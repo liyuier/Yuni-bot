@@ -13,6 +13,7 @@
         <module>yuni-common</module>
         <module>yuni-core</module>
         <module>yuni-function</module>
+        <module>yuni-dd</module>
     </modules>
 
 </project>

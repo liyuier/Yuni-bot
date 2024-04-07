@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="yuni-core" />
+        <module name="yuni-dd" />
         <module name="yuni-common" />
         <module name="yuni-function" />
       </profile>
@@ -16,6 +17,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="yuni-common" options="-parameters" />
       <module name="yuni-core" options="-parameters" />
+      <module name="yuni-dd" options="-parameters" />
       <module name="yuni-function" options="-parameters" />
     </option>
   </component>
