@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.util.Date;
 
 /**
  * OneBot 上报消息数据类
@@ -14,7 +13,6 @@ import java.util.Date;
  */
 @SuppressWarnings("serial")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class OneBotPostMessageDataDto {
 
