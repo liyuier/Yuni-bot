@@ -1,37 +1,31 @@
 package com.yuier.yuni.core.aspect;
 
-import com.yuier.yuni.core.annotation.OneBotEventController;
 import com.yuier.yuni.core.annotation.OneBotEventHandler;
 import com.yuier.yuni.core.domain.dto.OneBotPostEventDto;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
 @Aspect
 @Component
 public class EventDispatchAspect {
 
-    @Autowired
-    private ApplicationContext applicationContext;
-
     // 切入点为打了 @OneBotEventUnifiedEntrance 注解的方法
-    @Around("@annotation(com.yuier.yuni.core.annotation.OneBotEventUnifiedEntrance)")
+    @Around("@annotation(com.yuier.yuni.core.annotation.OneBotEventEntrance)")
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
+        // 解析入参
         OneBotPostEventDto oneBotPostEventDto = (OneBotPostEventDto) joinPoint.getArgs()[0];
         String postType = oneBotPostEventDto.getPost_type();
 
+        // 通过反射，获取入口类的自定义方法
         Method[] declaredMethods = joinPoint.getTarget().getClass().getDeclaredMethods();
-        // 在 Bean 中搜索打上了 @OneBotEventHandler 注解的方法
+        // 搜索打上了 @OneBotEventHandler 注解的方法
         for (Method method : declaredMethods) {
-            if (method.isAnnotationPresent(OneBotEventHandler.class) && method.getAnnotation(OneBotEventHandler.class).value().equals(postType)) {
-                OneBotEventHandler annotation = method.getDeclaredAnnotation(OneBotEventHandler.class);
-                System.out.println(annotation.value());
+            if (method.isAnnotationPresent(OneBotEventHandler.class)
+                    && method.getAnnotation(OneBotEventHandler.class).value().equals(postType)) {
                 // 使用反射调用方法
                 method.setAccessible(true);
                 return method.invoke(joinPoint.getTarget(), oneBotPostEventDto);
