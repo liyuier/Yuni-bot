@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * OneBot 上报事件类
@@ -26,4 +28,7 @@ public class OneBotPostEventDto {
 
     // 事件类型
     private String post_type;
+
+    // 其余参数
+    Map<String, Object> eventData;
 }
