@@ -2,20 +2,16 @@ package com.yuier.yuni.core.aspect;
 
 import com.yuier.yuni.core.annotation.OneBotEventController;
 import com.yuier.yuni.core.annotation.OneBotEventHandler;
-import jakarta.servlet.http.HttpServletRequest;
+import com.yuier.yuni.core.domain.dto.OneBotPostEventDto;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
 
 @Aspect
 @Component
@@ -24,30 +20,24 @@ public class EventDispatchAspect {
     @Autowired
     private ApplicationContext applicationContext;
 
+    // 切入点为打了 @OneBotEventUnifiedEntrance 注解的方法
     @Around("@annotation(com.yuier.yuni.core.annotation.OneBotEventUnifiedEntrance)")
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String postType = request.getParameter("post_type");
-        String str = request.getQueryString();
-        Map<String, String[]> map = request.getParameterMap();
-        for (String k : map.keySet()) {
-            System.out.println(k);
-            System.out.println(Arrays.toString(map.get(k)));
-        }
+        OneBotPostEventDto oneBotPostEventDto = (OneBotPostEventDto) joinPoint.getArgs()[0];
+        String postType = oneBotPostEventDto.getPost_type();
 
-        // 查找带有@EventHandler注解的方法
+        // 注入带有 @OneBotEventController 注解的 Bean
         Map<String, Object> beansWithMethods = applicationContext.getBeansWithAnnotation(OneBotEventController.class);
         for (Object bean : beansWithMethods.values()) {
             Method[] declaredMethods = bean.getClass().getSuperclass().getDeclaredMethods();
+            // 在 Bean 中搜索打上了 @OneBotEventHandler 注解的方法
             for (Method method : declaredMethods) {
-                if (method.isAnnotationPresent(OneBotEventHandler.class)
-                        && method.getAnnotation(OneBotEventHandler.class).value().equals(postType)
-                    ) {
+                if (method.isAnnotationPresent(OneBotEventHandler.class) && method.getAnnotation(OneBotEventHandler.class).value().equals(postType)) {
                     OneBotEventHandler annotation = method.getDeclaredAnnotation(OneBotEventHandler.class);
                     System.out.println(annotation.value());
                     // 使用反射调用方法
                     method.setAccessible(true);
-                    return method.invoke(bean, request);
+                    return method.invoke(bean, oneBotPostEventDto);
                 }
             }
         }
