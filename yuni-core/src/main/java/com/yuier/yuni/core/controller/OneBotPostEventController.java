@@ -1,7 +1,7 @@
 package com.yuier.yuni.core.controller;
 
-import com.yuier.yuni.core.annotation.OneBotEventHandler;
-import com.yuier.yuni.core.annotation.OneBotEventEntrance;
+import com.yuier.yuni.common.annotation.OneBotEventHandler;
+import com.yuier.yuni.common.annotation.OneBotEventEntrance;
 import com.yuier.yuni.core.domain.dto.OneBotPostEventDto;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

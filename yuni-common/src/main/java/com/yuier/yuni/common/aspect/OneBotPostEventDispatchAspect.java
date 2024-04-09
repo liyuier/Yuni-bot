@@ -1,24 +1,26 @@
-package com.yuier.yuni.core.aspect;
+package com.yuier.yuni.common.aspect;
 
-import com.yuier.yuni.core.annotation.OneBotEventHandler;
-import com.yuier.yuni.core.domain.dto.OneBotPostEventDto;
+import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 @Aspect
 @Component
-public class EventDispatchAspect {
+public class OneBotPostEventDispatchAspect {
 
     // 切入点为打了 @OneBotEventUnifiedEntrance 注解的方法
-    @Around("@annotation(com.yuier.yuni.core.annotation.OneBotEventEntrance)")
+    @Around("@annotation(com.yuier.yuni.common.annotation.OneBotEventEntrance)")
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
         // 解析入参
-        OneBotPostEventDto oneBotPostEventDto = (OneBotPostEventDto) joinPoint.getArgs()[0];
-        String postType = oneBotPostEventDto.getPost_type();
+        Object oneBotPostEventDto = joinPoint.getArgs()[0];
+        Field field = oneBotPostEventDto.getClass().getDeclaredField("post_type");
+        field.setAccessible(true);
+        String postType = (String) field.get(oneBotPostEventDto);
 
         // 通过反射，获取入口类的自定义方法
         Method[] declaredMethods = joinPoint.getTarget().getClass().getDeclaredMethods();

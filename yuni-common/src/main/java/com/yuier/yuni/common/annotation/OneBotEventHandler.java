@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.annotation;
+package com.yuier.yuni.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface OneBotEventEntrance {
-
+public @interface OneBotEventHandler {
+    String value();
 }
