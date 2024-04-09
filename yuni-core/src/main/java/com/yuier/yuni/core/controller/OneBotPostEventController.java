@@ -2,6 +2,7 @@ package com.yuier.yuni.core.controller;
 
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.annotation.OneBotEventEntrance;
+import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.core.domain.dto.OneBotPostEventDto;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,28 +15,33 @@ public class OneBotPostEventController {
 
     @PostMapping("/")
     @OneBotEventEntrance
-    public void eventUnifiedEntrance(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
+    public ResponseResult eventUnifiedEntrance(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
         System.out.println("收到无法识别事件 " + oneBotPostEventDto.getPost_type());
+        return ResponseResult.okResult("无法识别事件 " + oneBotPostEventDto.getPost_type());
     }
 
     @OneBotEventHandler("message")
-    public void messageEventHandler(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
+    public ResponseResult messageEventHandler(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
         System.out.println("进入了消息事件处理逻辑");
+        return ResponseResult.okResult("进入了消息事件处理逻辑");
     }
 
     @OneBotEventHandler("notice")
-    public void noticeEventHandler(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
+    public ResponseResult noticeEventHandler(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
         System.out.println("进入了通知事件处理逻辑");
+        return ResponseResult.okResult("进入了消息事件处理逻辑");
     }
 
     @OneBotEventHandler("request")
-    public void requestEventHandler(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
+    public ResponseResult requestEventHandler(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
         System.out.println("进入了请求事件处理逻辑");
+        return ResponseResult.okResult("进入了消息事件处理逻辑");
     }
 
     @OneBotEventHandler("meta_event")
-    public void metaEventHandler(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
+    public ResponseResult metaEventHandler(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
         System.out.println("进入了元事件处理逻辑");
+        return ResponseResult.okResult("进入了消息事件处理逻辑");
     }
 
 }
