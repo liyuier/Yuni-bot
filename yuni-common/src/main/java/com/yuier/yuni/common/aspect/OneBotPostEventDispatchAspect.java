@@ -9,6 +9,14 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+/**
+ * @Title: OneBotPostEventDispatchAspect
+ * @Author yuier
+ * @Package com.yuier.yuni.common.aspect
+ * @Date 2024/4/10 0:41
+ * @description: OneBot上报事件分派切面，根据 post_type 的值分派不同的处理方法
+ */
+
 @Aspect
 @Component
 public class OneBotPostEventDispatchAspect {
