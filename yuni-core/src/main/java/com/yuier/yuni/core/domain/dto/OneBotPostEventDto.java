@@ -1,10 +1,12 @@
 package com.yuier.yuni.core.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -30,5 +32,10 @@ public class OneBotPostEventDto {
     private String post_type;
 
     // 其余参数
-    Map<String, Object> eventData;
+    Map<String, Object> eventData = new HashMap<>();
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String key, Object value) {
+        this.eventData.put(key, value);
+    }
 }
