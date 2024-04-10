@@ -1,6 +1,6 @@
 package com.yuier.yuni.core.domain.message;
 
-import com.yuier.yuni.core.domain.entity.QQUserEntity;
+import com.yuier.yuni.core.domain.user.QQUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageSender extends QQUserEntity {
+public class MessageSender extends QQUser {
 
     private String sex;
 

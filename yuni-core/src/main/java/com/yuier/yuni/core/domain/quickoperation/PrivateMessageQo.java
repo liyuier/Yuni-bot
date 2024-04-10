@@ -1,6 +1,5 @@
 package com.yuier.yuni.core.domain.quickoperation;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yuier.yuni.core.domain.message.MessageSeg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +24,5 @@ public class PrivateMessageQo {
 
     // 消息是否作为纯文本发送（即不解析CQ码）
     // 只在 reply 是字符串时有效
-    @JsonProperty("auto_escape")
     private boolean autoEscape;
 }
