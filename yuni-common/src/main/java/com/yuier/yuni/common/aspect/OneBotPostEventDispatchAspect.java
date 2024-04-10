@@ -1,6 +1,7 @@
 package com.yuier.yuni.common.aspect;
 
-import com.yuier.yuni.common.annotation.OneBotEventHandler;
+import com.yuier.yuni.common.annotation.OneBotEventEntrance;
+import com.yuier.yuni.common.constants.SystemConstants;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,11 +23,11 @@ import java.lang.reflect.Method;
 public class OneBotPostEventDispatchAspect {
 
     // 切入点为打了 @OneBotEventUnifiedEntrance 注解的方法
-    @Around("@annotation(com.yuier.yuni.common.annotation.OneBotEventEntrance)")
+    @Around("@annotation(com.yuier.yuni.common.annotation.OneBotPostEntrance)")
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
         // 解析入参
         Object oneBotPostEventDto = joinPoint.getArgs()[0];
-        Field field = oneBotPostEventDto.getClass().getDeclaredField("postType");
+        Field field = oneBotPostEventDto.getClass().getDeclaredField(SystemConstants.FIELD_NAMES.POST_TYPE);
         field.setAccessible(true);
         String postType = (String) field.get(oneBotPostEventDto);
 
@@ -34,8 +35,8 @@ public class OneBotPostEventDispatchAspect {
         Method[] declaredMethods = joinPoint.getTarget().getClass().getDeclaredMethods();
         // 搜索打上了 @OneBotEventHandler 注解的方法
         for (Method method : declaredMethods) {
-            if (method.isAnnotationPresent(OneBotEventHandler.class)
-                    && method.getAnnotation(OneBotEventHandler.class).value().equals(postType)) {
+            if (method.isAnnotationPresent(OneBotEventEntrance.class)
+                    && method.getAnnotation(OneBotEventEntrance.class).eventType().equals(postType)) {
                 // 使用反射调用方法
                 method.setAccessible(true);
                 return method.invoke(joinPoint.getTarget(), oneBotPostEventDto);
