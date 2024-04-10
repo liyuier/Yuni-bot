@@ -27,6 +27,7 @@ public class MessageSender extends QQUser {
     // 群名片/备注
     private String card;
 
+    // 地区
     private String area;
 
     // 成员等级

@@ -12,7 +12,7 @@ import java.util.List;
  * @Author yuier
  * @Package com.yuier.yuni.core.domain.message
  * @Date 2024/4/10 23:02
- * @description: 合并转发自定义结点消息段 data 字段
+ * @description: 转发结点消息段 data 字段类
  */
 @Data
 @NoArgsConstructor
@@ -23,5 +23,5 @@ public class NodeMessageData {
 
     private String nickname;
 
-    private List<MessageSeg> content;
+    private List<NodeMessageSeg> content;
 }
