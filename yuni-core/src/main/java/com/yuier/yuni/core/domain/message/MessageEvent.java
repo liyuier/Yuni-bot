@@ -50,34 +50,9 @@ public class MessageEvent {
     private Long messageId;
 
     /**
-     * 群号。只有为群聊消息时有效。
-     */
-    private Long groupId;
-
-    /**
      * 发送者 QQ 号
      */
     private Long userId;
-
-    /**
-     * 默认0，表示不是匿名信息；1表示是匿名信息。只有当群聊消息时有效。
-     */
-    private Integer anonymous;
-
-    /**
-     * 匿名用户ID
-     */
-    private Long anonymousId;
-
-    /**
-     * 匿名用户名称
-     */
-    private String anonymousName;
-
-    /**
-     * 匿名用户 flag，调用禁言API时传入
-     */
-    private String anonymousFlag;
 
     /**
      * 消息内容
@@ -90,7 +65,22 @@ public class MessageEvent {
     private String rawMessage;
 
     /**
-     * 删除标志，默认0，表示未删除；1表示删除
+     * 字体
      */
-    private Integer delFlag;
+    private int font;
+
+    /**
+     * 发送人信息
+     */
+    private MessageSender sender;
+
+    /**
+     * 群号。只有为群聊消息时有效。
+     */
+    private Long groupId;
+
+    /**
+     * 匿名信息，如果不是匿名消息则为 null
+     */
+    private AnonymousMessage anonymous;
 }
