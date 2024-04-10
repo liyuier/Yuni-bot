@@ -16,8 +16,8 @@ public class OneBotPostEventController {
     @PostMapping("/")
     @OneBotEventEntrance
     public ResponseResult eventUnifiedEntrance(@RequestBody OneBotPostEventDto oneBotPostEventDto) {
-        System.out.println("收到无法识别事件 " + oneBotPostEventDto.getPost_type());
-        return ResponseResult.okResult("无法识别事件 " + oneBotPostEventDto.getPost_type());
+        System.out.println("收到无法识别事件 " + oneBotPostEventDto.getPostType());
+        return ResponseResult.okResult("无法识别事件 " + oneBotPostEventDto.getPostType());
     }
 
     @OneBotEventHandler("message")

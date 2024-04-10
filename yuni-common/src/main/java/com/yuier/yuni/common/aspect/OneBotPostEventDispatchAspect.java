@@ -26,7 +26,7 @@ public class OneBotPostEventDispatchAspect {
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
         // 解析入参
         Object oneBotPostEventDto = joinPoint.getArgs()[0];
-        Field field = oneBotPostEventDto.getClass().getDeclaredField("post_type");
+        Field field = oneBotPostEventDto.getClass().getDeclaredField("postType");
         field.setAccessible(true);
         String postType = (String) field.get(oneBotPostEventDto);
 

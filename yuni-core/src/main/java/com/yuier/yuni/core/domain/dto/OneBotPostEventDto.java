@@ -1,6 +1,7 @@
 package com.yuier.yuni.core.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,6 @@ import lombok.AllArgsConstructor;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * OneBot 上报事件类
@@ -26,13 +26,15 @@ public class OneBotPostEventDto {
     private Date time;
 
     // 收到消息的机器人QQ号
-    private Long self_id;
+    @JsonProperty("self_id")
+    private Long selfId;
 
     // 事件类型
-    private String post_type;
+    @JsonProperty("post_type")
+    private String postType;
 
     // 其余参数
-    Map<String, Object> eventData = new HashMap<>();
+    private Map<String, Object> eventData = new HashMap<>();
 
     @JsonAnySetter
     public void setAdditionalProperty(String key, Object value) {
