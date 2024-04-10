@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.domain.entity;
+package com.yuier.yuni.core.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class QQUserEntity {
+public class QQUser {
 
     private Long userId;
 

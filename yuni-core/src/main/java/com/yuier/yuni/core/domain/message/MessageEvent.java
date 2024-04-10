@@ -1,7 +1,7 @@
-package com.yuier.yuni.core.domain.dto;
+package com.yuier.yuni.core.domain.message;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.yuier.yuni.core.domain.message.MessageSeg;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,17 +20,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageEventDto {
+@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class MessageEvent {
 
     // 收到消息的时间戳
     private Date time;
 
     // 收到消息的机器人QQ号
-    @JsonProperty("self_id")
     private Long selfId;
 
     // 事件类型
-    @JsonProperty("post_type")
     private String postType;
 
     /**
