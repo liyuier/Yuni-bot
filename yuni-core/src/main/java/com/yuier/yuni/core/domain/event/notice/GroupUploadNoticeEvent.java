@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.domain.event;
+package com.yuier.yuni.core.domain.event.notice;
 
 import com.yuier.yuni.common.annotation.OneBotNoticeEventEntity;
 import com.yuier.yuni.common.constants.SystemConstants;

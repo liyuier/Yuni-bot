@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.domain.event;
+package com.yuier.yuni.core.domain.event.message;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
