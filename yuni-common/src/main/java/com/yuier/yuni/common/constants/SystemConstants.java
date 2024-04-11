@@ -9,6 +9,8 @@ package com.yuier.yuni.common.constants;
  */
 public class SystemConstants {
 
+    public static final String HANDLE_METHODS = "handle";
+
     public static final class FIELD_NAMES {
 
         public static final String POST_TYPE = "postType";
@@ -18,6 +20,7 @@ public class SystemConstants {
         public static final String MESSAGE_SUB_TYPE = "subType";
 
         public static final String MESSAGE_SENDER_SEX = "sex";
+
     }
 
     // OneBot 上报事件类型

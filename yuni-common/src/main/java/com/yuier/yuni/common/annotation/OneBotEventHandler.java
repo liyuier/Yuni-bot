@@ -5,8 +5,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.METHOD)
+/**
+ * @Title: OneBotEventHandler
+ * @Author yuier
+ * @Package com.yuier.yuni.common.annotation
+ * @Date 2024/4/11 22:45
+ * @description: 注解，加在 OneBot 上报事件处理类上
+ */
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface OneBotEventEntrance {
+public @interface OneBotEventHandler {
     String eventType();
 }
