@@ -15,7 +15,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
 @EnableAspectJAutoProxy
-public class AopConfig {
+public class YuniCoreConfig {
 
     @Bean
     public OneBotPostEventDispatchAspect oneBotPostEventDispatchAspect() {
