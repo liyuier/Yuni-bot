@@ -50,7 +50,7 @@ public class MessageEvent {
     /**
      * 消息ID
      */
-    private Long messageId;
+    private Integer messageId;
 
     /**
      * 发送者 QQ 号
@@ -70,7 +70,7 @@ public class MessageEvent {
     /**
      * 字体
      */
-    private int font;
+    private Integer font;
 
     /**
      * 发送人信息
@@ -80,10 +80,18 @@ public class MessageEvent {
     /**
      * 群号。只有为群聊消息时有效。
      */
-    private Long groupId;
+    private Integer groupId;
 
     /**
      * 匿名信息，如果不是匿名消息则为 null
      */
     private AnonymousMessage anonymous;
+
+    // 以下为 LLOneBot 在 OneBot 消息事件标准之外添加的字段
+    // 消息类型，是数组还是 CQ 码
+    private String messageFormat;
+
+    // 真实 ID 就是最真实的 ID
+    // 其实这个字段在协议的 get_msg() 接口上会响应出来
+    private Integer realId;
 }
