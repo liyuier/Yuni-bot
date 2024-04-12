@@ -3,6 +3,7 @@ package com.yuier.yuni.core.domain.message;
 import com.yuier.yuni.core.domain.user.QQUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -16,7 +17,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageSender extends QQUser {
+public class MessageSender {
+
+    private Long userId;
+
+    private String nickname;
 
     private String sex;
 

@@ -11,6 +11,18 @@ public class SystemConstants {
 
     public static final String HANDLE_METHODS = "handle";
 
+    public static final class POST_EVENT_DTO_FIELDS {
+
+        public static final String TIME = "time";
+
+        public static final String SELF_ID = "selfId";
+
+        public static final String POST_TYPE = "postType";
+
+        public static final String EVENT_DATA = "eventData";
+    }
+
+
     public static final class FIELD_NAMES {
 
         public static final String POST_TYPE = "postType";
