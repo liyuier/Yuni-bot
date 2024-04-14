@@ -41,4 +41,9 @@ public class ImageData extends MessageData {
     // 以下为 LLOneBot 自行添加字段
     private String fileSize;
 
+    @Override
+    public String toString() {
+        return "【图片" + ((null == this.type) ? "" : "<闪照>") + "<file=" + this.file + "><url=" + this.url + ">】";
+    }
+
 }

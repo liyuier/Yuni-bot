@@ -27,4 +27,9 @@ public class LocationData extends MessageData {
     private String title;
     // 发送时可选，内容描述
     private String content;
+
+    @Override
+    public String toString() {
+        return "【位置消息<纬度=" + this.lat + "><经度=" + this.lon + ">】";
+    }
 }

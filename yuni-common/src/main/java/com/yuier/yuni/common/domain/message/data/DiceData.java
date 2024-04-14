@@ -17,4 +17,8 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @MessageDataEntity(messageType = "dice")
 public class DiceData extends MessageData {
+    @Override
+    public String toString() {
+        return "【投骰子】";
+    }
 }

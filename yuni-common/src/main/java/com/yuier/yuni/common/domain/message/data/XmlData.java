@@ -21,4 +21,9 @@ import org.springframework.stereotype.Component;
 public class XmlData extends MessageData {
     // XML 内容
     private String data;
+
+    @Override
+    public String toString() {
+        return "【XML消息<" + this.data + ">】";
+    }
 }

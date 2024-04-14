@@ -8,4 +8,5 @@ package com.yuier.yuni.common.domain.message.data;
  * @description: 消息段的 data 字段的抽象父类
  */
 public abstract class MessageData {
+    public abstract String toString();
 }

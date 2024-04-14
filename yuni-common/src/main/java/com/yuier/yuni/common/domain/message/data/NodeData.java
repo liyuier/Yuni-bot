@@ -21,4 +21,9 @@ import org.springframework.stereotype.Component;
 public class NodeData extends MessageData {
     // 转发的消息 ID
     private String id;
+
+    @Override
+    public String toString() {
+        return "【合并转发消息】";
+    }
 }

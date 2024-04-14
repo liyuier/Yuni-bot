@@ -23,4 +23,9 @@ public class ForwardData extends MessageData {
      * 合并转发 id，需通过 get_forward_msg API 获取具体内容
      */
     private String id;
+
+    @Override
+    public String toString() {
+        return "【合并转发消息】";
+    }
 }

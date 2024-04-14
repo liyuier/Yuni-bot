@@ -20,4 +20,9 @@ import org.springframework.stereotype.Component;
 @MessageDataEntity(messageType = "face")
 public class FaceData extends MessageData {
     private String id;
+
+    @Override
+    public String toString() {
+        return "【QQ表情<#" + this.id + ">】";
+    }
 }

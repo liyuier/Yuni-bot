@@ -21,4 +21,9 @@ import org.springframework.stereotype.Component;
 public class AtData extends MessageData {
     // 被 @ 的 QQ 号。all 表示全体成员。
     private String qq;
+
+    @Override
+    public String toString() {
+        return "【@<" + this.qq + ">】";
+    }
 }

@@ -42,49 +42,6 @@ public class BeanCopyUtils {
                 .toList();
     }
 
-    public static <S, T> T copyEvent(S postEvent, Class<T> clazz) {
-        T event = null;
-        try {
-            Class<?> oneBotPostEventDtoClass = postEvent.getClass();
-            Field dataMapField = oneBotPostEventDtoClass.getDeclaredField(SystemConstants.POST_EVENT_MAP_FIELDS.EVENT_DATA);
-            dataMapField.setAccessible(true);
-            Map<String, Object> dataMap = (Map<String, Object>) dataMapField.get(postEvent);
-            event = mapToMapObject(dataMap, clazz);
-            copyFixedFields(postEvent, event);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return event;
-    }
-
-    private static <S, T> void copyFixedFields(S postEvent, T event) {
-        try {
-            Class<?> postEventDtoClass = postEvent.getClass();
-            Field[] fields = event.getClass().getDeclaredFields();
-            copyOneField(postEvent, postEventDtoClass, event, fields, SystemConstants.POST_EVENT_MAP_FIELDS.TIME);
-            copyOneField(postEvent, postEventDtoClass, event, fields, SystemConstants.POST_EVENT_MAP_FIELDS.SELF_ID);
-            copyOneField(postEvent, postEventDtoClass, event, fields, SystemConstants.POST_EVENT_MAP_FIELDS.POST_TYPE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static <S, T> void copyOneField(S postEvent, Class<?> postEventDtoClass, T event, Field[] eventFields, String postEventFieldName) {
-        try {
-            Field postEventField = postEventDtoClass.getDeclaredField(postEventFieldName);
-            postEventField.setAccessible(true);
-            Object postEventFieldValue = postEventField.get(postEvent);
-            for (Field field : eventFields) {
-                field.setAccessible(true);
-                if (field.getName().equals(postEventFieldName)) {
-                    field.set(event, postEventFieldValue);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static <T> T mapToMapObject(Map<String, Object> map, Class<T> clazz) {
         T obj = null;
         try {
