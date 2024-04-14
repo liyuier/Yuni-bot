@@ -1,5 +1,6 @@
 package com.yuier.yuni.common.aspect;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -32,20 +33,18 @@ public class OneBotPostEventDispatchAspect {
     @Around("@annotation(com.yuier.yuni.common.annotation.OneBotPostEntrance)")
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
         // 解析入参
-        Object oneBotPostEventDto = joinPoint.getArgs()[0];
-        Field field = oneBotPostEventDto.getClass().getDeclaredField(SystemConstants.FIELD_NAMES.POST_TYPE);
-        field.setAccessible(true);
-        String postType = (String) field.get(oneBotPostEventDto);
+        Map<String, Object> postEventDto = (Map<String, Object>) joinPoint.getArgs()[0];
+        String postType = (String) postEventDto.get("post_type");
 
         // 遍历打了 @OneBotEventHandler 注解的类
         Map<String, Object> handlerBeans = applicationContext.getBeansWithAnnotation(OneBotEventHandler.class);
         for (Object bean : handlerBeans.values()) {
             OneBotEventHandler annotation = bean.getClass().getAnnotation(OneBotEventHandler.class);
             if (annotation.eventType().equals(postType)) {
-                Method handle = bean.getClass().getDeclaredMethod(SystemConstants.HANDLE_METHODS, oneBotPostEventDto.getClass());
+                Method handle = bean.getClass().getDeclaredMethod(SystemConstants.HANDLE_METHODS, Map.class);
                 // 使用反射调用方法
                 handle.setAccessible(true);
-                return handle.invoke(bean, oneBotPostEventDto);
+                return handle.invoke(bean, postEventDto);
             }
         }
 

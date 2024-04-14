@@ -1,9 +1,10 @@
-package com.yuier.yuni.core.domain.message.nodemessage;
+package com.yuier.yuni.common.domain.message.nodemessage;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,10 +18,10 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NodeMessageSegContent {
+public class NodeMessageContentSeg<T> {
     // 消息段类型
     private String type;
 
     // 消息段数据
-    private Map<String, Objects> data;
+    private ArrayList<T> data;
 }

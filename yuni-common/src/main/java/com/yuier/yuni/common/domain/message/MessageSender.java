@@ -1,9 +1,7 @@
-package com.yuier.yuni.core.domain.message;
+package com.yuier.yuni.common.domain.message;
 
-import com.yuier.yuni.core.domain.user.QQUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**

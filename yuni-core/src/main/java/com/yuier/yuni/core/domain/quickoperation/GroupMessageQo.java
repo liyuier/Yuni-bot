@@ -1,6 +1,6 @@
 package com.yuier.yuni.core.domain.quickoperation;
 
-import com.yuier.yuni.core.domain.message.MessageSeg;
+import com.yuier.yuni.common.domain.message.MessageSeg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

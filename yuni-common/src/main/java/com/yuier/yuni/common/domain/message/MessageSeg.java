@@ -1,5 +1,6 @@
-package com.yuier.yuni.core.domain.message;
+package com.yuier.yuni.common.domain.message;
 
+import com.yuier.yuni.common.domain.message.data.MessageData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,5 @@ public class MessageSeg {
     private String type;
 
     // 消息段数据
-    private Map<String, String> data;
+    private MessageData data;
 }

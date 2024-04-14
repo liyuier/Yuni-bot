@@ -1,0 +1,20 @@
+package com.yuier.yuni.common.domain.message.data;
+
+import com.yuier.yuni.common.annotation.MessageDataEntity;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+
+/**
+ * @Title: RpsData
+ * @Author yuier
+ * @Package com.yuier.yuni.common.domain.message.data
+ * @Date 2024/4/14 21:55
+ * @description: 猜拳魔法表情
+ */
+@Data
+@Component
+@NoArgsConstructor
+@MessageDataEntity(messageType = "rps")
+public class RpsData extends MessageData {
+}

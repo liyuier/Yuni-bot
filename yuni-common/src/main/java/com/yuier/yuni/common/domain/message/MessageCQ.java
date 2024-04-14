@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.domain.message;
+package com.yuier.yuni.common.domain.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

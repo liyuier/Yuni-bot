@@ -1,6 +1,5 @@
-package com.yuier.yuni.core.domain.message.nodemessage;
+package com.yuier.yuni.common.domain.message.nodemessage;
 
-import com.yuier.yuni.core.domain.message.MessageSeg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import java.util.List;
  * @Author yuier
  * @Package com.yuier.yuni.core.domain.message
  * @Date 2024/4/10 23:02
- * @description: 转发结点消息段 data 字段类
+ * @description: 转发结点消息段（发） data 字段类
  */
 @Data
 @NoArgsConstructor
