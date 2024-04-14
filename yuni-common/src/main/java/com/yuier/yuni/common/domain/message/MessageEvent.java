@@ -24,7 +24,7 @@ import java.util.List;
 public class MessageEvent {
 
     // 收到消息的时间戳
-    private Integer time;
+    private Long time;
 
     // 收到消息的机器人QQ号
     private Long selfId;
@@ -47,7 +47,7 @@ public class MessageEvent {
     /**
      * 消息ID
      */
-    private Integer messageId;
+    private Long messageId;
 
     /**
      * 发送者 QQ 号
@@ -67,7 +67,7 @@ public class MessageEvent {
     /**
      * 字体
      */
-    private Integer font;
+    private Long font;
 
     /**
      * 发送人信息
@@ -77,7 +77,7 @@ public class MessageEvent {
     /**
      * 群号。只有为群聊消息时有效。
      */
-    private Integer groupId;
+    private Long groupId;
 
     /**
      * 匿名信息，如果不是匿名消息则为 null
@@ -90,5 +90,5 @@ public class MessageEvent {
 
     // 真实 ID 就是最真实的 ID
     // 其实这个字段在协议的 get_msg() 接口上会响应出来
-    private Integer realId;
+    private Long realId;
 }

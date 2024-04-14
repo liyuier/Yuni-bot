@@ -1,8 +1,7 @@
 package com.yuier.yuni.common.aspect;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
-import com.yuier.yuni.common.constants.SystemConstants;
+import com.yuier.yuni.common.service.AsyncService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -29,6 +26,9 @@ public class OneBotPostEventDispatchAspect {
     @Autowired
     ApplicationContext applicationContext;
 
+    @Autowired
+    AsyncService asyncService;
+
     // 切入点为打了 @OneBotPostEntrance 注解的方法
     @Around("@annotation(com.yuier.yuni.common.annotation.OneBotPostEntrance)")
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -41,10 +41,7 @@ public class OneBotPostEventDispatchAspect {
         for (Object bean : handlerBeans.values()) {
             OneBotEventHandler annotation = bean.getClass().getAnnotation(OneBotEventHandler.class);
             if (annotation.eventType().equals(postType)) {
-                Method handle = bean.getClass().getDeclaredMethod(SystemConstants.HANDLE_METHODS, Map.class);
-                // 使用反射调用方法
-                handle.setAccessible(true);
-                return handle.invoke(bean, postEventDto);
+                return asyncService.asyncReflectiveMethodCall(bean, postEventDto).get();
             }
         }
 

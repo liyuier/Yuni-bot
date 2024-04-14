@@ -1,10 +1,8 @@
-package com.yuier.yuni.core.handlers;
+package com.yuier.yuni.core.handler;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.utils.ResponseResult;
-import com.yuier.yuni.core.domain.dto.OneBotPostEventDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
