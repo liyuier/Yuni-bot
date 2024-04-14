@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.handlers;
+package com.yuier.yuni.core.handler;
 
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
