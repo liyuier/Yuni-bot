@@ -25,4 +25,9 @@ public class ShareData extends MessageData {
     private String content;
     // 发送时可选，图片 URL
     private String image;
+
+    @Override
+    public String toString() {
+        return "【链接分享<url=" + this.url + "><title=" + this.title + ">】";
+    }
 }

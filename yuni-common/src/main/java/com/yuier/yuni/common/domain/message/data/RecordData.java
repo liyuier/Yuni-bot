@@ -23,7 +23,7 @@ public class RecordData extends MessageData {
     private String file;
     // 发送时可选，默认 0，设置为 1 表示变声
     private String magic;
-    // 图片 URL
+    // 文件 URL
     private String url;
     // 只在通过网络 URL 发送时有效，表示是否使用已缓存的文件，默认 1
     private String cache;
@@ -31,4 +31,9 @@ public class RecordData extends MessageData {
     private String proxy;
     // 只在通过网络 URL 发送时有效，单位秒，表示下载网络文件的超时事件，默认不超时
     private String timeout;
+
+    @Override
+    public String toString() {
+        return "【语音" + "<file=" + this.file + "><url=" + this.url + ">】";
+    }
 }

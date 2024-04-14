@@ -23,4 +23,9 @@ public class ContactData extends MessageData {
     private String type;
     // 被推荐人/群的 QQ 号
     private String id;
+
+    @Override
+    public String toString() {
+        return "【推荐" + (type.equals("qq") ? "QQ 用户" : "QQ 群 ") + "<" + this.id + ">】";
+    }
 }

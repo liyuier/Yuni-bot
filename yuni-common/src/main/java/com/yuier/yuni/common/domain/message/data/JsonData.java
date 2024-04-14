@@ -20,4 +20,9 @@ import org.springframework.stereotype.Component;
 @MessageDataEntity(messageType = "json")
 public class JsonData extends MessageData {
     private String data;
+
+    @Override
+    public String toString() {
+        return "【JSON消息<" + this.data + ">】";
+    }
 }

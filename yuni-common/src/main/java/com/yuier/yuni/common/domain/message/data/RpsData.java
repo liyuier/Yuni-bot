@@ -17,4 +17,9 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @MessageDataEntity(messageType = "rps")
 public class RpsData extends MessageData {
+
+    @Override
+    public String toString() {
+        return "【猜拳魔法表情】";
+    }
 }

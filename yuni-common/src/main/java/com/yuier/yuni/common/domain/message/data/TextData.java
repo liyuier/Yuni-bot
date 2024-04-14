@@ -20,4 +20,9 @@ import org.springframework.stereotype.Component;
 @MessageDataEntity(messageType = "text")
 public class TextData extends MessageData {
     private String text;
+
+    @Override
+    public String toString() {
+        return this.text;
+    }
 }

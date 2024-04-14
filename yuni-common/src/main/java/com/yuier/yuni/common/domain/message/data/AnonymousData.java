@@ -21,4 +21,9 @@ import org.springframework.stereotype.Component;
 public class AnonymousData extends MessageData {
     // 可选，表示无法匿名时是否继续发送
     private String ignore;
+
+    @Override
+    public String toString() {
+        return "【匿名消息】";
+    }
 }

@@ -29,4 +29,9 @@ public class VideoData extends MessageData {
     private String proxy;
     // 只在通过网络 URL 发送时有效，单位秒，表示下载网络文件的超时事件，默认不超时
     private String timeout;
+
+    @Override
+    public String toString() {
+        return "【视频" + "<file=" + this.file + "><url=" + this.url + ">】";
+    }
 }

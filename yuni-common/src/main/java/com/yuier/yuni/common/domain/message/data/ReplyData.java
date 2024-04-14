@@ -21,4 +21,9 @@ import org.springframework.stereotype.Component;
 public class ReplyData extends MessageData {
     // 回复时引用的消息 ID
     private String id;
+
+    @Override
+    public String toString() {
+        return "【回复<消息id="+ this.id + ">】";
+    }
 }

@@ -41,4 +41,11 @@ public class MusicData extends MessageData {
     private String content;
     // 发送时可选，图片 URL
     private String image;
+
+    @Override
+    public String toString() {
+        return "【分享音乐" + (!this.type.equals("custom")
+                ? "<平台=" + this.type + "><歌曲ID=" + this.id
+                : "<url=" + this.url + "><歌曲url=" + this.audio + "><标题=" + this.title + ">】");
+    }
 }
