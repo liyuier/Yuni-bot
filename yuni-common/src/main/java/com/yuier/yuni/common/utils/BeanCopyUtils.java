@@ -46,7 +46,7 @@ public class BeanCopyUtils {
         T event = null;
         try {
             Class<?> oneBotPostEventDtoClass = postEvent.getClass();
-            Field dataMapField = oneBotPostEventDtoClass.getDeclaredField(SystemConstants.POST_EVENT_DTO_FIELDS.EVENT_DATA);
+            Field dataMapField = oneBotPostEventDtoClass.getDeclaredField(SystemConstants.POST_EVENT_MAP_FIELDS.EVENT_DATA);
             dataMapField.setAccessible(true);
             Map<String, Object> dataMap = (Map<String, Object>) dataMapField.get(postEvent);
             event = mapToMapObject(dataMap, clazz);
@@ -61,9 +61,9 @@ public class BeanCopyUtils {
         try {
             Class<?> postEventDtoClass = postEvent.getClass();
             Field[] fields = event.getClass().getDeclaredFields();
-            copyOneField(postEvent, postEventDtoClass, event, fields, SystemConstants.POST_EVENT_DTO_FIELDS.TIME);
-            copyOneField(postEvent, postEventDtoClass, event, fields, SystemConstants.POST_EVENT_DTO_FIELDS.SELF_ID);
-            copyOneField(postEvent, postEventDtoClass, event, fields, SystemConstants.POST_EVENT_DTO_FIELDS.POST_TYPE);
+            copyOneField(postEvent, postEventDtoClass, event, fields, SystemConstants.POST_EVENT_MAP_FIELDS.TIME);
+            copyOneField(postEvent, postEventDtoClass, event, fields, SystemConstants.POST_EVENT_MAP_FIELDS.SELF_ID);
+            copyOneField(postEvent, postEventDtoClass, event, fields, SystemConstants.POST_EVENT_MAP_FIELDS.POST_TYPE);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,10 +1,7 @@
-package com.yuier.yuni.core.domain.event.message;
+package com.yuier.yuni.common.domain.message;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.yuier.yuni.core.domain.message.AnonymousMessage;
-import com.yuier.yuni.core.domain.message.MessageSeg;
-import com.yuier.yuni.core.domain.message.MessageSender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +24,7 @@ import java.util.List;
 public class MessageEvent {
 
     // 收到消息的时间戳
-    private Date time;
+    private Integer time;
 
     // 收到消息的机器人QQ号
     private Long selfId;
@@ -60,7 +57,7 @@ public class MessageEvent {
     /**
      * 消息内容
      */
-    private List<MessageSeg> message;
+    private MessageChain message;
 
     /**
      * 原始消息内容
