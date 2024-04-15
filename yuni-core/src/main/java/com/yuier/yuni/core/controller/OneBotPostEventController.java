@@ -1,9 +1,7 @@
 package com.yuier.yuni.core.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.OneBotPostEntrance;
 import com.yuier.yuni.common.utils.ResponseResult;
-import com.yuier.yuni.core.domain.dto.OneBotPostEventDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
