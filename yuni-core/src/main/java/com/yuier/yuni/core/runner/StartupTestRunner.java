@@ -1,30 +1,32 @@
-package com.yuier.yuni.common;
+package com.yuier.yuni.core.runner;
 
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-@SpringBootTest
-class YuniCommonApplicationTests {
+/**
+ * @Title: StartupTestRunner
+ * @Author yuier
+ * @Package com.yuier.yuni.core.runner
+ * @Date 2024/4/16 1:11
+ * @description: 启动测试类
+ */
+@Component
+public class StartupTestRunner implements CommandLineRunner {
     @Autowired
     MessageChainService messageChainService;
     @Autowired
     CallOneBot callOneBot;
 
-    @Test
-    void contextLoads() {
-    }
-
-    @Test
-    void testSendMessage() {
+    @Override
+    public void run(String... args) {
         SendGroupMessageDto dto = new SendGroupMessageDto();
         dto.setGroupId((long)930198267);
         dto.setMessage(messageChainService.buildChain("123").getContent());
         dto.setAutoEscape(false);
         callOneBot.sendGroupMessage(dto);
     }
-
 }

@@ -7,6 +7,7 @@ import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageSeg;
 import com.yuier.yuni.common.domain.message.data.MessageData;
+import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.domain.message.data.UnknownData;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.BeanCopyUtils;
@@ -67,5 +68,14 @@ public class MessageChainServiceImpl implements MessageChainService {
             }
         }
         throw new RuntimeException("Unknown type: " + type);
+    }
+
+    // 传入字符串，创建一个消息链
+    @Override
+    public MessageChain buildChain(String msgStr) {
+        MessageChain chain = new MessageChain();
+        chain.setContent(new ArrayList<>());
+        chain.getContent().add(new MessageSeg("text", new TextData(msgStr)));
+        return chain;
     }
 }
