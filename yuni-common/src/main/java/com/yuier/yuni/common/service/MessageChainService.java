@@ -17,4 +17,6 @@ public interface MessageChainService {
     MessageChain buildChain(ArrayList<Map<String, Object>> msgMapList);
 
     MessageData buildMessageData(Map<String, Object> msgMap);
+
+    MessageChain buildChain(String msgStr);
 }
