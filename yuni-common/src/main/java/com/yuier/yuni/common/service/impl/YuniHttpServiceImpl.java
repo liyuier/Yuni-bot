@@ -27,10 +27,10 @@ public class YuniHttpServiceImpl implements YuniHttpService {
         }
     }
 
-    public<T> T sendPostRequest(String url, Object requestBody, Class<T> clazz) {
+    public<S, T> T postRequestForObject(String url, S requestBody, Class<T> clazz) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> requestEntity = new HttpEntity<>(requestBody, headers);
+        HttpEntity<S> requestEntity = new HttpEntity<>(requestBody, headers);
         ResponseEntity<T> responseEntity  = restTemplate.postForEntity(url, requestEntity, clazz);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             return responseEntity.getBody();

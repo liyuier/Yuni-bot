@@ -1,8 +1,10 @@
 package com.yuier.yuni.function.config;
 
 import com.yuier.yuni.common.aspect.OneBotPostEventDispatchAspect;
+import com.yuier.yuni.common.config.YuniCommonConfig;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.service.impl.MessageChainServiceImpl;
+import com.yuier.yuni.common.utils.CallOneBot;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -16,6 +18,12 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan(basePackageClasses = {MessageChainServiceImpl.class, OneBotPostEventDispatchAspect.class, TextData.class})
+@ComponentScan(basePackageClasses = {
+        MessageChainServiceImpl.class,
+        OneBotPostEventDispatchAspect.class,
+        TextData.class,
+        YuniCommonConfig.class,
+        CallOneBot.class
+})
 public class YuniFunctionConfig {
 }
