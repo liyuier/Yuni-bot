@@ -23,3 +23,5 @@ buildNumber.properties
 .idea
 **/.gitignore
 /.idea/
+
+**/application.yaml

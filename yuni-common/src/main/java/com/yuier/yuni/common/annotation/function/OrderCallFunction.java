@@ -1,4 +1,4 @@
-package com.yuier.yuni.common.annotation;
+package com.yuier.yuni.common.annotation.function;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

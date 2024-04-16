@@ -1,4 +1,4 @@
-package com.yuier.yuni.common.annotation;
+package com.yuier.yuni.common.annotation.function;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,14 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Title: KeyWordFunction
+ * @Title: RegularCallFunction
  * @Author yuier
  * @Package com.yuier.yuni.common.annotation
- * @Date 2024/4/15 1:31
- * @description: 注解，加在关键词触发的功能插件上
+ * @Date 2024/4/15 1:44
+ * @description: 注解，加在正则表达式触发的功能插件上
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface KeyWordCallFunction {
-    String keyWord();
+public @interface RegularCallFunction {
+    String regular();
 }

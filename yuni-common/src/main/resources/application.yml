@@ -1,2 +1,5 @@
 base-urls:
   one-bot: http://localhost:3000/
+  core: http://localhost:11451/
+  function: http://localhost:11452/
+  dd: http://localhost:11453/

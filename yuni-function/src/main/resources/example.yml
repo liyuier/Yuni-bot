@@ -1,5 +1,5 @@
 server:
-  port: 11452
+  port: 2345
 spring:
   application:
     name: yuni-function
@@ -8,8 +8,8 @@ spring:
       matching-strategy: ant_path_matcher
   datasource:
     url: jdbc:mysql://localhost:3306/yuni_fms?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: LY86358635
+    username: username
+    password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
