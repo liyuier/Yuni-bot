@@ -1,15 +1,15 @@
 server:
-  port: 11452
+  port: 3456
 spring:
   application:
-    name: yuni-function
+    name: yuni-dd
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
   datasource:
-    url: jdbc:mysql://localhost:3306/yuni_fms?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: LY86358635
+    url: jdbc:mysql://localhost:3306/yuni_dms?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: username
+    password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:

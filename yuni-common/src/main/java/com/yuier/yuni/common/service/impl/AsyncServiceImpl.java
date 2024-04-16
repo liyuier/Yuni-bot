@@ -25,7 +25,6 @@ public class AsyncServiceImpl implements AsyncService{
         Method handle = bean.getClass().getDeclaredMethod(SystemConstants.HANDLE_METHODS, Map.class);
         // 使用反射调用方法
         handle.setAccessible(true);
-//        return (CompletableFuture<Object>) handle.invoke(bean, postEventDto);
         return CompletableFuture.completedFuture(handle.invoke(bean, postEventDto));
     }
 }
