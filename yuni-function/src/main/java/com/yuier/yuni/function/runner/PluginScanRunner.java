@@ -1,7 +1,8 @@
 package com.yuier.yuni.function.runner;
 
+import com.yuier.yuni.common.utils.CallCore;
+import com.yuier.yuni.function.service.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,11 +10,18 @@ import org.springframework.stereotype.Component;
  * @Author yuier
  * @Package com.yuier.yuni.function.runner
  * @Date 2024/4/16 19:58
- * @description: 启动时自动扫描插件
+ * @description: 启动时初始化插件，并将插件发送给 core 服务
  */
 @Component
 public class PluginScanRunner {
 
     @Autowired
-    ApplicationContext applicationContext;
+    CallCore callCore;
+
+    @Autowired
+    PluginService pluginService;
+
+
+
+
 }
