@@ -13,4 +13,6 @@ import org.apache.poi.ss.formula.functions.T;
  */
 public interface YuniPlugin {
 
+    String description();
+
 }

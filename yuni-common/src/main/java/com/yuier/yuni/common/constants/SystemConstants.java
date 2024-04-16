@@ -227,4 +227,12 @@ public class SystemConstants {
         public static final String CONNECT = "connect";
     }
 
+    public static final class FUNCTION_KIND {
+        public static final String ORDER_CALL = "order";
+        public static final String KEY_WORD_CALL = "keyword";
+        public static final String AT_CALL = "at";
+        public static final String REGULAR_CALL = "regular";
+        public static final String POSITIVE = "positive";
+    }
+
 }

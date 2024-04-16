@@ -1,6 +1,7 @@
 package com.yuier.yuni.core.runner;
 
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
+import com.yuier.yuni.common.domain.message.res.SendMessageRes;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,6 @@ public class StartupTestRunner implements CommandLineRunner {
         dto.setGroupId((long)930198267);
         dto.setMessage(messageChainService.buildChain("123").getContent());
         dto.setAutoEscape(false);
-        callOneBot.sendGroupMessage(dto);
+        SendMessageRes res = callOneBot.sendGroupMessage(dto);
     }
 }
