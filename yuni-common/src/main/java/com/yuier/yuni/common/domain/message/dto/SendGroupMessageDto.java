@@ -2,6 +2,7 @@ package com.yuier.yuni.common.domain.message.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageSeg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,14 @@ import java.util.ArrayList;
 public class SendGroupMessageDto {
     private Long groupId;
     private ArrayList<MessageSeg> message;
-    private boolean autoEscape;
+    private boolean autoEscape = false;
+
+    public SendGroupMessageDto(Long groupId, ArrayList<MessageSeg> message) {
+        this.groupId = groupId;
+        this.message = message;
+    }
+    public SendGroupMessageDto(Long groupId, MessageChain chain) {
+        this.groupId = groupId;
+        this.message = chain.getContent();
+    }
 }

@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.util.Map;
 
 /**
@@ -11,4 +13,6 @@ import java.util.Map;
  */
 public interface MessageEventService {
     <T> T postToMessage(Map<String, Object> postDataMap, Class<T> targetClazz);
+
+    <T> T postToMessage(JsonNode postDataNode, Class<T> targetClazz);
 }

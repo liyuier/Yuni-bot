@@ -46,6 +46,11 @@ public class MessageChainServiceImpl implements MessageChainService {
         return chain;
     }
 
+    /**
+     * 传入 Map，构造出 MessageData 对象
+     * @param msgMap 原始的 MessageData 数据
+     * @return 构造出的 MessageData 对象
+     */
     @Override
     public MessageData buildMessageData(Map<String, Object> msgMap) {
         String type = (String) msgMap.get("type");
