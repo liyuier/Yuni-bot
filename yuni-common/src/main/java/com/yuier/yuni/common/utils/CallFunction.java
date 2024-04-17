@@ -1,5 +1,6 @@
 package com.yuier.yuni.common.utils;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.service.YuniHttpService;
@@ -37,5 +38,10 @@ public class CallFunction {
     public ResponseResult orderCallFunction(MessageEvent messageEvent) {
         String url = getBaseUrl() + "function/order";
         return yuniHttpService.postRequestForObject(url, messageEvent, ResponseResult.class);
+    }
+
+    public ResponseResult orderCallFunction(JsonNode postEventNode) {
+        String url = getBaseUrl() + "function/order";
+        return yuniHttpService.postRequestForObject(url, postEventNode, ResponseResult.class);
     }
 }

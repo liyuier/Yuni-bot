@@ -1,5 +1,6 @@
 package com.yuier.yuni.function.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.data.TextData;
@@ -37,6 +38,24 @@ public class FunctionCallServiceImpl implements FunctionCallService {
         for (Object bean : orderCallFunctionBeans.values()) {
             OrderCallFunction annotation = bean.getClass().getAnnotation(OrderCallFunction.class);
             if (annotation.orderWord().equals(order)) {
+                try {
+                    asyncService.asyncReflectivePlugin(bean, messageEvent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult orderCallFunction(JsonNode messageEventNode) {
+        MessageEvent messageEvent = messageEventService.postToMessage(messageEventNode, MessageEvent.class);
+        String order = ((TextData) messageEvent.getMessage().getContent().get(0).getData()).getText();
+        Map<String, Object> orderCallFunctionBeans = applicationContext.getBeansWithAnnotation(OrderCallFunction.class);
+        for (Object bean : orderCallFunctionBeans.values()) {
+            OrderCallFunction annotation = bean.getClass().getAnnotation(OrderCallFunction.class);
+            if (("/" + annotation.orderWord()).equals(order)) {
                 try {
                     asyncService.asyncReflectivePlugin(bean, messageEvent);
                 } catch (Exception e) {

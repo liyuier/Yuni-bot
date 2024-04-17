@@ -11,6 +11,7 @@ import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.MessageEventService;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.common.domain.message.MessageEvent;
+import com.yuier.yuni.core.domain.global.GlobalData;
 import com.yuier.yuni.core.service.MessageRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,9 @@ public class OneBotMessageEventHandler {
     @Autowired
     AsyncService asyncService;
 
+    @Autowired
+    GlobalData globalData;
+
     String[] callers = {
             SystemConstants.FUNCTION_KIND.AT_CALL,
             SystemConstants.FUNCTION_KIND.ORDER_CALL,
@@ -58,18 +62,11 @@ public class OneBotMessageEventHandler {
             SystemConstants.FUNCTION_KIND.REGULAR_CALL
     };
 
-//    public ResponseResult handle(Map<String, Object> postEventDto) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
-//        log.info("进入了消息事件处理器");
-//        MessageEvent messageEvent = messageEventService.postToMessage(postEventDto, MessageEvent.class);
-//        MessageChain chain = messageChainService.buildChain((ArrayList<Map<String, Object>>) postEventDto.get("message"));
-//        detect(chain, messageEvent);
-//        return ResponseResult.okResult();
-//    }
-
-    public ResponseResult handle(JsonNode postEventDto) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
+    public ResponseResult handle(JsonNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
         log.info("进入了消息事件处理器");
-        MessageEvent messageEvent = messageEventService.postToMessage(postEventDto, MessageEvent.class);
-        MessageChain chain = messageChainService.buildChain((ArrayNode) postEventDto.get("message"));
+        globalData.setPostEventNode(postEventNode);
+        MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
+        MessageChain chain = messageChainService.buildChain((ArrayNode) postEventNode.get("message"));
         detect(chain, messageEvent);
         return ResponseResult.okResult();
     }
@@ -80,7 +77,7 @@ public class OneBotMessageEventHandler {
             for (Object bean : handlerBeans.values()) {
                 FunctionCallerDetector annotation = bean.getClass().getAnnotation(FunctionCallerDetector.class);
                 if (annotation.callerKind().equals(caller)) {
-                    Object o = asyncService.asyncReflectiveDetector(bean, messageEvent).get();
+                    Object o = asyncService.asyncReflectiveDetector(bean, chain).get();
                 }
             }
         }

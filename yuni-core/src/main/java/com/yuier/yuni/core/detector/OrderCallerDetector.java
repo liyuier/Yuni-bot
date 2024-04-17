@@ -45,7 +45,33 @@ public class OrderCallerDetector implements YuniMessageDetector{
         for (String orderCaller : orderCallers) {
             if (firstText.getText().startsWith("/" + orderCaller)) {
                 flag = true;
-                callFunction.orderCallFunction(messageEvent);
+                callFunction.orderCallFunction(globalData.getPostEventNode());
+                break;
+            }
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean detect(MessageChain chain) {
+        if (null == chain.getContent() ||chain.getContent().isEmpty()) {
+            return false;
+        }
+        ArrayList<MessageSeg> content = chain.getContent();
+        String firstSegType = content.get(0).getType();
+        if (!firstSegType.equals("text")) {
+            return false;
+        }
+        TextData firstText = (TextData) chain.getContent().get(0).getData();
+        if (!firstText.getText().startsWith("/")) {
+            return false;
+        }
+        ArrayList<String> orderCallers = globalData.getFunctions().get(SystemConstants.FUNCTION_KIND.ORDER_CALL);
+        boolean flag = false;
+        for (String orderCaller : orderCallers) {
+            if (firstText.getText().startsWith("/" + orderCaller)) {
+                flag = true;
+                callFunction.orderCallFunction(globalData.getPostEventNode());
                 break;
             }
         }
