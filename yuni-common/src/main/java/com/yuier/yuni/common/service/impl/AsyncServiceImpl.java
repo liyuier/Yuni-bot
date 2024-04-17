@@ -49,4 +49,11 @@ public class AsyncServiceImpl implements AsyncService{
         run.setAccessible(true);
         return CompletableFuture.completedFuture(run.invoke(bean, postEventDto));
     }
+
+    @Override
+    public CompletableFuture<Object> asyncReflectiveDetector(Object bean, MessageChain chain) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method detect = bean.getClass().getDeclaredMethod("detect", MessageChain.class);
+        detect.setAccessible(true);
+        return CompletableFuture.completedFuture(detect.invoke(bean, chain));
+    }
 }

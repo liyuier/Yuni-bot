@@ -12,4 +12,6 @@ import com.yuier.yuni.common.domain.message.MessageEvent;
  */
 public interface YuniMessageDetector {
     boolean detect(MessageEvent messageEvent);
+
+    boolean detect(MessageChain chain);
 }

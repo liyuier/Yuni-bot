@@ -30,4 +30,7 @@ public interface AsyncService {
 
     @Async
     CompletableFuture<Object> asyncReflectiveHandler(Object bean, JsonNode postEventDto) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+
+    @Async
+    CompletableFuture<Object> asyncReflectiveDetector(Object bean, MessageChain chain) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
 }

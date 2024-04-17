@@ -34,7 +34,7 @@ public class GenShinStart implements YuniOrderPlugin {
     @Override
     public ResponseResult<T> run(MessageEvent messageEvent) {
         long ownerQQ = Long.parseLong("2937818202");
-        if (ownerQQ != messageEvent.getUserId()) {
+        if (ownerQQ == messageEvent.getUserId()) {
             callOneBot.sendGroupMessage(new SendGroupMessageDto(
                     messageEvent.getGroupId(),
                     messageChainService.buildChain("启动！")

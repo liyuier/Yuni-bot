@@ -1,5 +1,6 @@
 package com.yuier.yuni.function.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.utils.ResponseResult;
 
@@ -16,4 +17,6 @@ import java.util.Map;
 public interface FunctionCallService {
 
     ResponseResult orderCallFunction(Map<String, Object> messageEvent);
+
+    ResponseResult orderCallFunction(JsonNode messageEvent);
 }
