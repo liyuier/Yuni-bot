@@ -20,7 +20,7 @@ import java.util.HashMap;
  * @description: 接收 function 模块 http 请求的 controller 层
  */
 @RestController
-@RequestMapping("/function")
+@RequestMapping("function")
 public class FunctionController {
 
     @Autowired

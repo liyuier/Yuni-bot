@@ -7,6 +7,7 @@ import com.yuier.yuni.common.domain.message.res.SendMessageRes;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,11 +21,15 @@ import org.springframework.stereotype.Component;
 public class CallOneBot {
     @Autowired
     YuniHttpService yuniHttpService;
+    @Autowired
+    private Environment environment;
 
-    @Value("${base-urls.one-bot}")
-    private String baseUrl;
+//    @Value("${base-urls.one-bot}")
+//    private String baseUrl;
 
     private String getBaseUrl() {
+//        String baseUrl = environment.getProperty("base-urls.one-bot");
+        String baseUrl = "http://localhost:3000/";
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }

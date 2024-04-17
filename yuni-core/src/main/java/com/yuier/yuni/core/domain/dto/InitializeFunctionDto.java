@@ -15,4 +15,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InitializeFunctionDto {
+    String name;
 }

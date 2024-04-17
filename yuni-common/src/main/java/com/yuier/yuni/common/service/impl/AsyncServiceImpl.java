@@ -1,7 +1,8 @@
 package com.yuier.yuni.common.service.impl;
 
-import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
+import com.yuier.yuni.common.domain.message.MessageChain;
+import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.service.AsyncService;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,24 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class AsyncServiceImpl implements AsyncService{
     @Override
-    public CompletableFuture<Object> asyncReflectiveMethodCall(Object bean, Map<String, Object> postEventDto) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        OneBotEventHandler annotation = bean.getClass().getAnnotation(OneBotEventHandler.class);
+    public CompletableFuture<Object> asyncReflectiveHandler(Object bean, Map<String, Object> postEventDto) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method handle = bean.getClass().getDeclaredMethod(SystemConstants.HANDLE_METHODS, Map.class);
         // 使用反射调用方法
         handle.setAccessible(true);
         return CompletableFuture.completedFuture(handle.invoke(bean, postEventDto));
+    }
+
+    @Override
+    public CompletableFuture<Object> asyncReflectiveDetector(Object bean, MessageEvent messageEvent) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method detect = bean.getClass().getDeclaredMethod("detect", MessageEvent.class);
+        detect.setAccessible(true);
+        return CompletableFuture.completedFuture(detect.invoke(bean, messageEvent));
+    }
+
+    @Override
+    public CompletableFuture<Object> asyncReflectivePlugin(Object bean, MessageEvent messageEvent) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method run = bean.getClass().getDeclaredMethod("run", MessageEvent.class);
+        run.setAccessible(true);
+        return CompletableFuture.completedFuture(run.invoke(bean, messageEvent));
     }
 }

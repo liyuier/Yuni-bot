@@ -4,6 +4,7 @@ import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,11 +21,15 @@ import java.util.HashMap;
 public class CallCore {
     @Autowired
     YuniHttpService yuniHttpService;
+    @Autowired
+    private Environment environment;
 
-    @Value("${base-urls.core}")
-    private String baseUrl;
+//    @Value("${base-urls.core}")
+//    private String baseUrl;
 
     private String getBaseUrl() {
+//        String baseUrl = environment.getProperty("base-urls.core");
+        String baseUrl = "http://localhost:11451/";
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }
@@ -32,7 +37,7 @@ public class CallCore {
     }
 
     public ResponseResult initializeFunction(PluginFunctionDto pluginFunctionDto) {
-        String url = getBaseUrl() + "init_func";
+        String url = getBaseUrl() + "function/init_func";
         return yuniHttpService.postRequestForObject(url, pluginFunctionDto, ResponseResult.class);
     }
 }

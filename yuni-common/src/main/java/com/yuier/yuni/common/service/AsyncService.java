@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.service;
 
+import com.yuier.yuni.common.domain.message.MessageChain;
+import com.yuier.yuni.common.domain.message.MessageEvent;
 import org.springframework.scheduling.annotation.Async;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,5 +18,11 @@ import java.util.concurrent.CompletableFuture;
 public interface AsyncService {
 
     @Async
-    public CompletableFuture<Object> asyncReflectiveMethodCall(Object bean, Map<String, Object> postEventDto) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+    CompletableFuture<Object> asyncReflectiveHandler(Object bean, Map<String, Object> postEventDto) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+
+    @Async
+    CompletableFuture<Object> asyncReflectiveDetector(Object bean, MessageEvent messageEvent) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+
+    @Async
+    CompletableFuture<Object> asyncReflectivePlugin(Object bean, MessageEvent messageEvent) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
 }

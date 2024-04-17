@@ -4,6 +4,7 @@ import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.data.MessageData;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -19,4 +20,5 @@ public interface MessageChainService {
     MessageData buildMessageData(Map<String, Object> msgMap);
 
     MessageChain buildChain(String msgStr);
+
 }
