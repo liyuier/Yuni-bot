@@ -1,5 +1,6 @@
 package com.yuier.yuni.common.aspect;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.service.AsyncService;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -33,8 +34,9 @@ public class OneBotPostEventDispatchAspect {
     @Around("@annotation(com.yuier.yuni.common.annotation.OneBotPostEntrance)")
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
         // 解析入参
-        Map<String, Object> postEventDto = (Map<String, Object>) joinPoint.getArgs()[0];
-        String postType = (String) postEventDto.get("post_type");
+        JsonNode postEventDto = (JsonNode) joinPoint.getArgs()[0];
+        String postType = postEventDto.get("post_type").asText();
+
 
         // 遍历打了 @OneBotEventHandler 注解的类
         Map<String, Object> handlerBeans = applicationContext.getBeansWithAnnotation(OneBotEventHandler.class);

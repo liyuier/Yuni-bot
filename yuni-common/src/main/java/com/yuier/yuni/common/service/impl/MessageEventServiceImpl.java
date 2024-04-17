@@ -3,6 +3,8 @@ package com.yuier.yuni.common.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.MessageEventService;
@@ -61,10 +63,7 @@ public class MessageEventServiceImpl implements MessageEventService {
             targetObj = targetClazz.getDeclaredConstructor().newInstance();
             Field[] fields = targetClazz.getDeclaredFields();
             for (Field field : fields) {
-                int mod = field.getModifiers();
-                if (Modifier.isPrivate(mod)) {
-                    field.setAccessible(true);
-                }
+                field.setAccessible(true);
                 String fieldName = field.getName();
                 Object value = postDataMap.get(StrUtil.toUnderlineCase(fieldName));
                 if (value != null) {
@@ -101,7 +100,28 @@ public class MessageEventServiceImpl implements MessageEventService {
             for (Field field : fields) {
                 field.setAccessible(true);
                 String fieldName = field.getName();
-
+                JsonNode value = postDataNode.get(StrUtil.toUnderlineCase(fieldName));
+                if (value != null) {
+                    if (fieldName.equals(SystemConstants.ONE_BOT_POST_TYPE.MESSAGE)) {
+                        field.set(targetObj, messageChainService.buildChain((ArrayNode) value));
+                    } else if (value instanceof ObjectNode) {
+                        Class<?> targetType = field.getType();
+                        field.set(targetObj, postToMessage(value, targetType));
+                    } else { // TODO 重写
+                        if (value.isTextual()) {
+                            // 如果字段是文本，则直接设置值  
+                            field.set(targetObj, value.asText());
+                        } else if (value.isBoolean()) {
+                            field.set(targetObj, value.asBoolean());
+                        } else if (value.isInt()) {
+                            field.set(targetObj, (long)value.asInt());
+                        } else if (value.isLong()) {
+                            field.set(targetObj, value.asLong());
+                        } else if (value.isFloat() || value.isDouble()) {
+                            field.set(targetObj, value.asDouble());
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,17 +138,17 @@ public class MessageEventServiceImpl implements MessageEventService {
         for (Field field : fields) {
             field.setAccessible(true);
             String fieldName = field.getName();
-            JsonNode fieldNode = jsonNode.get(fieldName);
-            if (fieldNode != null) {
-                if (fieldNode.isObject()) {
+            JsonNode value = jsonNode.get(fieldName);
+            if (value != null) {
+                if (value.isObject()) {
                     // 递归处理嵌套对象
                     Object nestedEntity = field.getType().getDeclaredConstructor().newInstance();
-                    mapJsonNodeToEntity(fieldNode, nestedEntity);
+                    mapJsonNodeToEntity(value, nestedEntity);
                     field.set(entity, nestedEntity);
                 } else {
                     JsonNodeToFieldValueConverter converter = converters.get(field.getType());
                     if (converter != null) {
-                        field.set(entity, converter.convert(fieldNode));
+                        field.set(entity, converter.convert(value));
                     } else {
                         // 对于不支持的类型，可以选择抛出异常或进行其他处理
                         throw new IllegalArgumentException("Unsupported field type: " + field.getType());

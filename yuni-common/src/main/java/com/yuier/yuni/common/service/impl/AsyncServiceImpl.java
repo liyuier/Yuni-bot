@@ -1,5 +1,6 @@
 package com.yuier.yuni.common.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageEvent;
@@ -40,5 +41,12 @@ public class AsyncServiceImpl implements AsyncService{
         Method run = bean.getClass().getDeclaredMethod("run", MessageEvent.class);
         run.setAccessible(true);
         return CompletableFuture.completedFuture(run.invoke(bean, messageEvent));
+    }
+
+    @Override
+    public CompletableFuture<Object> asyncReflectiveHandler(Object bean, JsonNode postEventDto) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method run = bean.getClass().getDeclaredMethod(SystemConstants.HANDLE_METHODS, JsonNode.class);
+        run.setAccessible(true);
+        return CompletableFuture.completedFuture(run.invoke(bean, postEventDto));
     }
 }

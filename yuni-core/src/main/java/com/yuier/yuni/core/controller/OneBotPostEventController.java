@@ -1,5 +1,6 @@
 package com.yuier.yuni.core.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.OneBotPostEntrance;
 import com.yuier.yuni.common.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ public class OneBotPostEventController {
 
     @PostMapping("/")
     @OneBotPostEntrance
-    public ResponseResult postEventEntrance(@RequestBody Map<String, Object> oneBotPostEventDto) {
+    public ResponseResult postEventEntrance(@RequestBody JsonNode oneBotPostEventDto) {
         log.warn("收到无法识别事件 " + oneBotPostEventDto.get("post_type"));
         return ResponseResult.okResult("无法识别事件 " + oneBotPostEventDto.get("post_type"));
     }

@@ -1,10 +1,11 @@
 package com.yuier.yuni.common.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.data.MessageData;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +18,11 @@ import java.util.Map;
 public interface MessageChainService {
     MessageChain buildChain(ArrayList<Map<String, Object>> msgMapList);
 
+    MessageChain buildChain(ArrayNode msgMapList);
+
     MessageData buildMessageData(Map<String, Object> msgMap);
+
+    MessageData buildMessageData(JsonNode node);
 
     MessageChain buildChain(String msgStr);
 
