@@ -23,6 +23,3 @@ buildNumber.properties
 .idea
 **/.gitignore
 /.idea/
-
-**/application.yaml
-**/application.yml
