@@ -1,5 +1,7 @@
 package com.yuier.yuni.core.handler;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.yuier.yuni.common.annotation.FunctionCallerDetector;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
@@ -56,10 +58,18 @@ public class OneBotMessageEventHandler {
             SystemConstants.FUNCTION_KIND.REGULAR_CALL
     };
 
-    public ResponseResult handle(Map<String, Object> postEventDto) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
+//    public ResponseResult handle(Map<String, Object> postEventDto) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
+//        log.info("进入了消息事件处理器");
+//        MessageEvent messageEvent = messageEventService.postToMessage(postEventDto, MessageEvent.class);
+//        MessageChain chain = messageChainService.buildChain((ArrayList<Map<String, Object>>) postEventDto.get("message"));
+//        detect(chain, messageEvent);
+//        return ResponseResult.okResult();
+//    }
+
+    public ResponseResult handle(JsonNode postEventDto) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
         log.info("进入了消息事件处理器");
         MessageEvent messageEvent = messageEventService.postToMessage(postEventDto, MessageEvent.class);
-        MessageChain chain = messageChainService.buildChain((ArrayList<Map<String, Object>>) postEventDto.get("message"));
+        MessageChain chain = messageChainService.buildChain((ArrayNode) postEventDto.get("message"));
         detect(chain, messageEvent);
         return ResponseResult.okResult();
     }

@@ -48,10 +48,7 @@ public class BeanCopyUtils {
             obj = clazz.getDeclaredConstructor().newInstance();
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                int mod = field.getModifiers();
-                if (Modifier.isPrivate(mod)) {
-                    field.setAccessible(true);
-                }
+                field.setAccessible(true);
                 Object value = map.get(StrUtil.toUnderlineCase(field.getName()));
                 if (value != null) {
                     if (value instanceof Map) {
