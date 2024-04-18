@@ -21,15 +21,11 @@ import org.springframework.stereotype.Component;
 public class CallOneBot {
     @Autowired
     YuniHttpService yuniHttpService;
-    @Autowired
-    private Environment environment;
 
-//    @Value("${base-urls.one-bot}")
-//    private String baseUrl;
+    @Value("${base-urls.one-bot}")
+    private String baseUrl;
 
     private String getBaseUrl() {
-//        String baseUrl = environment.getProperty("base-urls.one-bot");
-        String baseUrl = "http://localhost:3000/";
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }

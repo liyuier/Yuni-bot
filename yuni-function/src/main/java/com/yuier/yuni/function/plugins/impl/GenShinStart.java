@@ -9,8 +9,11 @@ import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.function.plugins.YuniOrderPlugin;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 
 /**
@@ -31,10 +34,12 @@ public class GenShinStart implements YuniOrderPlugin {
     @Autowired
     MessageChainService messageChainService;
 
+    @Value("${bot.owner}")
+    private Long ownerQQ;
+
     @Override
     public ResponseResult<T> run(MessageEvent messageEvent) {
-        long ownerQQ = Long.parseLong("2937818202");
-        if (ownerQQ == messageEvent.getUserId()) {
+        if (Objects.equals(ownerQQ, messageEvent.getUserId())) {
             callOneBot.sendGroupMessage(new SendGroupMessageDto(
                     messageEvent.getGroupId(),
                     messageChainService.buildChain("启动！")

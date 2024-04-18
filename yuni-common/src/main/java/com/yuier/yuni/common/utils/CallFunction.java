@@ -20,15 +20,11 @@ import org.springframework.stereotype.Component;
 public class CallFunction {
     @Autowired
     YuniHttpService yuniHttpService;
-    @Autowired
-    private Environment environment;
 
-//    @Value("${base-urls.function}")
-//    private String baseUrl;
+    @Value("${base-urls.function}")
+    private String baseUrl;
 
     private String getBaseUrl() {
-//        String baseUrl = environment.getProperty("base-urls.function");
-        String baseUrl = "http://localhost:11452/";
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }
