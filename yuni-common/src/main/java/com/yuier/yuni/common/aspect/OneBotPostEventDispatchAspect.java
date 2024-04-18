@@ -2,6 +2,7 @@ package com.yuier.yuni.common.aspect;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
+import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.service.AsyncService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -43,7 +44,8 @@ public class OneBotPostEventDispatchAspect {
         for (Object bean : handlerBeans.values()) {
             OneBotEventHandler annotation = bean.getClass().getAnnotation(OneBotEventHandler.class);
             if (annotation.eventType().equals(postType)) {
-                return asyncService.asyncReflectiveHandler(bean, postEventDto).get();
+//                return asyncService.asyncReflectiveHandler(bean, postEventDto).get();
+                return asyncService.asyncReflective(bean, postEventDto, SystemConstants.HANDLE_METHODS).get();
             }
         }
 
