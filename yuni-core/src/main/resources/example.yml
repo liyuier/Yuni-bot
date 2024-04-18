@@ -42,3 +42,11 @@ COS:
   secret-key: secret-key
   bucket-name:
     one-bucket: one-bucket-name
+base-urls:
+  one-bot: http://url/to/one-bot/
+  core: http://url/to/core/
+  function: http://url/to/function/
+  dd: http://url/to/dd/
+
+bot:
+  owner: qq_of_owner
