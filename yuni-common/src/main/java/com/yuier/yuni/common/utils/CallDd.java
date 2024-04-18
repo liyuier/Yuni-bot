@@ -17,15 +17,11 @@ import org.springframework.stereotype.Component;
 public class CallDd {
     @Autowired
     YuniHttpService yuniHttpService;
-    @Autowired
-    private Environment environment;
 
-//    @Value("${base-urls.dd}")
-//    private String baseUrl;
+    @Value("${base-urls.dd}")
+    private String baseUrl;
 
     private String getBaseUrl() {
-//        String baseUrl = environment.getProperty("base-urls.dd");
-        String baseUrl = "http://localhost:11453/";
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }

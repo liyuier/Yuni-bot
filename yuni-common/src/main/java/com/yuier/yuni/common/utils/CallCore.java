@@ -21,15 +21,11 @@ import java.util.HashMap;
 public class CallCore {
     @Autowired
     YuniHttpService yuniHttpService;
-    @Autowired
-    private Environment environment;
 
-//    @Value("${base-urls.core}")
-//    private String baseUrl;
+    @Value("${base-urls.core}")
+    private String baseUrl;
 
     private String getBaseUrl() {
-//        String baseUrl = environment.getProperty("base-urls.core");
-        String baseUrl = "http://localhost:11451/";
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }
