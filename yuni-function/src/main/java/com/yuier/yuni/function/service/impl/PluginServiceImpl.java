@@ -1,10 +1,8 @@
 package com.yuier.yuni.function.service.impl;
 
-import com.yuier.yuni.common.annotation.FunctionCallerDetector;
 import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
-import com.yuier.yuni.function.plugins.YuniOrderPlugin;
 import com.yuier.yuni.function.service.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,13 +28,13 @@ public class PluginServiceImpl implements PluginService {
     @Override
     public PluginFunctionDto buildPluginFunctionDto() {
         HashMap<String, ArrayList<String>> functionMap = new HashMap<>();
-        ArrayList<String> orders = callFunctionOrders();
+        ArrayList<String> orders = getFunctionOrderNames();
         functionMap.put(SystemConstants.FUNCTION_KIND.ORDER_CALL, orders);
 
         return new PluginFunctionDto(functionMap);
     }
 
-    private ArrayList<String> callFunctionOrders() {
+    private ArrayList<String> getFunctionOrderNames() {
         ArrayList<String> orders = new ArrayList<>();
         Map<String, Object> orderCallFunctionBeans = applicationContext.getBeansWithAnnotation(OrderCallFunction.class);
         for (Object bean : orderCallFunctionBeans.values()) {
