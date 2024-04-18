@@ -64,7 +64,7 @@ public class OneBotMessageEventHandler {
 
     public ResponseResult handle(JsonNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
         log.info("进入了消息事件处理器");
-        globalData.setPostEventNode(postEventNode);
+        globalData.setPostEventNode(postEventNode);  // TODO 把这玩意移到 AOP 里边去
         MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
         MessageChain chain = messageChainService.buildChain((ArrayNode) postEventNode.get("message"));
         detect(chain, messageEvent);

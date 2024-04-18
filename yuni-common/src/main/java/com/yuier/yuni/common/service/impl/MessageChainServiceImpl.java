@@ -115,8 +115,12 @@ public class MessageChainServiceImpl implements MessageChainService {
             Field[] fields = targetMessageClazz.getDeclaredFields();
             for (Field field : fields) {
                 field.setAccessible(true);
-                String fieldVal = objectNode.get(StrUtil.toUnderlineCase(field.getName())).asText();
-                field.set(messageData, fieldVal);
+                JsonNode nodeFieldVal = objectNode.get(StrUtil.toUnderlineCase(field.getName()));
+                String msgDataFieldVal;
+                if (null != nodeFieldVal) {
+                    msgDataFieldVal = nodeFieldVal.asText();
+                    field.set(messageData, msgDataFieldVal);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
