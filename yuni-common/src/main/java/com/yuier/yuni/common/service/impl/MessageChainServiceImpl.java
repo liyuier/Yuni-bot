@@ -1,28 +1,21 @@
 package com.yuier.yuni.common.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.annotation.MessageDataEntity;
-import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageSeg;
 import com.yuier.yuni.common.domain.message.data.MessageData;
 import com.yuier.yuni.common.domain.message.data.TextData;
-import com.yuier.yuni.common.domain.message.data.UnknownData;
 import com.yuier.yuni.common.service.MessageChainService;
-import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -39,24 +32,6 @@ public class MessageChainServiceImpl implements MessageChainService {
 
     @Autowired
     ApplicationContext applicationContext;
-
-    /**
-     * 传入一组 Map ，构造出 MessageData 对象
-     * @param msgMapList
-     * @return
-     */
-    @Override
-    public MessageChain buildChain(ArrayList<Map<String, Object>> msgMapList) {
-        MessageChain chain = new MessageChain();
-        chain.setContent(new ArrayList<>());
-        for (Map<String, Object> msgMap : msgMapList) {
-            String type = (String) msgMap.get("type");
-            MessageData data = buildMessageData(msgMap);
-            MessageSeg messageSeg = new MessageSeg(type, data);
-            chain.getContent().add(messageSeg);
-        }
-        return chain;
-    }
 
     /**
      * 传入 ArrayNode ，构造出 MessageData 对象
@@ -126,35 +101,6 @@ public class MessageChainServiceImpl implements MessageChainService {
             e.printStackTrace();
         }
         return messageData;
-    }
-
-    /**
-     * 传入一个 Map，构造出 MessageData 对象
-     * @param msgMap 原始的 MessageData 数据
-     * @return 构造出的 MessageData 对象
-     */
-    @Override
-    public MessageData buildMessageData(Map<String, Object> msgMap) {
-        String type = (String) msgMap.get("type");
-        Map<String, Object> mapData = (Map<String, Object>) msgMap.get("data");
-        if (null == type || null == mapData) {
-            try {
-                log.error("消息段结构不全！" + new ObjectMapper().writeValueAsString(msgMap));
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        Map<String, Object> msgDataBeans = applicationContext.getBeansWithAnnotation(MessageDataEntity.class);
-        for (Object bean : msgDataBeans.values()) {
-            if (!(bean instanceof MessageData)) {
-                continue;
-            }
-            MessageDataEntity annotation = bean.getClass().getAnnotation(MessageDataEntity.class);
-            if (annotation.messageType().equals(type)) {
-                return (MessageData) BeanCopyUtils.mapToMapObject(mapData, bean.getClass());
-            }
-        }
-        throw new RuntimeException("Unknown type: " + type);
     }
 
     // 传入字符串，创建一个消息链

@@ -2,8 +2,6 @@ package com.yuier.yuni.common.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.util.Map;
-
 /**
  * @Title: MessageEventService
  * @Author yuier
@@ -12,7 +10,6 @@ import java.util.Map;
  * @description: 消息事件 service 接口
  */
 public interface MessageEventService {
-    <T> T postToMessage(Map<String, Object> postDataMap, Class<T> targetClazz);
 
     <T> T postToMessage(JsonNode postDataNode, Class<T> targetClazz);
 }
