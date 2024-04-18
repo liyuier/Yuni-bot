@@ -30,23 +30,6 @@ public class FunctionCallServiceImpl implements FunctionCallService {
     AsyncService asyncService;
     @Autowired
     MessageEventService messageEventService;
-    @Override
-    public ResponseResult orderCallFunction(Map<String, Object> messageMap) {
-        MessageEvent messageEvent = messageEventService.postToMessage(messageMap, MessageEvent.class);
-        String order = ((TextData) messageEvent.getMessage().getContent().get(1).getData()).getText();
-        Map<String, Object> orderCallFunctionBeans = applicationContext.getBeansWithAnnotation(OrderCallFunction.class);
-        for (Object bean : orderCallFunctionBeans.values()) {
-            OrderCallFunction annotation = bean.getClass().getAnnotation(OrderCallFunction.class);
-            if (annotation.orderWord().equals(order)) {
-                try {
-                    asyncService.asyncReflectivePlugin(bean, messageEvent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return ResponseResult.okResult();
-    }
 
     @Override
     public ResponseResult orderCallFunction(JsonNode messageEventNode) {

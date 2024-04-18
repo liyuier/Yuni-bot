@@ -5,9 +5,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.data.MessageData;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 /**
  * @Title: MessageChainService
  * @Author yuier
@@ -16,11 +13,8 @@ import java.util.Map;
  * @description: 消息链 service 接口
  */
 public interface MessageChainService {
-    MessageChain buildChain(ArrayList<Map<String, Object>> msgMapList);
 
     MessageChain buildChain(ArrayNode msgMapList);
-
-    MessageData buildMessageData(Map<String, Object> msgMap);
 
     MessageData buildMessageData(JsonNode node);
 
