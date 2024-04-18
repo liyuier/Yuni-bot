@@ -2,6 +2,7 @@ package com.yuier.yuni.core.handler;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.annotation.FunctionCallerDetector;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
@@ -62,7 +63,7 @@ public class OneBotMessageEventHandler {
             SystemConstants.FUNCTION_KIND.REGULAR_CALL
     };
 
-    public ResponseResult handle(JsonNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
+    public ResponseResult handle(ObjectNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
         log.info("进入了消息事件处理器");
         globalData.setPostEventNode(postEventNode);  // TODO 把这玩意移到 AOP 里边去
         MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
@@ -77,7 +78,8 @@ public class OneBotMessageEventHandler {
             for (Object bean : handlerBeans.values()) {
                 FunctionCallerDetector annotation = bean.getClass().getAnnotation(FunctionCallerDetector.class);
                 if (annotation.callerKind().equals(caller)) {
-                    Object o = asyncService.asyncReflectiveDetector(bean, chain).get();
+//                    Object o = asyncService.asyncReflectiveDetector(bean, chain).get();
+                    Object o = asyncService.asyncReflective(bean, chain, "detect").get();
                 }
             }
         }

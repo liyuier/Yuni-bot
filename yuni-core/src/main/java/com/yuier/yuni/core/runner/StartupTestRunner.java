@@ -26,7 +26,7 @@ public class StartupTestRunner implements CommandLineRunner {
     public void run(String... args) {
         SendGroupMessageDto dto = new SendGroupMessageDto();
         dto.setGroupId((long)930198267);
-        dto.setMessage(messageChainService.buildChain("123").getContent());
+        dto.setMessage(messageChainService.buildChain("孩子们，我回来了").getContent());
         dto.setAutoEscape(false);
         SendMessageRes res = callOneBot.sendGroupMessage(dto);
     }

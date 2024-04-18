@@ -40,7 +40,8 @@ public class FunctionCallServiceImpl implements FunctionCallService {
             OrderCallFunction annotation = bean.getClass().getAnnotation(OrderCallFunction.class);
             if (("/" + annotation.orderWord()).equals(order)) {
                 try {
-                    asyncService.asyncReflectivePlugin(bean, messageEvent);
+//                    asyncService.asyncReflectivePlugin(bean, messageEvent);
+                    asyncService.asyncReflective(bean, messageEvent, "run");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
