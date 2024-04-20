@@ -2,6 +2,7 @@ package com.yuier.yuni.core.domain.event.notice;
 
 import com.yuier.yuni.common.annotation.OneBotNoticeEventEntity;
 import com.yuier.yuni.common.constants.SystemConstants;
+import com.yuier.yuni.common.enums.NoticeEventEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@OneBotNoticeEventEntity(noticeType = SystemConstants.NOTICE_TYPE.GROUP_UPLOAD)
+@OneBotNoticeEventEntity(noticeType = NoticeEventEnum.GROUP_UPLOAD)
 public class GroupUploadNoticeEvent {
 
     // 收到消息的时间戳
