@@ -3,6 +3,7 @@ package com.yuier.yuni.function.service.impl;
 import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
+import com.yuier.yuni.common.enums.FunctionCallerEnum;
 import com.yuier.yuni.function.service.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -29,7 +30,7 @@ public class PluginServiceImpl implements PluginService {
     public PluginFunctionDto buildPluginFunctionDto() {
         HashMap<String, ArrayList<String>> functionMap = new HashMap<>();
         ArrayList<String> orders = getFunctionOrderNames();
-        functionMap.put(SystemConstants.FUNCTION_KIND.ORDER_CALL, orders);
+        functionMap.put(FunctionCallerEnum.ORDER.toString(), orders);
 
         return new PluginFunctionDto(functionMap);
     }

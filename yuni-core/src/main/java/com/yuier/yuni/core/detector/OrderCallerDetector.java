@@ -6,6 +6,7 @@ import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.MessageSeg;
 import com.yuier.yuni.common.domain.message.data.TextData;
+import com.yuier.yuni.common.enums.FunctionCallerEnum;
 import com.yuier.yuni.common.utils.CallFunction;
 import com.yuier.yuni.core.domain.global.GlobalData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * @description: 检测消息链是否命中命令
  */
 @Component
-@FunctionCallerDetector(callerKind = SystemConstants.FUNCTION_KIND.ORDER_CALL)
+@FunctionCallerDetector(callerKind = FunctionCallerEnum.ORDER)
 public class OrderCallerDetector implements YuniMessageDetector{
     @Autowired
     GlobalData globalData;
@@ -40,7 +41,7 @@ public class OrderCallerDetector implements YuniMessageDetector{
         if (!firstText.getText().startsWith("/")) {
             return false;
         }
-        ArrayList<String> orderCallers = globalData.getFunctions().get(SystemConstants.FUNCTION_KIND.ORDER_CALL);
+        ArrayList<String> orderCallers = globalData.getFunctions().get(FunctionCallerEnum.ORDER.toString());
         boolean flag = false;
         for (String orderCaller : orderCallers) {
             if (firstText.getText().startsWith("/" + orderCaller)) {
@@ -66,7 +67,7 @@ public class OrderCallerDetector implements YuniMessageDetector{
         if (!firstText.getText().startsWith("/")) {
             return false;
         }
-        ArrayList<String> orderCallers = globalData.getFunctions().get(SystemConstants.FUNCTION_KIND.ORDER_CALL);
+        ArrayList<String> orderCallers = globalData.getFunctions().get(FunctionCallerEnum.ORDER.toString());
         boolean flag = false;
         for (String orderCaller : orderCallers) {
             if (firstText.getText().startsWith("/" + orderCaller)) {

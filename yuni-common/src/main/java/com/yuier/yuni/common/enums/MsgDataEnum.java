@@ -35,7 +35,7 @@ public enum MsgDataEnum {
 
     private final String typeName;
 
-    private MsgDataEnum(String typeName) {
+    MsgDataEnum(String typeName) {
         this.typeName = typeName;
     }
 
