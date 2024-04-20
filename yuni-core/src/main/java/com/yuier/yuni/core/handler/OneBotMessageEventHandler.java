@@ -6,6 +6,7 @@ import com.yuier.yuni.common.annotation.FunctionCallerDetector;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.MessageChain;
+import com.yuier.yuni.common.enums.FunctionCallerEnum;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.MessageEventService;
@@ -54,10 +55,10 @@ public class OneBotMessageEventHandler {
     GlobalData globalData;
 
     String[] callers = {
-            SystemConstants.FUNCTION_KIND.AT_CALL,
-            SystemConstants.FUNCTION_KIND.ORDER_CALL,
-            SystemConstants.FUNCTION_KIND.KEY_WORD_CALL,
-            SystemConstants.FUNCTION_KIND.REGULAR_CALL
+            FunctionCallerEnum.AT.toString(),
+            FunctionCallerEnum.ORDER.toString(),
+            FunctionCallerEnum.KEYWORD.toString(),
+            FunctionCallerEnum.REGULAR.toString()
     };
 
     public ResponseResult handle(ObjectNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
@@ -74,7 +75,7 @@ public class OneBotMessageEventHandler {
         for (String caller : callers) {
             for (Object bean : handlerBeans.values()) {
                 FunctionCallerDetector annotation = bean.getClass().getAnnotation(FunctionCallerDetector.class);
-                if (annotation.callerKind().equals(caller)) {
+                if (annotation.callerKind().toString().equals(caller)) {
 //                    Object o = asyncService.asyncReflectiveDetector(bean, chain).get();
                     Object o = asyncService.asyncReflective(bean, chain, "detect").get();
                 }
