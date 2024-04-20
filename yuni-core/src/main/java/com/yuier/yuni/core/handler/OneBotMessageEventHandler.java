@@ -7,6 +7,7 @@ import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.enums.FunctionCallerEnum;
+import com.yuier.yuni.common.enums.OneBotEventEnum;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.MessageEventService;
@@ -33,7 +34,7 @@ import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Component
-@OneBotEventHandler(eventType = SystemConstants.ONE_BOT_POST_TYPE.MESSAGE)
+@OneBotEventHandler(eventType = OneBotEventEnum.MESSAGE)
 public class OneBotMessageEventHandler {
 
     @Autowired

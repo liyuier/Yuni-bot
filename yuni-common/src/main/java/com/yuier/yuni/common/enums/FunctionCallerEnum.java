@@ -15,7 +15,7 @@ public enum FunctionCallerEnum {
     REGULAR("regular"),
     POSITIVE("positive");
 
-    private String callerKind;
+    private final String callerKind;
 
     FunctionCallerEnum(String callerKind) {
         this.callerKind = callerKind;
