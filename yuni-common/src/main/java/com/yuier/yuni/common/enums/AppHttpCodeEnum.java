@@ -1,5 +1,8 @@
 package com.yuier.yuni.common.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @Title: AppHttpCodeEnum
  * @Author yuier
@@ -7,6 +10,7 @@ package com.yuier.yuni.common.enums;
  * @Date 2024/4/9 23:36
  * @description: 响应码枚举类
  */
+@Getter
 public enum AppHttpCodeEnum {
     // 成功
     SUCCESS(200,"操作成功"),
@@ -20,11 +24,4 @@ public enum AppHttpCodeEnum {
         this.msg = errorMessage;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
 }

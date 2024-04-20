@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.enums;
 
+import lombok.Getter;
+
 /**
  * @Title: NoticeEventEnum
  * @Author yuier
@@ -7,6 +9,7 @@ package com.yuier.yuni.common.enums;
  * @Date 2024/4/20 19:11
  * @description: OneBot 通知事件枚举类
  */
+@Getter
 public enum NoticeEventEnum {
     GROUP_UPLOAD("group_upload", "群文件上传"),
     GROUP_ADMIN("GROUP_ADMIN", "群管理员变动"),
@@ -31,11 +34,4 @@ public enum NoticeEventEnum {
         return this.noticeType;
     }
 
-    public String getNoticeType() {
-        return noticeType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }

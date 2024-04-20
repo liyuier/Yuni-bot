@@ -10,8 +10,7 @@ import com.yuier.yuni.common.domain.message.MessageEvent;
  * @Date 2024/4/16 22:54
  * @description: YuniMessageDetector
  */
-public interface YuniMessageDetector {
-    boolean detect(MessageEvent messageEvent);
+public interface YuniMsgBaseDetector {
 
     boolean detect(MessageChain chain);
 }

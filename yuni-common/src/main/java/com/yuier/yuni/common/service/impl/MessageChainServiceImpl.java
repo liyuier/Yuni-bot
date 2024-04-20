@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.annotation.MessageDataEntity;
+import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageSeg;
 import com.yuier.yuni.common.domain.message.data.MessageData;
 import com.yuier.yuni.common.domain.message.data.TextData;
+import com.yuier.yuni.common.enums.MsgDataEnum;
 import com.yuier.yuni.common.service.MessageChainService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class MessageChainServiceImpl implements MessageChainService {
         MessageChain chain = new MessageChain();
         chain.setContent(new ArrayList<>());
         for (JsonNode node : arrayNode) {
-            String type = node.get("type").asText();
+            String type = node.get(SystemConstants.POST_KEY_FIELD.MESSAGE_TYPE).asText();
             MessageData data = buildMessageData(node);
             MessageSeg messageSeg = new MessageSeg(type, data);
             chain.getContent().add(messageSeg);
@@ -58,8 +60,8 @@ public class MessageChainServiceImpl implements MessageChainService {
      */
     @Override
     public MessageData buildMessageData(JsonNode node) {
-        String messageType = node.get("type").asText();
-        ObjectNode messageDataNode = (ObjectNode) node.get("data");
+        String messageType = node.get(SystemConstants.POST_KEY_FIELD.MESSAGE_TYPE).asText();
+        ObjectNode messageDataNode = (ObjectNode) node.get(SystemConstants.POST_KEY_FIELD.MESSAGE_DATA);
         if (null == messageType || null == messageDataNode) {
             log.error("消息段结构不全！" + node);
         }
@@ -108,7 +110,7 @@ public class MessageChainServiceImpl implements MessageChainService {
     public MessageChain buildChain(String msgStr) {
         MessageChain chain = new MessageChain();
         chain.setContent(new ArrayList<>());
-        chain.getContent().add(new MessageSeg("text", new TextData(msgStr)));
+        chain.getContent().add(new MessageSeg(MsgDataEnum.TEXT.toString(), new TextData(msgStr)));
         return chain;
     }
 }
