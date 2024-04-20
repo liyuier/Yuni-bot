@@ -27,6 +27,6 @@ public class ContactData extends MessageData {
 
     @Override
     public String toString() {
-        return "【推荐" + (type.equals("qq") ? "QQ 用户" : "QQ 群 ") + "<" + this.id + ">】";
+        return "[推荐" + (type.equals("qq") ? "QQ 用户" : "QQ 群 ") + "<" + this.id + ">]";
     }
 }

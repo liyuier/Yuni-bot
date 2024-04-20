@@ -25,6 +25,6 @@ public class AnonymousData extends MessageData {
 
     @Override
     public String toString() {
-        return "【匿名消息】";
+        return "[匿名消息]";
     }
 }

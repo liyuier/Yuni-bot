@@ -24,6 +24,6 @@ public class JsonData extends MessageData {
 
     @Override
     public String toString() {
-        return "【JSON消息<" + this.data + ">】";
+        return "[JSON消息<" + this.data + ">]";
     }
 }

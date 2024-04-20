@@ -24,6 +24,6 @@ public class MarkdownData extends MessageData {
 
     @Override
     public String toString() {
-        return "【markdown消息<#" + this.data + ">】";
+        return "[markdown消息<#" + this.data + ">]";
     }
 }

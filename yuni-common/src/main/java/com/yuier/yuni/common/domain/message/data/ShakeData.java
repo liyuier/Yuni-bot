@@ -21,6 +21,6 @@ public class ShakeData extends MessageData {
 
     @Override
     public String toString() {
-        return "【窗口抖动消息】";
+        return "[窗口抖动消息]";
     }
 }

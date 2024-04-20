@@ -24,6 +24,6 @@ public class MarketFaceData extends MessageData {
 
     @Override
     public String toString() {
-        return "【商城表情<#" + this.text + ">】";
+        return "[商城表情#" + this.text + "]";
     }
 }

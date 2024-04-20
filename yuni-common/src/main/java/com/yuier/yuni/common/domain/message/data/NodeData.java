@@ -25,6 +25,6 @@ public class NodeData extends MessageData {
 
     @Override
     public String toString() {
-        return "【合并转发消息】";
+        return "[合并转发消息]";
     }
 }

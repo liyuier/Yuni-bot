@@ -49,7 +49,7 @@ public class ImageData extends MessageData {
 
     @Override
     public String toString() {
-        return "【图片" + ((null == this.type) ? "" : "<闪照>") + "<file=" + this.file + "><url=" + this.url + ">】";
+        return "[图片" + ((null == this.type) ? "" : "<闪照>") + "<file=" + this.file + ">" + ((null == this.url) ? "" : "<url=" + this.url  + ">") +"]";
     }
 
 }

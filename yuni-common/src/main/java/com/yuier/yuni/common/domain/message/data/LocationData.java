@@ -31,6 +31,6 @@ public class LocationData extends MessageData {
 
     @Override
     public String toString() {
-        return "【位置消息<纬度=" + this.lat + "><经度=" + this.lon + ">】";
+        return "[位置消息<纬度=" + this.lat + "><经度=" + this.lon + ">]";
     }
 }

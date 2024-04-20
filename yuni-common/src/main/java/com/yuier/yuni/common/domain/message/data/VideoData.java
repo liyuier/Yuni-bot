@@ -33,6 +33,6 @@ public class VideoData extends MessageData {
 
     @Override
     public String toString() {
-        return "【视频" + "<file=" + this.file + "><url=" + this.url + ">】";
+        return "[视频" + "<file=" + this.file + "><url=" + this.url + ">]";
     }
 }

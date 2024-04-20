@@ -2,6 +2,7 @@ package com.yuier.yuni.common.domain.message;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.yuier.yuni.common.enums.MsgTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -91,4 +92,16 @@ public class MessageEvent {
     // 真实 ID 就是最真实的 ID
     // 其实这个字段在协议的 get_msg() 接口上会响应出来
     private Long realId;
+
+    public boolean isPrivateMessage() {
+        return messageType.equals(MsgTypeEnum.PRIVATE.toString());
+    }
+
+    public boolean isGroupMessage() {
+        return messageType.equals(MsgTypeEnum.GROUP.toString());
+    }
+
+    public boolean isAnonymousMessage() {
+        return null != anonymous;
+    }
 }

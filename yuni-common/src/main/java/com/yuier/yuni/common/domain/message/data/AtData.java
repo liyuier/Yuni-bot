@@ -25,6 +25,6 @@ public class AtData extends MessageData {
 
     @Override
     public String toString() {
-        return "【@<" + this.qq + ">】";
+        return "[@" + this.qq + "]";
     }
 }

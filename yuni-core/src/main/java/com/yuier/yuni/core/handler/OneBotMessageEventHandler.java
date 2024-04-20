@@ -1,6 +1,5 @@
 package com.yuier.yuni.core.handler;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.annotation.FunctionCallerDetector;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
@@ -11,6 +10,7 @@ import com.yuier.yuni.common.enums.OneBotEventEnum;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.MessageEventService;
+import com.yuier.yuni.common.utils.EventLogUtils;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.core.domain.global.GlobalData;
@@ -32,7 +32,7 @@ import java.util.concurrent.ExecutionException;
  * @description: OneBot 上报消息事件处理器
  */
 
-@Slf4j
+//@Slf4j
 @Component
 @OneBotEventHandler(eventType = OneBotEventEnum.MESSAGE)
 public class OneBotMessageEventHandler {
@@ -63,10 +63,10 @@ public class OneBotMessageEventHandler {
     };
 
     public ResponseResult handle(ObjectNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
-        log.info("进入了消息事件处理器");
         globalData.setPostEventNode(postEventNode);  // TODO 把这玩意移到 AOP 里边去
         MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
-        MessageChain chain = messageChainService.buildChain((ArrayNode) postEventNode.get(SystemConstants.POST_KEY_FIELD.MESSAGE));
+        EventLogUtils.printMsgEventLog(messageEvent);
+        MessageChain chain = messageEvent.getMessage();
         detect(chain, messageEvent);
         return ResponseResult.okResult();
     }

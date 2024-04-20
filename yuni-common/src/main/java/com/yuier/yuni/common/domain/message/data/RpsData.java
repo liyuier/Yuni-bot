@@ -21,6 +21,6 @@ public class RpsData extends MessageData {
 
     @Override
     public String toString() {
-        return "【猜拳魔法表情】";
+        return "[猜拳魔法表情]";
     }
 }

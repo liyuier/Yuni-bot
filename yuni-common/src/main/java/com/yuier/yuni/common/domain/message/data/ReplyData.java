@@ -25,6 +25,6 @@ public class ReplyData extends MessageData {
 
     @Override
     public String toString() {
-        return "【回复<消息id="+ this.id + ">】";
+        return "[回复<消息id="+ this.id + ">]";
     }
 }
