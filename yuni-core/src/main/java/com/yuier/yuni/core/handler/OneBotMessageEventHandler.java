@@ -77,7 +77,6 @@ public class OneBotMessageEventHandler {
             for (Object bean : handlerBeans.values()) {
                 FunctionCallerDetector annotation = bean.getClass().getAnnotation(FunctionCallerDetector.class);
                 if (annotation.callerKind().toString().equals(caller)) {
-//                    Object o = asyncService.asyncReflectiveDetector(bean, chain).get();
                     Object o = asyncService.asyncReflective(bean, chain, "detect").get();
                 }
             }

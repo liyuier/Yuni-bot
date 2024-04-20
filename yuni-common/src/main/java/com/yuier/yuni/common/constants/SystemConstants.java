@@ -9,8 +9,6 @@ package com.yuier.yuni.common.constants;
  */
 public class SystemConstants {
 
-    public static final String HANDLE_METHODS = "handle";
-
     public static final class POST_EVENT_MAP_FIELDS {
 
         public static final String TIME = "time";
@@ -84,37 +82,6 @@ public class SystemConstants {
         public static final String ROLE_MEMBER = "member";
     }
 
-    // 通知事件类型
-    public static final class NOTICE_TYPE {
-
-        // 群文件上传
-        public static final String GROUP_UPLOAD = "group_upload";
-
-        // 群管理员变动
-        public static final String GROUP_ADMIN = "group_admin";
-
-        // 群成员减少
-        public static final String GROUP_DECREASE = "group_decrease";
-
-        // 群成员增加
-        public static final String GROUP_INCREASE = "group_increase";
-
-        // 群禁言
-        public static final String GROUP_BAN = "group_ban";
-
-        // 好友添加
-        public static final String FRIEND_ADD = "friend_add";
-
-        // 群消息撤回
-        public static final String GROUP_RECALL = "group_recall";
-
-        // 好友消息撤回
-        public static final String FRIEND_RECALL = "friend_recall";
-
-        // 群内戳一戳 / 群红包运气王 / 群成员荣誉变更
-        public static final String NOTIFY = "notify";
-    }
-
     // 通知事件子事件类型
     public static final class NOTICE_SUB_TYPE {
 
@@ -184,16 +151,6 @@ public class SystemConstants {
 
         // 邀请进群
         public static final String GROUP_INVITE = "invite";
-    }
-
-    // 元事件类型
-    public static final class META_EVENT_TYPE {
-
-        // 生命周期
-        public static final String LIFE_CYCLE = "lifecycle";
-
-        // 心跳
-        public static final String DOKIDOKI = "heartbeat";
     }
 
     // 元事件子类型

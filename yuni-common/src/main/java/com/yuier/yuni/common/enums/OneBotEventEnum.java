@@ -9,20 +9,30 @@ package com.yuier.yuni.common.enums;
  */
 public enum OneBotEventEnum {
 
-    MESSAGE("message"),
-    NOTICE("notice"),
-    REQUEST("request"),
-    META("meta_event");
+    MESSAGE("message", "消息事件"),
+    NOTICE("notice", "通知事件"),
+    REQUEST("request", "请求事件"),
+    META("meta_event", "元事件");
 
 
     private final String eventType;
+    private final String description;
 
-    OneBotEventEnum(String eventType) {
+    OneBotEventEnum(String eventType, String description) {
         this.eventType = eventType;
+        this.description = description;
     }
 
     @Override
     public String toString() {
         return this.eventType;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
