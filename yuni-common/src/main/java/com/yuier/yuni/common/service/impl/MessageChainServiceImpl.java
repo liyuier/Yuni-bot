@@ -70,7 +70,7 @@ public class MessageChainServiceImpl implements MessageChainService {
                 continue;
             }
             MessageDataEntity annotation = bean.getClass().getAnnotation(MessageDataEntity.class);
-            if (annotation.messageType().equals(messageType)) {
+            if (annotation.dataType().toString().equals(messageType)) {
                 return objectNodeToMessageData(messageDataNode, (Class<MessageData>) bean.getClass());
             }
         }

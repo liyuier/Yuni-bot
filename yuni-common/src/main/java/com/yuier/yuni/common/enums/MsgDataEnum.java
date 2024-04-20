@@ -38,4 +38,9 @@ public enum MsgDataEnum {
     private MsgDataEnum(String typeName) {
         this.typeName = typeName;
     }
+
+    @Override
+    public String toString() {
+        return this.typeName;
+    }
 }

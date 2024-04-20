@@ -1,6 +1,7 @@
 package com.yuier.yuni.common.domain.message.data;
 
 import com.yuier.yuni.common.annotation.MessageDataEntity;
+import com.yuier.yuni.common.enums.MsgDataEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@MessageDataEntity(messageType = "image")
+@MessageDataEntity(dataType = MsgDataEnum.IMAGE)
 public class ImageData extends MessageData {
     /**
      * 文件名

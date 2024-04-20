@@ -1,6 +1,7 @@
 package com.yuier.yuni.common.domain.message.data;
 
 import com.yuier.yuni.common.annotation.MessageDataEntity;
+import com.yuier.yuni.common.enums.MsgDataEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @NoArgsConstructor
-@MessageDataEntity(messageType = "dice")
+@MessageDataEntity(dataType = MsgDataEnum.DICE)
 public class DiceData extends MessageData {
     @Override
     public String toString() {
