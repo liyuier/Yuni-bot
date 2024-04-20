@@ -2,6 +2,7 @@ package com.yuier.yuni.core.handler;
 
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
+import com.yuier.yuni.common.enums.OneBotEventEnum;
 import com.yuier.yuni.common.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-@OneBotEventHandler(eventType = SystemConstants.ONE_BOT_POST_TYPE.META)
+@OneBotEventHandler(eventType = OneBotEventEnum.META)
 public class OneBotMetaEventHandler {
 
     public ResponseResult handle(Map<String, Object> oneBotPostEventDto) {

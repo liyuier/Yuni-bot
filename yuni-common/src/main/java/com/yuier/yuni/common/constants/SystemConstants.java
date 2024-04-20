@@ -35,19 +35,6 @@ public class SystemConstants {
 
     }
 
-    // OneBot 上报事件类型
-    public static final class ONE_BOT_POST_TYPE {
-
-
-        public static final String MESSAGE = "message";
-
-        public static final String NOTICE = "notice";
-
-        public static final String REQUEST = "request";
-
-        public static final String META = "meta_event";
-    }
-
     // 消息事件类型
     public static final class MESSAGE_TYPE {
 

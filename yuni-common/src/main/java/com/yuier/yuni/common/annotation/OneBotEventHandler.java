@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.annotation;
 
+import com.yuier.yuni.common.enums.OneBotEventEnum;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -15,5 +17,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OneBotEventHandler {
-    String eventType();
+    OneBotEventEnum eventType();
 }

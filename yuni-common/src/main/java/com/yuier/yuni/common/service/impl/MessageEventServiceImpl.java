@@ -61,7 +61,7 @@ public class MessageEventServiceImpl implements MessageEventService {
                 String fieldName = field.getName();
                 JsonNode value = postDataNode.get(StrUtil.toUnderlineCase(fieldName));
                 if (value != null) {
-                    if (fieldName.equals(SystemConstants.ONE_BOT_POST_TYPE.MESSAGE)) {
+                    if (fieldName.equals("message")) {
                         field.set(targetObj, messageChainService.buildChain((ArrayNode) value));
                     } else if (value instanceof ObjectNode) {
                         Class<?> targetType = field.getType();
