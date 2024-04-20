@@ -29,6 +29,6 @@ public class ShareData extends MessageData {
 
     @Override
     public String toString() {
-        return "【链接分享<url=" + this.url + "><title=" + this.title + ">】";
+        return "[链接分享<url=" + this.url + "><title=" + this.title + ">]";
     }
 }

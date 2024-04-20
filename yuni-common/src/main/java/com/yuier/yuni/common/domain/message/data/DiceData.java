@@ -20,6 +20,6 @@ import org.springframework.stereotype.Component;
 public class DiceData extends MessageData {
     @Override
     public String toString() {
-        return "【投骰子】";
+        return "[投骰子]";
     }
 }

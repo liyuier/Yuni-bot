@@ -25,6 +25,6 @@ public class XmlData extends MessageData {
 
     @Override
     public String toString() {
-        return "【XML消息<" + this.data + ">】";
+        return "[XML消息<" + this.data + ">]";
     }
 }

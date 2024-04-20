@@ -35,6 +35,6 @@ public class RecordData extends MessageData {
 
     @Override
     public String toString() {
-        return "【语音" + "<file=" + this.file + "><url=" + this.url + ">】";
+        return "[语音" + "<file=" + this.file + "><url=" + this.url + ">]";
     }
 }

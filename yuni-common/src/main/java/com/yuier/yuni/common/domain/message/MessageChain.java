@@ -19,4 +19,13 @@ import java.util.ArrayList;
 public class MessageChain {
 
     private ArrayList<MessageSeg> content;
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        for (MessageSeg seg : content) {
+            str.append(seg.getData().toString());
+        }
+        return str.toString();
+    }
 }

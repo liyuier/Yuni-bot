@@ -45,8 +45,8 @@ public class MusicData extends MessageData {
 
     @Override
     public String toString() {
-        return "【分享音乐" + (!this.type.equals("custom")
+        return "[分享音乐" + (!this.type.equals("custom")
                 ? "<平台=" + this.type + "><歌曲ID=" + this.id
-                : "<url=" + this.url + "><歌曲url=" + this.audio + "><标题=" + this.title + ">】");
+                : "<url=" + this.url + "><歌曲url=" + this.audio + "><标题=" + this.title + ">]");
     }
 }

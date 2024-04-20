@@ -24,6 +24,6 @@ public class FaceData extends MessageData {
 
     @Override
     public String toString() {
-        return "【QQ表情<#" + this.id + ">】";
+        return "[QQ表情#" + this.id + "]";
     }
 }
