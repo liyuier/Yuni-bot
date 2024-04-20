@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.enums;
 
+import lombok.Getter;
+
 /**
  * @Title: MsgDataEnum
  * @Author yuier
@@ -7,6 +9,7 @@ package com.yuier.yuni.common.enums;
  * @Date 2024/4/20 18:17
  * @description: 消息段类型枚举类
  */
+@Getter
 public enum MsgDataEnum {
 
     ANONYMOUS("anonymous", "匿名消息（发）"),
@@ -46,11 +49,4 @@ public enum MsgDataEnum {
         return this.typeName;
     }
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }

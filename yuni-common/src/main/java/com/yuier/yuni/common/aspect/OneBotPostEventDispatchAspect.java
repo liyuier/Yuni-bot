@@ -35,8 +35,8 @@ public class OneBotPostEventDispatchAspect {
     @Around("@annotation(com.yuier.yuni.common.annotation.OneBotPostEntrance)")
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
         // 解析入参
-        JsonNode postEventDto = (JsonNode) joinPoint.getArgs()[0];
-        String postType = postEventDto.get("post_type").asText();
+        JsonNode postEventDto = (JsonNode) joinPoint.getArgs()[SystemConstants.FIRST_INDEX];
+        String postType = postEventDto.get(SystemConstants.POST_KEY_FIELD.POST_TYPE).asText();
 
 
         // 遍历打了 @OneBotEventHandler 注解的类
@@ -44,7 +44,7 @@ public class OneBotPostEventDispatchAspect {
         for (Object bean : handlerBeans.values()) {
             OneBotEventHandler annotation = bean.getClass().getAnnotation(OneBotEventHandler.class);
             if (annotation.eventType().toString().equals(postType)) {
-                return asyncService.asyncReflective(bean, postEventDto, "handle").get();
+                return asyncService.asyncReflective(bean, postEventDto, SystemConstants.PLUGIN_ENTRY_NAME.HANDLER_ENTRY).get();
             }
         }
 

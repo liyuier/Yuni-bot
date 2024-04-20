@@ -6,7 +6,7 @@ import com.yuier.yuni.common.annotation.FunctionCallerDetector;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.MessageChain;
-import com.yuier.yuni.common.enums.FunctionCallerEnum;
+import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
 import com.yuier.yuni.common.enums.OneBotEventEnum;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageChainService;
@@ -56,17 +56,17 @@ public class OneBotMessageEventHandler {
     GlobalData globalData;
 
     String[] callers = {
-            FunctionCallerEnum.AT.toString(),
-            FunctionCallerEnum.ORDER.toString(),
-            FunctionCallerEnum.KEYWORD.toString(),
-            FunctionCallerEnum.REGULAR.toString()
+            FuncBaseCallerEnum.AT.toString(),
+            FuncBaseCallerEnum.ORDER.toString(),
+            FuncBaseCallerEnum.KEYWORD.toString(),
+            FuncBaseCallerEnum.REGULAR.toString()
     };
 
     public ResponseResult handle(ObjectNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
         log.info("进入了消息事件处理器");
         globalData.setPostEventNode(postEventNode);  // TODO 把这玩意移到 AOP 里边去
         MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
-        MessageChain chain = messageChainService.buildChain((ArrayNode) postEventNode.get("message"));
+        MessageChain chain = messageChainService.buildChain((ArrayNode) postEventNode.get(SystemConstants.POST_KEY_FIELD.MESSAGE));
         detect(chain, messageEvent);
         return ResponseResult.okResult();
     }
@@ -77,7 +77,7 @@ public class OneBotMessageEventHandler {
             for (Object bean : handlerBeans.values()) {
                 FunctionCallerDetector annotation = bean.getClass().getAnnotation(FunctionCallerDetector.class);
                 if (annotation.callerKind().toString().equals(caller)) {
-                    Object o = asyncService.asyncReflective(bean, chain, "detect").get();
+                    Object o = asyncService.asyncReflective(bean, chain, SystemConstants.PLUGIN_ENTRY_NAME.MSG_DETECTOR_ENTRY).get();
                 }
             }
         }

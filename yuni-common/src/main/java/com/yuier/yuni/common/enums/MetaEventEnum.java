@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.enums;
 
+import lombok.Getter;
+
 /**
  * @Title: MetaEventEnum
  * @Author yuier
@@ -8,6 +10,7 @@ package com.yuier.yuni.common.enums;
  * @description: OneBot 元事件类型枚举类
  *               参考 https://283375.github.io/onebot_v11_vitepress/event/meta.html 每种事件 meta_event_type 字段
  */
+@Getter
 public enum MetaEventEnum {
 
     LIFECYCLE("lifecycle", "生命周期"),
@@ -26,11 +29,4 @@ public enum MetaEventEnum {
         return this.metaEventType;
     }
 
-    public String getMetaEventType() {
-        return metaEventType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }

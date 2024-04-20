@@ -1,13 +1,16 @@
 package com.yuier.yuni.common.enums;
 
+import lombok.Getter;
+
 /**
  * @Title: FunctionCallerEnum
  * @Author yuier
  * @Package com.yuier.yuni.common.enums
  * @Date 2024/4/20 18:42
- * @description: 功能调用方式的枚举类（指令触发、关键字触发、正则表达式触发、at 触发等）
+ * @description: 功能基本调用方式的枚举类
  */
-public enum FunctionCallerEnum {
+@Getter
+public enum FuncBaseCallerEnum {
 
     ORDER("order", "指令触发"),
     KEYWORD("keyword", "关键词触发"),
@@ -18,7 +21,7 @@ public enum FunctionCallerEnum {
     private final String callerKind;
     private final String description;
 
-    FunctionCallerEnum(String callerKind, String description) {
+    FuncBaseCallerEnum(String callerKind, String description) {
         this.callerKind = callerKind;
         this.description = description;
     }
@@ -28,11 +31,4 @@ public enum FunctionCallerEnum {
         return this.callerKind;
     }
 
-    public String getCallerKind() {
-        return callerKind;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }

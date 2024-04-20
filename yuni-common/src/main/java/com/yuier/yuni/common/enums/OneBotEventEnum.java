@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.enums;
 
+import lombok.Getter;
+
 /**
  * @Title: OneBotEventEnum
  * @Author yuier
@@ -7,6 +9,7 @@ package com.yuier.yuni.common.enums;
  * @Date 2024/4/20 18:56
  * @description: OneBot 实现上报事件类型枚举类
  */
+@Getter
 public enum OneBotEventEnum {
 
     MESSAGE("message", "消息事件"),
@@ -28,11 +31,4 @@ public enum OneBotEventEnum {
         return this.eventType;
     }
 
-    public String getEventType() {
-        return eventType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }
