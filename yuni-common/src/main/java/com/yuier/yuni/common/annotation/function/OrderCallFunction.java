@@ -15,5 +15,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OrderCallFunction {
-    String orderWord();
+    String orderWord() default "";
+
 }
