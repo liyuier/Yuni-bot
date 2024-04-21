@@ -40,6 +40,12 @@ public class EventLogUtils {
         return escaped.toString();
     }
 
+    private static String buildMsgSender(MessageEvent messageEvent) {
+        String groupCard = messageEvent.getSender().getCard();
+        return (null != groupCard && ! groupCard.isEmpty() ?
+                    messageEvent.getSender().getCard() : messageEvent.getSender().getNickname()) +
+                "<" + messageEvent.getUserId() + ">";
+    }
     private static String buildRedLog(String input) {
         return "\033[31m" + input + "\033[0m";
     }
@@ -66,6 +72,7 @@ public class EventLogUtils {
         return "\033[92m" + input + "\033[0m";
     }
 
+
     public static void printMsgEventLog(MessageEvent messageEvent) {
         StringBuilder sb = new StringBuilder();
         if (messageEvent.isGroupMessage()) {
@@ -78,14 +85,14 @@ public class EventLogUtils {
             } else {
                 sb.append((new SimpleDateFormat("yyyy-MM-dd HH:mm"))
                             .format(new Date(messageEvent.getTime() * 1000L))).append(" ")
-                    .append(buildBrightRedLog(messageEvent.getSender().getNickname())).append(" ")
+                    .append(buildBrightRedLog(buildMsgSender(messageEvent))).append(" ")
                     .append("于 ").append(buildCyanLog(messageEvent.getGroupId().toString())).append(" ")
                     .append("发送消息 ").append(buildBrightBlueLog(messageEvent.getMessage().toString()));
             }
         } else if (messageEvent.isPrivateMessage()) {
             sb.append((new SimpleDateFormat("yyyy-MM-dd HH:mm"))
                             .format(new Date(messageEvent.getTime() * 1000L))).append(" ")
-                    .append(buildBrightRedLog(messageEvent.getSender().getNickname())).append(" ")
+                    .append(buildBrightRedLog(buildMsgSender(messageEvent))).append(" ")
                     .append("向机器人发送私聊消息 ").append(buildBrightBlueLog(messageEvent.getMessage().toString()));
         }
         log.info(escapeString(sb.toString()));
