@@ -43,7 +43,7 @@ public class EventLogUtils {
     private static String buildMsgSender(MessageEvent messageEvent) {
         String groupCard = messageEvent.getSender().getCard();
         return (null != groupCard && ! groupCard.isEmpty() ?
-                    messageEvent.getSender().getCard() : messageEvent.getSender().getNickname()) +
+                    groupCard : messageEvent.getSender().getNickname()) +
                 "<" + messageEvent.getUserId() + ">";
     }
     private static String buildRedLog(String input) {
