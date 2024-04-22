@@ -1,6 +1,7 @@
 package com.yuier.yuni.core.runner;
 
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
+import com.yuier.yuni.common.domain.message.res.GetLoginInfoRes;
 import com.yuier.yuni.common.domain.message.res.SendMessageRes;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;

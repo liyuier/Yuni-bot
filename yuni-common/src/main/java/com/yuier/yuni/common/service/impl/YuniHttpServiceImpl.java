@@ -27,11 +27,23 @@ public class YuniHttpServiceImpl implements YuniHttpService {
         }
     }
 
-    public<S, T> T postRequestForObject(String url, S requestBody, Class<T> clazz) {
+    public<S, T> T postRequestForObject(String url, S requestBody, Class<T> responseType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<S> requestEntity = new HttpEntity<>(requestBody, headers);
-        ResponseEntity<T> responseEntity  = restTemplate.postForEntity(url, requestEntity, clazz);
+        ResponseEntity<T> responseEntity  = restTemplate.postForEntity(url, requestEntity, responseType);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            return responseEntity.getBody();
+        } else {
+            throw new RuntimeException("Failed to post data to " + url + ". Status code: " + responseEntity.getStatusCode());
+        }
+    }
+
+    public<T> T postRequestForObject(String url, Class<T> responseType) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
+        ResponseEntity<T> responseEntity  = restTemplate.postForEntity(url, requestEntity, responseType);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             return responseEntity.getBody();
         } else {
