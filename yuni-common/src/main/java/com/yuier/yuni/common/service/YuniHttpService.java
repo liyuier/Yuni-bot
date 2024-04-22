@@ -10,7 +10,8 @@ package com.yuier.yuni.common.service;
  */
 public interface YuniHttpService {
 
-    <S, T> T postRequestForObject(String url, S requestBody, Class<T> clazz);
+    <S, T> T postRequestForObject(String url, S requestBody, Class<T> responseType);
+    <T> T postRequestForObject(String url, Class<T> responseType);
 
     <T> T getRequestForObject(String url, Class<T> responseType);
 }
