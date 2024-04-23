@@ -1,9 +1,6 @@
 package com.yuier.yuni.common.utils;
 
-import com.yuier.yuni.common.domain.message.dto.DeleteMsgDto;
-import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
-import com.yuier.yuni.common.domain.message.dto.SendMessageDto;
-import com.yuier.yuni.common.domain.message.dto.SendPrivateMessageDto;
+import com.yuier.yuni.common.domain.message.dto.*;
 import com.yuier.yuni.common.domain.message.res.GetLoginInfoRes;
 import com.yuier.yuni.common.domain.message.res.NoDataRes;
 import com.yuier.yuni.common.domain.message.res.SendMessageRes;
@@ -56,6 +53,11 @@ public class CallOneBot {
 
     public NoDataRes deleteMsg(DeleteMsgDto dto) {
         String url = getBaseUrl() + "delete_msg";
+        return yuniHttpService.postRequestForObject(url, dto, NoDataRes.class);
+    }
+
+    public NoDataRes sendLike(SendLikeDto dto) {
+        String url = getBaseUrl() + "send_like";
         return yuniHttpService.postRequestForObject(url, dto, NoDataRes.class);
     }
 }
