@@ -1,10 +1,7 @@
 package com.yuier.yuni.common.utils;
 
 import com.yuier.yuni.common.domain.message.dto.*;
-import com.yuier.yuni.common.domain.message.res.GetFriendListRes;
-import com.yuier.yuni.common.domain.message.res.GetLoginInfoRes;
-import com.yuier.yuni.common.domain.message.res.NoDataRes;
-import com.yuier.yuni.common.domain.message.res.SendMessageRes;
+import com.yuier.yuni.common.domain.message.res.*;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,5 +67,15 @@ public class CallOneBot {
     public NoDataRes setFriendAddRequest(SetFriendAddRequestDto dto) {
         String url = getBaseUrl() + "set_friend_add_request";
         return yuniHttpService.postRequestForObject(url, dto, NoDataRes.class);
+    }
+
+    public GetGroupInfoRes getGroupInfo(GetGroupInfoDto dto) {
+        String url = getBaseUrl() + "get_group_info";
+        return yuniHttpService.postRequestForObject(url, dto, GetGroupInfoRes.class);
+    }
+
+    public GetGroupListRes getGroupList() {
+        String url = getBaseUrl() + "get_group_list";
+        return yuniHttpService.postRequestForObject(url, GetGroupListRes.class);
     }
 }
