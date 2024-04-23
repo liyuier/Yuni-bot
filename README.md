@@ -19,8 +19,8 @@
 | 点赞                 | send_like               |  ✔   |
 | 获取好友列表         | get_friend_list         |  ✔   |
 | 处理好友请求         | set_friend_add_request  |  ✔   |
-| 获取群列表           | get_group_list          |  ❌   |
-| 获取群信息           | get_group_info          |  ❌   |
+| 获取群列表           | get_group_list          |  ✔   |
+| 获取群信息           | get_group_info          |  ✔   |
 | 获取群成员列表       | get_group_member_list   |  ❌   |
 | 获取群成员信息       | get_group_member_info   |  ❌   |
 | 获取群荣誉信息       | get_group_honor_info    |  ❌   |
