@@ -2,6 +2,7 @@ package com.yuier.yuni.core.runner;
 
 import com.yuier.yuni.common.domain.message.dto.DeleteMsgDto;
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
+import com.yuier.yuni.common.domain.message.dto.SendLikeDto;
 import com.yuier.yuni.common.domain.message.res.GetLoginInfoRes;
 import com.yuier.yuni.common.domain.message.res.NoDataRes;
 import com.yuier.yuni.common.domain.message.res.SendMessageRes;
@@ -33,5 +34,6 @@ public class StartupTestRunner implements CommandLineRunner {
         dto.setAutoEscape(false);
         SendMessageRes res = callOneBot.sendGroupMessage(dto);
 //        NoDataRes noDataRes = callOneBot.deleteMsg(new DeleteMsgDto(res.getData().getMessageId()));
+//        NoDataRes noDataRes = callOneBot.sendLike(new SendLikeDto(2937818202L));
     }
 }
