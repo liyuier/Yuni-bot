@@ -17,7 +17,7 @@
 | 获取消息详情         | get_msg                 |  ❌   |
 | 撤回消息             | delete_msg              |  ✔   |
 | 点赞                 | send_like               |  ✔   |
-| 获取好友列表         | get_friend_list         |  ❌   |
+| 获取好友列表         | get_friend_list         |  ✔   |
 | 处理好友请求         | set_friend_add_request  |  ❌   |
 | 获取群列表           | get_group_list          |  ❌   |
 | 获取群信息           | get_group_info          |  ❌   |
