@@ -66,4 +66,9 @@ public class CallOneBot {
         String url = getBaseUrl() + "get_friend_list";
         return yuniHttpService.postRequestForObject(url, GetFriendListRes.class);
     }
+
+    public NoDataRes setFriendAddRequest(SetFriendAddRequestDto dto) {
+        String url = getBaseUrl() + "set_friend_add_request";
+        return yuniHttpService.postRequestForObject(url, dto, NoDataRes.class);
+    }
 }
