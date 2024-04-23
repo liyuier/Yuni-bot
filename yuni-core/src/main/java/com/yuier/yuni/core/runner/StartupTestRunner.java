@@ -3,6 +3,7 @@ package com.yuier.yuni.core.runner;
 import com.yuier.yuni.common.domain.message.dto.DeleteMsgDto;
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
 import com.yuier.yuni.common.domain.message.dto.SendLikeDto;
+import com.yuier.yuni.common.domain.message.dto.SetFriendAddRequestDto;
 import com.yuier.yuni.common.domain.message.res.GetFriendListRes;
 import com.yuier.yuni.common.domain.message.res.GetLoginInfoRes;
 import com.yuier.yuni.common.domain.message.res.NoDataRes;
@@ -37,6 +38,7 @@ public class StartupTestRunner implements CommandLineRunner {
 //        NoDataRes noDataRes = callOneBot.deleteMsg(new DeleteMsgDto(res.getData().getMessageId()));
 //        NoDataRes noDataRes = callOneBot.sendLike(new SendLikeDto(2937818202L));
 //        GetFriendListRes friendList = callOneBot.getFriendList();
+//        callOneBot.setFriendAddRequest(new SetFriendAddRequestDto("u_N3cMsQzNG31ZGSmth2roUg1713885973", true));
 
     }
 }
