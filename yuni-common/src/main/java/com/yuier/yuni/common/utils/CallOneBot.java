@@ -1,6 +1,7 @@
 package com.yuier.yuni.common.utils;
 
 import com.yuier.yuni.common.domain.message.dto.*;
+import com.yuier.yuni.common.domain.message.res.GetFriendListRes;
 import com.yuier.yuni.common.domain.message.res.GetLoginInfoRes;
 import com.yuier.yuni.common.domain.message.res.NoDataRes;
 import com.yuier.yuni.common.domain.message.res.SendMessageRes;
@@ -59,5 +60,10 @@ public class CallOneBot {
     public NoDataRes sendLike(SendLikeDto dto) {
         String url = getBaseUrl() + "send_like";
         return yuniHttpService.postRequestForObject(url, dto, NoDataRes.class);
+    }
+
+    public GetFriendListRes getFriendList() {
+        String url = getBaseUrl() + "get_friend_list";
+        return yuniHttpService.postRequestForObject(url, GetFriendListRes.class);
     }
 }
