@@ -1,8 +1,11 @@
 package com.yuier.yuni.common.domain.message.res.data;
 
+import com.yuier.yuni.common.domain.message.MessageSeg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 
 /**
  * @Title: GetMsgResMessage
@@ -15,5 +18,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetMsgResMessage {
-
+    ArrayList<MessageSeg> message;
 }
