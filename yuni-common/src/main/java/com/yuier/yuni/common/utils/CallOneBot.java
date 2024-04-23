@@ -1,9 +1,11 @@
 package com.yuier.yuni.common.utils;
 
+import com.yuier.yuni.common.domain.message.dto.DeleteMsgDto;
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
 import com.yuier.yuni.common.domain.message.dto.SendMessageDto;
 import com.yuier.yuni.common.domain.message.dto.SendPrivateMessageDto;
 import com.yuier.yuni.common.domain.message.res.GetLoginInfoRes;
+import com.yuier.yuni.common.domain.message.res.NoDataRes;
 import com.yuier.yuni.common.domain.message.res.SendMessageRes;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +52,10 @@ public class CallOneBot {
     public GetLoginInfoRes getLoginInfo() {
         String url = getBaseUrl() + "get_login_info";
         return yuniHttpService.postRequestForObject(url, GetLoginInfoRes.class);
+    }
+
+    public NoDataRes deleteMsg(DeleteMsgDto dto) {
+        String url = getBaseUrl() + "delete_msg";
+        return yuniHttpService.postRequestForObject(url, dto, NoDataRes.class);
     }
 }

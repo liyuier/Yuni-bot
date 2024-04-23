@@ -1,5 +1,6 @@
 package com.yuier.yuni.core.handler;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.enums.OneBotEventEnum;
@@ -21,7 +22,7 @@ import java.util.Map;
 @OneBotEventHandler(eventType = OneBotEventEnum.REQUEST)
 public class OneBotRequestEventHandler {
 
-    public ResponseResult handle(Map<String, Object> oneBotPostEventDto) {
+    public ResponseResult handle(ObjectNode postEventNode) {
         log.info("进入了请求事件处理器");
         return ResponseResult.okResult();
     }
