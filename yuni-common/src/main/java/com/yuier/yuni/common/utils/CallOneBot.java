@@ -7,8 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.dto.*;
 import com.yuier.yuni.common.domain.message.res.*;
-import com.yuier.yuni.common.domain.message.res.data.GetGroupMemberInfoResData;
-import com.yuier.yuni.common.domain.message.res.data.GetGroupMemberListResData;
+import com.yuier.yuni.common.domain.message.res.data.*;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,5 +151,30 @@ public class CallOneBot {
     public GetGroupMemberListRes getGroupMemberListRes(GetGroupMemberListDto dto) {
         String url = getBaseUrl() + "get_group_member_list ";
         return yuniHttpService.postRequestForObject(url, dto, GetGroupMemberListRes.class);
+    }
+
+    public NoDataRes setGroupAddRequest(SetGroupAddRequestDto dto) {
+        String url = getBaseUrl() + "set_group_add_request";
+        return yuniHttpService.postRequestForObject(url, dto, NoDataRes.class);
+    }
+
+    public NoDataRes setGroupLeave(SetGroupLeaveDto dto) {
+        String url = getBaseUrl() + "set_group_leave";
+        return yuniHttpService.postRequestForObject(url, dto, NoDataRes.class);
+    }
+
+    public GetStringerInfoRes getStringerInfo(GetStrangerInfoDto dto) {
+        String url = getBaseUrl() + "get_stranger_info";
+        return yuniHttpService.postRequestForObject(url, dto, GetStringerInfoRes.class);
+    }
+
+    public GetVersionInfoRes getVersionRes(GetVersionInfoResData dto) {
+        String url = getBaseUrl() + "get_version_info";
+        return yuniHttpService.postRequestForObject(url, GetVersionInfoRes.class);
+    }
+
+    public GetStatusRes getStatusRes(GetStatusResData dto) {
+        String url = getBaseUrl() + "get_status";
+        return yuniHttpService.postRequestForObject(url, GetStatusRes.class);
     }
 }
