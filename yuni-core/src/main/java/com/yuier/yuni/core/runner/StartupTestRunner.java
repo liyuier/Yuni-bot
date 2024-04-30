@@ -2,6 +2,7 @@ package com.yuier.yuni.core.runner;
 
 import com.yuier.yuni.common.domain.message.dto.*;
 import com.yuier.yuni.common.domain.message.res.*;
+import com.yuier.yuni.common.domain.message.res.data.GetGroupMemberInfoResData;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class StartupTestRunner implements CommandLineRunner {
 //        callOneBot.setFriendAddRequest(new SetFriendAddRequestDto("u_N3cMsQzNG31ZGSmth2roUg1713885973", true));
 //        GetGroupInfoRes groupInfo = callOneBot.getGroupInfo(new GetGroupInfoDto(930198267L));
 //        GetGroupListRes groupList = callOneBot.getGroupList();
-
+        GetGroupMemberInfoResData groupMemberInfo = callOneBot.getGroupMemberInfo(new GetGroupMemberInfoDto(930198267L, 2937818202L));
+        GetGroupMemberListRes groupMemberListRes = callOneBot.getGroupMemberListRes(new GetGroupMemberListDto(930198267L));
     }
 }

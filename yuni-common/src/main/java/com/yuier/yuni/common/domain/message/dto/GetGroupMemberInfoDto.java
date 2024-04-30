@@ -7,26 +7,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @Title: GetGroupInfoDto
+ * @Title: GetGroupMemberInfoDto
  * @Author yuier
  * @Package com.yuier.yuni.common.domain.message.dto
- * @Date 2024/4/23 23:29
- * @description: 获取群信息 dto
+ * @Date 2024/4/24 22:52
+ * @description: 获取群成员信息 dto
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class GetGroupInfoDto {
+public class GetGroupMemberInfoDto {
     private Long groupId;
-    /**
-     * 是否不使用缓存（使用缓存可能更新不及时，但响应更快）
-     * 默认 false
-     */
+    private Long userId;
+    // 是否不使用缓存，默认 false
     private Boolean noCache;
 
-    public GetGroupInfoDto(Long groupId) {
+    public GetGroupMemberInfoDto(Long groupId, Long userId) {
         this.groupId = groupId;
+        this.userId = userId;
         this.noCache = false;
     }
 }
