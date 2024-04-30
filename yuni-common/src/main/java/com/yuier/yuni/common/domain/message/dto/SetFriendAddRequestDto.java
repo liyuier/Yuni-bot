@@ -21,7 +21,7 @@ public class SetFriendAddRequestDto {
     // 加好友请求的 flag（需从上报的数据中获取）
     private String flag;
     // 是否同意请求
-    private boolean approve;
+    private Boolean approve;
     // 添加后的好友备注（仅在同意时有效）
     private String remark;
 

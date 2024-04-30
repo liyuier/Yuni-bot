@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.constants;
 
+import jakarta.servlet.http.PushBuilder;
+
 /**
  * @Title: SystemConstants
  * @Author yuier
@@ -11,6 +13,9 @@ public class SystemConstants {
 
     public static final Integer FIRST_INDEX = 0;
 
+    public static final Integer HTTP_OK = 200;
+    public static final String ONEBOT_OK_STATUS = "ok";
+
     // OneBot 上报数据关键字段
     public static final class POST_KEY_FIELD {
 
@@ -18,6 +23,16 @@ public class SystemConstants {
         public static final String MESSAGE = "message";
         public static final String MESSAGE_TYPE = "type";
         public static final String MESSAGE_DATA = "data";
+    }
+
+    // OneBot 响应数据字段
+    public static final class ONEBOT_RES_FIELD {
+        public static final String STATUE = "status";
+        public static final String RETCODE = "retcode";
+        public static final String MESSAGE = "message";
+        public static final String WORDING = "wording";
+        public static final String ECHO = "echo";
+        public static final String DATA = "data";
     }
 
     // 插件类 Bean 入口方法

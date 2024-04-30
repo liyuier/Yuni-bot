@@ -1,5 +1,6 @@
 package com.yuier.yuni.common.service.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -18,6 +19,7 @@ public class YuniHttpServiceImpl implements YuniHttpService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Override
     public <T> T getRequestForObject(String url, Class<T> responseType) {
         ResponseEntity<T> responseEntity = restTemplate.getForEntity(url, responseType);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -27,6 +29,7 @@ public class YuniHttpServiceImpl implements YuniHttpService {
         }
     }
 
+    @Override
     public<S, T> T postRequestForObject(String url, S requestBody, Class<T> responseType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -39,11 +42,38 @@ public class YuniHttpServiceImpl implements YuniHttpService {
         }
     }
 
+    @Override
     public<T> T postRequestForObject(String url, Class<T> responseType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
         ResponseEntity<T> responseEntity  = restTemplate.postForEntity(url, requestEntity, responseType);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            return responseEntity.getBody();
+        } else {
+            throw new RuntimeException("Failed to post data to " + url + ". Status code: " + responseEntity.getStatusCode());
+        }
+    }
+
+    @Override
+    public <S> JsonNode postRequestForJsonNode(String url, S requestBody) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<S> requestEntity = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<JsonNode> responseEntity  = restTemplate.postForEntity(url, requestEntity, JsonNode.class);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            return responseEntity.getBody();
+        } else {
+            throw new RuntimeException("Failed to post data to " + url + ". Status code: " + responseEntity.getStatusCode());
+        }
+    }
+
+    @Override
+    public JsonNode postRequestForJsonNode(String url) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
+        ResponseEntity<JsonNode> responseEntity  = restTemplate.postForEntity(url, requestEntity, JsonNode.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             return responseEntity.getBody();
         } else {

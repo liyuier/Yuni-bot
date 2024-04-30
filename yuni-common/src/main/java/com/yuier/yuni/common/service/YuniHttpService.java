@@ -1,6 +1,8 @@
 package com.yuier.yuni.common.service;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 /**
  * @Title: HttpService
  * @Author yuier
@@ -12,6 +14,9 @@ public interface YuniHttpService {
 
     <S, T> T postRequestForObject(String url, S requestBody, Class<T> responseType);
     <T> T postRequestForObject(String url, Class<T> responseType);
+
+    <S> JsonNode postRequestForJsonNode(String url, S requestBody);
+    JsonNode postRequestForJsonNode(String url);
 
     <T> T getRequestForObject(String url, Class<T> responseType);
 }

@@ -22,7 +22,7 @@ public class GetMsgResSender {
 
     private String sex;
 
-    private int age;
+    private Integer age;
 
     // 以下字段只有群聊消息有效
 

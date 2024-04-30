@@ -3,11 +3,6 @@ package com.yuier.yuni.core.config;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.yuier.yuni.common.aspect.OneBotPostEventDispatchAspect;
-import com.yuier.yuni.common.config.YuniCommonConfig;
-import com.yuier.yuni.common.domain.message.data.TextData;
-import com.yuier.yuni.common.service.impl.MessageChainServiceImpl;
-import com.yuier.yuni.common.utils.CallOneBot;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,13 +21,7 @@ import java.io.IOException;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan(basePackageClasses = {
-        MessageChainServiceImpl.class,
-        OneBotPostEventDispatchAspect.class,
-        TextData.class,
-        YuniCommonConfig.class,
-        CallOneBot.class
-})
+@ComponentScan("com.yuier.yuni.common")
 public class YuniCoreConfig {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer customizer() {

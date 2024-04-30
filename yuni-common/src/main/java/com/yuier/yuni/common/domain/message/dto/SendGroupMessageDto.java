@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class SendGroupMessageDto {
     private Long groupId;
     private ArrayList<MessageSeg> message;
-    private boolean autoEscape = false;
+    private Boolean autoEscape = false;
 
     public SendGroupMessageDto(Long groupId, ArrayList<MessageSeg> message) {
         this.groupId = groupId;

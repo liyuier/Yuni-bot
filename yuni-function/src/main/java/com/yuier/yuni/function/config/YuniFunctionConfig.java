@@ -25,13 +25,7 @@ import java.io.IOException;
  */
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan(basePackageClasses = {
-        MessageChainServiceImpl.class,
-        OneBotPostEventDispatchAspect.class,
-        TextData.class,
-        YuniCommonConfig.class,
-        CallOneBot.class
-})
+@ComponentScan("com.yuier.yuni.common")
 public class YuniFunctionConfig {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer customizer() {
