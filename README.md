@@ -37,17 +37,17 @@
 | 设置群名             | set_group_name          |  ❌   |
 | 获取陌生人信息       | get_stranger_info       |  ✔   |
 | 获取版本信息         | get_version_info        |  ✔   |
-| 获取状态             | get_status              |  ❌   |
-| 检查能否发送图片     | can_send_image          |  ❌   |
-| 检查能否发送语音     | can_send_record         |  ❌   |
-| 获取图片详情         | get_image               |  ❌   |
-| 获取语音文件         | get_record              |  ❌   |
-| 获取文件详情         | get_file                |  ❌   |
-| 获取 Cookies         | get_cookies             |  ❌   |
+| 获取状态             | get_status              |  ✔   |
+| 检查能否发送图片     | can_send_image          |  ✔   |
+| 检查能否发送语音     | can_send_record         |  ✔   |
+| 获取图片详情         | get_image               |  ✔   |
+| 获取语音文件         | get_record              |  ✔   |
+| 获取文件详情         | get_file                |  ✔   |
+| 获取 Cookies         | get_cookies             |  ✔   |
 | 获取 CSRF Token      | get_csrf_token          |  ❌   |
 | 获取 QQ 相关接口凭证 | get_credentials         |  ❌   |
 | 重启 OneBot 实现     | set_restart             |  ❌   |
-| 清理缓存             | clean_cache             |  ❌   |
+| 清理缓存             | clean_cache             |  ✔   |
 
 ### GO-CQHTTP
 

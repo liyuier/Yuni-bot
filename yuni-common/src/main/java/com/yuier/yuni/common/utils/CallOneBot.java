@@ -177,4 +177,39 @@ public class CallOneBot {
         String url = getBaseUrl() + "get_status";
         return yuniHttpService.postRequestForObject(url, GetStatusRes.class);
     }
+
+    public Boolean canSendImage() {
+        String url = getBaseUrl() + "can_send_image";
+        return yuniHttpService.postRequestForObject(url, CanSendImageRes.class).getData().getYes();
+    }
+
+    public Boolean canSendRecord() {
+        String url = getBaseUrl() + "can_send_record";
+        return yuniHttpService.postRequestForObject(url, CanSendRecordRes.class).getData().getYes();
+    }
+
+    public GetImageRes getImageRes(GetImageDto dto) {
+        String url = getBaseUrl() + "get_image";
+        return yuniHttpService.postRequestForObject(url, dto, GetImageRes.class);
+    }
+
+    public GetRecordRes getRecordRes(GetRecordDto dto) {
+        String url = getBaseUrl() + "get_record";
+        return yuniHttpService.postRequestForObject(url, dto, GetRecordRes.class);
+    }
+
+    public GetFileRes getFileRes(GetFileDto dto) {
+        String url = getBaseUrl() + "get_file";
+        return yuniHttpService.postRequestForObject(url, dto, GetFileRes.class);
+    }
+
+    public GetCookiesRes getCookiesRes(GetCookiesDto dto) {
+        String url = getBaseUrl() + "get_cookies";
+        return yuniHttpService.postRequestForObject(url, dto, GetCookiesRes.class);
+    }
+
+    public NoDataRes cleanCache() {
+        String url = getBaseUrl() + "clean_cache";
+        return yuniHttpService.postRequestForObject(url, NoDataRes.class);
+    }
 }
