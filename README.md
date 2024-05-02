@@ -14,7 +14,7 @@
 | 发送消息             | send_msg                |  ✔   |
 | 发送群聊消息         | send_group_msg          |  ✔   |
 | 发送好友消息         | send_private_msg        |  ✔   |
-| 获取消息详情         | get_msg                 |  ❌   |
+| 获取消息详情         | get_msg                 |  ✔   |
 | 撤回消息             | delete_msg              |  ✔   |
 | 点赞                 | send_like               |  ✔   |
 | 获取好友列表         | get_friend_list         |  ✔   |
