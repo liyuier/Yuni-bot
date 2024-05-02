@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.constants.SystemConstants;
+import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.dto.*;
 import com.yuier.yuni.common.domain.message.res.*;
 import com.yuier.yuni.common.domain.message.res.data.*;
 import com.yuier.yuni.common.service.MessageChainService;
+import com.yuier.yuni.common.service.MessageEventService;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +33,8 @@ public class CallOneBot {
     YuniHttpService yuniHttpService;
     @Autowired
     MessageChainService messageChainService;
+    @Autowired
+    MessageEventService messageEventService;
 
     @Value("${base-urls.one-bot}")
     private String baseUrl;
@@ -88,10 +92,6 @@ public class CallOneBot {
         }
         return targetObj;
     }
-
-//    private <T> ArrayList<T> checkResForDataList(JsonNode resNode, Class<T> dataClazz) {
-//        return
-//    }
 
     public SendMessageRes sendMessage(SendMessageDto dto) {
         String url = getBaseUrl() + "send_msg";
@@ -211,5 +211,12 @@ public class CallOneBot {
     public NoDataRes cleanCache() {
         String url = getBaseUrl() + "clean_cache";
         return yuniHttpService.postRequestForObject(url, NoDataRes.class);
+    }
+
+    public GetMessageResData getMessage(GetMessageDto dto) {
+        String url = getBaseUrl() + "get_msg";
+        JsonNode getMsgResNode = yuniHttpService.postRequestForJsonNode(url, dto);
+        MessageEvent messageData = messageEventService.postToMessage(getMsgResNode.get("data"), MessageEvent.class);
+        return BeanCopyUtils.copyBean(messageData, GetMessageResData.class);
     }
 }
