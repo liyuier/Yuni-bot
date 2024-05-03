@@ -10,7 +10,7 @@ import lombok.Getter;
  * @description: 消息段类型枚举类
  */
 @Getter
-public enum MsgDataEnum {
+public enum MessageDataEnum {
 
     ANONYMOUS("anonymous", "匿名消息（发）"),
     AT("at", "@某人"),
@@ -39,7 +39,7 @@ public enum MsgDataEnum {
     private final String typeName;
     private final String description;
 
-    MsgDataEnum(String typeName, String description) {
+    MessageDataEnum(String typeName, String description) {
         this.typeName = typeName;
         this.description = description;
     }

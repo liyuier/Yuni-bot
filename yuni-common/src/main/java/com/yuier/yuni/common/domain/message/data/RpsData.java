@@ -1,7 +1,7 @@
 package com.yuier.yuni.common.domain.message.data;
 
 import com.yuier.yuni.common.annotation.MessageDataEntity;
-import com.yuier.yuni.common.enums.MsgDataEnum;
+import com.yuier.yuni.common.enums.MessageDataEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @NoArgsConstructor
-@MessageDataEntity(dataType = MsgDataEnum.RPS)
+@MessageDataEntity(dataType = MessageDataEnum.RPS)
 public class RpsData extends MessageData {
 
     @Override

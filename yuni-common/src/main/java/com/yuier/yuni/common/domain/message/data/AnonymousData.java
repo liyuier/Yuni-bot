@@ -1,7 +1,7 @@
 package com.yuier.yuni.common.domain.message.data;
 
 import com.yuier.yuni.common.annotation.MessageDataEntity;
-import com.yuier.yuni.common.enums.MsgDataEnum;
+import com.yuier.yuni.common.enums.MessageDataEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@MessageDataEntity(dataType = MsgDataEnum.ANONYMOUS)
+@MessageDataEntity(dataType = MessageDataEnum.ANONYMOUS)
 public class AnonymousData extends MessageData {
     // 可选，表示无法匿名时是否继续发送
     private String ignore;

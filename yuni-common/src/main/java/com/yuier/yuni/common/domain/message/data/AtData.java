@@ -1,7 +1,7 @@
 package com.yuier.yuni.common.domain.message.data;
 
 import com.yuier.yuni.common.annotation.MessageDataEntity;
-import com.yuier.yuni.common.enums.MsgDataEnum;
+import com.yuier.yuni.common.enums.MessageDataEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@MessageDataEntity(dataType = MsgDataEnum.AT)
+@MessageDataEntity(dataType = MessageDataEnum.AT)
 public class AtData extends MessageData {
     // 被 @ 的 QQ 号。all 表示全体成员。
     private String qq;

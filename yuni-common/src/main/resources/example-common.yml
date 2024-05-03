@@ -5,7 +5,8 @@ base-urls:
   dd: http://url/to/dd/
 
 bot:
-  owner: qq_of_owner
+  self: qq-of-bot
+  owner: qq-of-owner
 
 spring:
   config:

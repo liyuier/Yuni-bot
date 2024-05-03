@@ -10,7 +10,7 @@ import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageSeg;
 import com.yuier.yuni.common.domain.message.data.MessageData;
 import com.yuier.yuni.common.domain.message.data.TextData;
-import com.yuier.yuni.common.enums.MsgDataEnum;
+import com.yuier.yuni.common.enums.MessageDataEnum;
 import com.yuier.yuni.common.service.MessageChainService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,7 +110,7 @@ public class MessageChainServiceImpl implements MessageChainService {
     public MessageChain buildChain(String msgStr) {
         MessageChain chain = new MessageChain();
         chain.setContent(new ArrayList<>());
-        chain.getContent().add(new MessageSeg(MsgDataEnum.TEXT.toString(), new TextData(msgStr)));
+        chain.getContent().add(new MessageSeg(MessageDataEnum.TEXT.toString(), new TextData(msgStr)));
         return chain;
     }
 }

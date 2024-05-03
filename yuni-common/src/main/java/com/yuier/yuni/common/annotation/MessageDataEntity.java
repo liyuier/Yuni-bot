@@ -1,6 +1,6 @@
 package com.yuier.yuni.common.annotation;
 
-import com.yuier.yuni.common.enums.MsgDataEnum;
+import com.yuier.yuni.common.enums.MessageDataEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -17,5 +17,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MessageDataEntity {
-    MsgDataEnum dataType();
+    MessageDataEnum dataType();
 }

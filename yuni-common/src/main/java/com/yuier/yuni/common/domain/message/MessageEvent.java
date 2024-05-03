@@ -2,13 +2,10 @@ package com.yuier.yuni.common.domain.message;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.yuier.yuni.common.enums.MsgTypeEnum;
+import com.yuier.yuni.common.enums.MessageTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * @Title: OneBotMessageEventDto
@@ -94,11 +91,11 @@ public class MessageEvent {
     private Long realId;
 
     public boolean isPrivateMessage() {
-        return messageType.equals(MsgTypeEnum.PRIVATE.toString());
+        return messageType.equals(MessageTypeEnum.PRIVATE.toString());
     }
 
     public boolean isGroupMessage() {
-        return messageType.equals(MsgTypeEnum.GROUP.toString());
+        return messageType.equals(MessageTypeEnum.GROUP.toString());
     }
 
     public boolean isAnonymousMessage() {

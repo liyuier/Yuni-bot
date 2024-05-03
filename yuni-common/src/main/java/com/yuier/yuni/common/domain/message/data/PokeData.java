@@ -1,7 +1,7 @@
 package com.yuier.yuni.common.domain.message.data;
 
 import com.yuier.yuni.common.annotation.MessageDataEntity;
-import com.yuier.yuni.common.enums.MsgDataEnum;
+import com.yuier.yuni.common.enums.MessageDataEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@MessageDataEntity(dataType = MsgDataEnum.POKE)
+@MessageDataEntity(dataType = MessageDataEnum.POKE)
 public class PokeData extends MessageData {
     // 见 [Mirai 的 PokeMessage 类](https://github.com/mamoe/mirai/blob/f5eefae7ecee84d18a66afce3f89b89fe1584b78/mirai-core/src/commonMain/kotlin/net.mamoe.mirai/message/data/HummerMessage.kt#L49)
     private String type;
