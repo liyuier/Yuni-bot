@@ -6,3 +6,8 @@ base-urls:
 
 bot:
   owner: qq_of_owner
+
+spring:
+  config:
+    activate:
+      on-profile: common
