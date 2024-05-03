@@ -2,11 +2,10 @@ package com.yuier.yuni.core.detector;
 
 import com.yuier.yuni.common.annotation.FunctionCallerDetector;
 import com.yuier.yuni.common.domain.message.MessageChain;
-import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.MessageSeg;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
-import com.yuier.yuni.common.enums.MsgDataEnum;
+import com.yuier.yuni.common.enums.MessageDataEnum;
 import com.yuier.yuni.common.utils.CallFunction;
 import com.yuier.yuni.core.domain.global.GlobalData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class OrderCallerDetector implements YuniMsgBaseDetector {
         }
         ArrayList<MessageSeg> content = chain.getContent();
         String firstSegType = content.get(0).getType();
-        if (!firstSegType.equals(MsgDataEnum.TEXT.toString())) {
+        if (!firstSegType.equals(MessageDataEnum.TEXT.toString())) {
             return false;
         }
         TextData firstText = (TextData) chain.getContent().get(0).getData();

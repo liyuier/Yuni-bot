@@ -19,12 +19,15 @@ import java.util.ArrayList;
  */
 @Service
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class OrderDefiner {
+
+    private OrderDefiner() {
+
+    }
+
     /**
-     * 静态方法 build 返回自身实例，启动链式调用
-     * 链式调用的方法实际上并非操作实例，而是操作实例自身下的 definer 字段
+     * 静态方法 build 返回 definer 实例，启动链式调用
+     * 在 build 后的链式调用的方法实际上都是 build 返回的 definer 字段在执行
      * 所有数据都储存在该字段中
      */
 
@@ -49,7 +52,7 @@ public class OrderDefiner {
     public OrderDefiner setHead(String str) {
         str = str.trim();
         if (yuniOrderService.orderHeadWordLegal(str)) {
-            definer.setHeadRawStr(str);
+            setHeadRawStr(str);
         } else {
             orderDefineLegal = false;
             throw new OrderBuildException(str);
@@ -58,8 +61,7 @@ public class OrderDefiner {
     }
 
     public OrderDefiner addElement(String str) {
-        str = str.trim();
-        definer.getElementRawList().add(str);
+        elementRawList.add(str.trim());
         return this;
     }
 }

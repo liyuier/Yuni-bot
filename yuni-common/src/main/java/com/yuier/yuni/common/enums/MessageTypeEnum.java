@@ -10,7 +10,7 @@ import lombok.Getter;
  * @description: 消息事件类型枚举类
  */
 @Getter
-public enum MsgTypeEnum {
+public enum MessageTypeEnum {
 
     PRIVATE("private", "私聊消息"),
     GROUP("group", "群聊消息");
@@ -18,7 +18,7 @@ public enum MsgTypeEnum {
     private final String msgType;
     private final String description;
 
-    MsgTypeEnum(String msgType, String description) {
+    MessageTypeEnum(String msgType, String description) {
         this.msgType = msgType;
         this.description = description;
     }
