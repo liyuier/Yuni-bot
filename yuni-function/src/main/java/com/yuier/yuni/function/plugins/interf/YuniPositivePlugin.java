@@ -1,6 +1,4 @@
-package com.yuier.yuni.function.plugins;
-
-import com.yuier.yuni.function.plugins.YuniPlugin;
+package com.yuier.yuni.function.plugins.interf;
 
 /**
  * @Title: YuniPositivePlugin
