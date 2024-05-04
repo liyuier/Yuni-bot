@@ -1,4 +1,4 @@
-package com.yuier.yuni.function.plugins;
+package com.yuier.yuni.function.plugins.interf;
 
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.utils.ResponseResult;
