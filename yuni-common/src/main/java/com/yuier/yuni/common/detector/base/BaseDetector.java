@@ -10,5 +10,5 @@ package com.yuier.yuni.common.detector.base;
 public interface BaseDetector {
 
     // 本消息链是否被定义过
-    Boolean defined();
+    Boolean valid();
 }

@@ -16,6 +16,10 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class DetectPrefix implements BaseDetector{
 
+    /**
+     * 可设置检测多个前缀，检测模式固定为 “或”
+     * 即命中设置值之一即为命中
+     */
     private ArrayList<String> prefixes;
 
     public DetectPrefix() {
@@ -32,8 +36,12 @@ public class DetectPrefix implements BaseDetector{
         }
     }
 
+    public void addPrefix(ArrayList<String> pres) {
+        prefixes.addAll(pres.stream().map(String::trim).toList());
+    }
+
     @Override
-    public Boolean defined() {
+    public Boolean valid() {
         return null != prefixes && !prefixes.isEmpty();
     }
 }

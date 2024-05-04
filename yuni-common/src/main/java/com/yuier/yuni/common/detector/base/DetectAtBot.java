@@ -26,7 +26,7 @@ public class DetectAtBot implements BaseDetector{
     }
 
     @Override
-    public Boolean defined() {
+    public Boolean valid() {
         return !atBot;
     }
 }

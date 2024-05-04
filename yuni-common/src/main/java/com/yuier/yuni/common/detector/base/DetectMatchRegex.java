@@ -25,7 +25,7 @@ public class DetectMatchRegex implements BaseDetector{
     }
 
     @Override
-    public Boolean defined() {
+    public Boolean valid() {
         return null != regex && !regex.isEmpty();
     }
 }
