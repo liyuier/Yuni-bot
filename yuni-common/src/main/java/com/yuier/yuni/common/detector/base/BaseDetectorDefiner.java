@@ -67,12 +67,22 @@ public class BaseDetectorDefiner {
         return this;
     }
 
+    public BaseDetectorDefiner startWith(ArrayList<String> pre) {
+        detectPrefix.addPrefix(pre);
+        return this;
+    }
+
     public BaseDetectorDefiner endWith(String[] ends) {
         detectSuffix.addSuffix(ends);
         return this;
     }
 
     public BaseDetectorDefiner endWith(String end) {
+        detectSuffix.addSuffix(end);
+        return this;
+    }
+
+    public BaseDetectorDefiner endWith(ArrayList<String> end) {
         detectSuffix.addSuffix(end);
         return this;
     }
@@ -92,8 +102,33 @@ public class BaseDetectorDefiner {
         return this;
     }
 
+    public BaseDetectorDefiner atSomeone(Long userId, BaseDetectorModelEnum model) {
+        detectAtUser.addTarget(userId, model);
+        return this;
+    }
+
     public BaseDetectorDefiner atSomeone(Long[] userId) {
         detectAtUser.addTarget(userId);
+        return this;
+    }
+
+    public BaseDetectorDefiner atSomeone(Long[] userId, BaseDetectorModelEnum model) {
+        detectAtUser.addTarget(userId, model);
+        return this;
+    }
+
+    public BaseDetectorDefiner atSomeone(ArrayList<Long> userId) {
+        detectAtUser.addTarget(userId);
+        return this;
+    }
+
+    public BaseDetectorDefiner atSomeone(ArrayList<Long> userId, BaseDetectorModelEnum model) {
+        detectAtUser.addTarget(userId, model);
+        return this;
+    }
+
+    public BaseDetectorDefiner setAtSomeoneDetectModel(BaseDetectorModelEnum model) {
+        detectAtUser.setDetectModel(model);
         return this;
     }
 
@@ -102,8 +137,33 @@ public class BaseDetectorDefiner {
         return this;
     }
 
+    public BaseDetectorDefiner containKeyWord(String word, BaseDetectorModelEnum model) {
+        detectContainKeyWord.addKeyWord(word, model);
+        return this;
+    }
+
     public BaseDetectorDefiner containKeyWord(String[] words) {
         detectContainKeyWord.addKeyWord(words);
+        return this;
+    }
+
+    public BaseDetectorDefiner containKeyWord(String[] words, BaseDetectorModelEnum model) {
+        detectContainKeyWord.addKeyWord(words, model);
+        return this;
+    }
+
+    public BaseDetectorDefiner containKeyWord(ArrayList<String> words) {
+        detectContainKeyWord.addKeyWord(words);
+        return this;
+    }
+
+    public BaseDetectorDefiner containKeyWord(ArrayList<String> words, BaseDetectorModelEnum model) {
+        detectContainKeyWord.addKeyWord(words, model);
+        return this;
+    }
+
+    public BaseDetectorDefiner setContainKeyWordDetectModel(BaseDetectorModelEnum model) {
+        detectContainKeyWord.setDetectModel(model);
         return this;
     }
 

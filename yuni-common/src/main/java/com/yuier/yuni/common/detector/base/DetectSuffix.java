@@ -16,6 +16,10 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class DetectSuffix implements BaseDetector{
 
+    /**
+     * 可设置检测多个后缀，检测模式固定为 “或”
+     * 即命中设置值之一即为命中
+     */
     private ArrayList<String> suffixes;
 
     public DetectSuffix() {
@@ -32,8 +36,12 @@ public class DetectSuffix implements BaseDetector{
         }
     }
 
+    public void addSuffix(ArrayList<String> suffes) {
+        suffixes.addAll(suffes.stream().map(String::trim).toList());
+    }
+
     @Override
-    public Boolean defined() {
+    public Boolean valid() {
         return null != suffixes && !suffixes.isEmpty();
     }
 
