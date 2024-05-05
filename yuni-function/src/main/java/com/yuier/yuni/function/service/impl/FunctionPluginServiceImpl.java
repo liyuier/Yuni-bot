@@ -4,7 +4,6 @@ import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
-import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
@@ -12,7 +11,6 @@ import com.yuier.yuni.function.domain.global.FunctionGlobalData;
 import com.yuier.yuni.function.domain.plugin.FunctionPlugin;
 import com.yuier.yuni.function.domain.plugin.FunctionPlugins;
 import com.yuier.yuni.function.plugins.interf.YuniOrderPlugin;
-import com.yuier.yuni.function.plugins.interf.YuniPlugin;
 import com.yuier.yuni.function.service.FunctionPluginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +51,11 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
     public void scanAndBuildPlugin() {
         FunctionPlugins functionPlugins = new FunctionPlugins();
         functionGlobalData.setPlugins(functionPlugins);
+        loadPlugins(functionPlugins);
+        initialPluginsToCore(functionPlugins);
+    }
+
+    private void loadPlugins(FunctionPlugins functionPlugins) {
         // 扫描加了 Plugin 注解的插件
         Map<String, Object> pluginMap = applicationContext.getBeansWithAnnotation(Plugin.class);
         try {
@@ -93,6 +96,10 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
             e.printStackTrace();
         }
         log.info("扫描完毕");
+    }
+
+    private void initialPluginsToCore(FunctionPlugins functionPlugins) {
+
     }
 
     private ArrayList<String> getFunctionOrderNames() {
