@@ -83,11 +83,8 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
                 funcPlugin.setListener(pluginAnnotation.listener());
                 funcPlugin.setRunMethod(runMethod);
                 MessageDetectorDefiner detectorDefiner = (MessageDetectorDefiner) detectorDefineMethod.invoke(pluginBean);
-                if (detectorDefiner instanceof BaseDetectorDefiner) {
-                    detectorDefiner = (BaseDetectorDefiner) detectorDefiner;
-                    if (!detectorDefiner.defineValid()) {
-                        continue;
-                    }
+                if (!detectorDefiner.defineValid()) {
+                    continue;
                 }
                 funcPlugin.setDetectorDefiner(detectorDefiner);
                 functionPlugins.getPluginMap().put(pluginId, funcPlugin);
