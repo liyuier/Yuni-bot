@@ -15,4 +15,6 @@ public interface YuniPlugin {
 
     String description();
 
+    ResponseResult<T> run(MessageEvent messageEvent);
+
 }

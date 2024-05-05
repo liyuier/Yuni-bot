@@ -28,4 +28,13 @@ public class SendMessageDto {
     private ArrayList<MessageSeg> message;
     // 消息内容是否作为纯文本发送（即不解析 CQ 码）
     private boolean autoEscape;
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        for (MessageSeg seg : message) {
+            str.append(seg.getData().toString());
+        }
+        return str.toString();
+    }
 }

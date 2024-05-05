@@ -1,10 +1,8 @@
 package com.yuier.yuni.function.runner;
 
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
-import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
-import com.yuier.yuni.common.domain.message.res.SendMessageRes;
 import com.yuier.yuni.common.utils.CallCore;
-import com.yuier.yuni.function.service.PluginService;
+import com.yuier.yuni.common.service.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

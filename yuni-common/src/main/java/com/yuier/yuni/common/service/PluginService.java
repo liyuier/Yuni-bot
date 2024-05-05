@@ -1,4 +1,4 @@
-package com.yuier.yuni.function.service;
+package com.yuier.yuni.common.service;
 
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 

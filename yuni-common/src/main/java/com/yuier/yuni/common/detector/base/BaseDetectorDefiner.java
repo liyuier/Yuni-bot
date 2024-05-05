@@ -1,6 +1,8 @@
 package com.yuier.yuni.common.detector.base;
 
+import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
+import com.yuier.yuni.common.enums.MessageDetectorEnum;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import java.util.ArrayList;
  */
 @Service
 @Data
-public class BaseDetectorDefiner {
+public class BaseDetectorDefiner implements MessageDetectorDefiner {
 
     private BaseDetectorDefiner() {
 
@@ -46,7 +48,7 @@ public class BaseDetectorDefiner {
     // 检测模式
     private BaseDetectorModelEnum detectModel;
 
-    public static BaseDetectorDefiner define() {
+    public static BaseDetectorDefiner build() {
         detector = new BaseDetectorDefiner();
         detector.setDetectPrefix(new DetectPrefix());
         detector.setDetectSuffix(new DetectSuffix());
@@ -175,5 +177,10 @@ public class BaseDetectorDefiner {
     public BaseDetectorDefiner setDetectModel(BaseDetectorModelEnum model) {
         detectModel = model;
         return this;
+    }
+
+    @Override
+    public MessageDetectorEnum detectorType() {
+        return MessageDetectorEnum.BASE;
     }
 }

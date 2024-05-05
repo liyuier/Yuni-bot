@@ -1,9 +1,9 @@
-package com.yuier.yuni.function.service.impl;
+package com.yuier.yuni.common.service.impl;
 
 import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
-import com.yuier.yuni.function.service.PluginService;
+import com.yuier.yuni.common.service.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
