@@ -35,4 +35,13 @@ public class SendGroupMessageDto {
         this.groupId = groupId;
         this.message = chain.getContent();
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        for (MessageSeg seg : message) {
+            str.append(seg.getData().toString());
+        }
+        return str.toString();
+    }
 }

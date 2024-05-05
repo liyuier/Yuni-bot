@@ -15,7 +15,6 @@ import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.core.domain.global.GlobalData;
 import com.yuier.yuni.core.service.MessageRecordService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -55,6 +54,9 @@ public class OneBotMessageEventHandler {
     @Autowired
     GlobalData globalData;
 
+    @Autowired
+    EventLogUtils eventLogUtils;
+
     String[] callers = {
             FuncBaseCallerEnum.AT.toString(),
             FuncBaseCallerEnum.ORDER.toString(),
@@ -65,7 +67,7 @@ public class OneBotMessageEventHandler {
     public ResponseResult handle(ObjectNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
         globalData.setPostEventNode(postEventNode);  // TODO 把这玩意移到 AOP 里边去
         MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
-        EventLogUtils.printMsgEventLog(messageEvent);
+        eventLogUtils.printRcvMsgEventLog(messageEvent);
         MessageChain chain = messageEvent.getMessage();
         detect(chain, messageEvent);
         return ResponseResult.okResult();

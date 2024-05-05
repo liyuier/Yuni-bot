@@ -1,8 +1,10 @@
 package com.yuier.yuni.function.plugins;
 
+import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
+import com.yuier.yuni.common.enums.MessageTypeEnum;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.common.utils.ResponseResult;
@@ -24,6 +26,7 @@ import java.util.Objects;
  * @description: 原神，启动！
  */
 @Component
+@Plugin(id = "GenShinStart", listener = MessageTypeEnum.ALL)
 @OrderCallFunction(orderWord = "原神")
 public class GenShinStart implements YuniOrderPlugin {
 

@@ -13,7 +13,8 @@ import lombok.Getter;
 public enum MessageTypeEnum {
 
     PRIVATE("private", "私聊消息"),
-    GROUP("group", "群聊消息");
+    GROUP("group", "群聊消息"),
+    ALL("all", "全部消息类型");
 
     private final String msgType;
     private final String description;

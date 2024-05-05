@@ -35,6 +35,8 @@ public class CallOneBot {
     MessageChainService messageChainService;
     @Autowired
     MessageEventService messageEventService;
+    @Autowired
+    EventLogUtils eventLogUtils;
 
     @Value("${base-urls.one-bot}")
     private String baseUrl;
@@ -94,16 +96,19 @@ public class CallOneBot {
     }
 
     public SendMessageRes sendMessage(SendMessageDto dto) {
+        eventLogUtils.printSendMsgLog(dto);
         String url = getBaseUrl() + "send_msg";
         return yuniHttpService.postRequestForObject(url, dto, SendMessageRes.class);
     }
 
     public SendMessageRes sendPrivateMessage(SendPrivateMessageDto dto) {
+        eventLogUtils.printSendPrivateMsgLog(dto);
         String url = getBaseUrl() + "send_msg";
         return yuniHttpService.postRequestForObject(url, dto, SendMessageRes.class);
     }
 
     public SendMessageRes sendGroupMessage(SendGroupMessageDto dto) {
+        eventLogUtils.printSendGroupMsgLog(dto);
         String url = getBaseUrl() + "send_msg";
         return yuniHttpService.postRequestForObject(url, dto, SendMessageRes.class);
     }
