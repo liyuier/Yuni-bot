@@ -20,7 +20,7 @@ import java.util.HashMap;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-public class GlobalData {
+public class CoreGlobalData {
     private HashMap<String, ArrayList<String>> functions;
 
     private JsonNode postEventNode;

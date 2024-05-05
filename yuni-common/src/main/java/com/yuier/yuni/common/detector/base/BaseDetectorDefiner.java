@@ -183,4 +183,9 @@ public class BaseDetectorDefiner implements MessageDetectorDefiner {
     public MessageDetectorEnum detectorType() {
         return MessageDetectorEnum.BASE;
     }
+
+    @Override
+    public Boolean defineValid() {
+        return true;
+    }
 }

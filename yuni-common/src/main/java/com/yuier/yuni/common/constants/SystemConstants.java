@@ -1,7 +1,5 @@
 package com.yuier.yuni.common.constants;
 
-import jakarta.servlet.http.PushBuilder;
-
 /**
  * @Title: SystemConstants
  * @Author yuier
@@ -35,8 +33,8 @@ public class SystemConstants {
         public static final String DATA = "data";
     }
 
-    // 插件类 Bean 入口方法
-    public static final class PLUGIN_ENTRY_NAME {
+    // 插件类 Bean 重要方法
+    public static final class PLUGIN_CRITICAL_NAME {
         // OneBot 上报事件处理器 handler 入口方法
         public static final String HANDLER_ENTRY = "handle";
 
@@ -45,6 +43,12 @@ public class SystemConstants {
 
         // 消息链探测器入口方法
         public static final String MSG_DETECTOR_ENTRY = "detect";
+
+        // 功能插件 detectorDefine 方法
+        public static final String DETECTOR_DEFINE = "detectorDefine";
+
+        // 功能插件 description 方法
+        public static final String DESCRIPTION = "description";
     }
 
 }

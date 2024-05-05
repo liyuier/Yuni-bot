@@ -7,7 +7,7 @@ import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
 import com.yuier.yuni.common.enums.MessageDataEnum;
 import com.yuier.yuni.common.utils.CallFunction;
-import com.yuier.yuni.core.domain.global.GlobalData;
+import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 @FunctionCallerDetector(callerKind = FuncBaseCallerEnum.ORDER)
 public class OrderCallerDetector implements YuniMsgBaseDetector {
     @Autowired
-    GlobalData globalData;
+    CoreGlobalData coreGlobalData;
     @Autowired
     CallFunction callFunction;
 
@@ -42,12 +42,12 @@ public class OrderCallerDetector implements YuniMsgBaseDetector {
         if (!firstText.getText().startsWith("/")) {
             return false;
         }
-        ArrayList<String> orderCallers = globalData.getFunctions().get(FuncBaseCallerEnum.ORDER.toString());
+        ArrayList<String> orderCallers = coreGlobalData.getFunctions().get(FuncBaseCallerEnum.ORDER.toString());
         boolean flag = false;
         for (String orderCaller : orderCallers) {
             if (firstText.getText().startsWith("/" + orderCaller)) {
                 flag = true;
-                callFunction.orderCallFunction(globalData.getPostEventNode());
+                callFunction.orderCallFunction(coreGlobalData.getPostEventNode());
                 break;
             }
         }
