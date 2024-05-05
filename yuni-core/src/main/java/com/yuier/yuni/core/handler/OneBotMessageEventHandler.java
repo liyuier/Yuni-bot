@@ -13,7 +13,7 @@ import com.yuier.yuni.common.service.MessageEventService;
 import com.yuier.yuni.common.utils.EventLogUtils;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.common.domain.message.MessageEvent;
-import com.yuier.yuni.core.domain.global.GlobalData;
+import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import com.yuier.yuni.core.service.MessageRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -52,7 +52,7 @@ public class OneBotMessageEventHandler {
     AsyncService asyncService;
 
     @Autowired
-    GlobalData globalData;
+    CoreGlobalData coreGlobalData;
 
     @Autowired
     EventLogUtils eventLogUtils;
@@ -65,7 +65,7 @@ public class OneBotMessageEventHandler {
     };
 
     public ResponseResult handle(ObjectNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
-        globalData.setPostEventNode(postEventNode);  // TODO 把这玩意移到 AOP 里边去
+        coreGlobalData.setPostEventNode(postEventNode);  // TODO 把这玩意移到 AOP 里边去
         MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
         eventLogUtils.printRcvMsgEventLog(messageEvent);
         MessageChain chain = messageEvent.getMessage();
@@ -79,7 +79,7 @@ public class OneBotMessageEventHandler {
             for (Object bean : handlerBeans.values()) {
                 FunctionCallerDetector annotation = bean.getClass().getAnnotation(FunctionCallerDetector.class);
                 if (annotation.callerKind().toString().equals(caller)) {
-                    Object o = asyncService.asyncReflective(bean, chain, SystemConstants.PLUGIN_ENTRY_NAME.MSG_DETECTOR_ENTRY).get();
+                    Object o = asyncService.asyncReflective(bean, chain, SystemConstants.PLUGIN_CRITICAL_NAME.MSG_DETECTOR_ENTRY).get();
                 }
             }
         }
