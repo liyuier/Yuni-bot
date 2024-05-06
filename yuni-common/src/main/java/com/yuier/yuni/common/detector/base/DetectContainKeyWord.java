@@ -1,6 +1,9 @@
 package com.yuier.yuni.common.detector.base;
 
+import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
+import com.yuier.yuni.common.detector.base.dto.DetectContainKeyWordDto;
 import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,7 +18,7 @@ import java.util.ArrayList;
  */
 @Data
 @AllArgsConstructor
-public class DetectContainKeyWord implements BaseDetector{
+public class DetectContainKeyWord implements BaseSubDetector {
 
     /**
      * 可设置一个或多个关键字。当设置多个关键字时，需要指定匹配模式为 “或” 还是 “与”
@@ -73,5 +76,10 @@ public class DetectContainKeyWord implements BaseDetector{
             throw new RuntimeException("DetectContainKeyWord 探测器定义多个关键字，但未设定匹配模式！");
         }
         return true;
+    }
+
+    @Override
+    public DetectContainKeyWordDto toDto() {
+        return BeanCopyUtils.copyBean(this, DetectContainKeyWordDto.class);
     }
 }

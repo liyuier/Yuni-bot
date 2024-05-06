@@ -1,8 +1,10 @@
 package com.yuier.yuni.common.detector.base;
 
+import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
+import com.yuier.yuni.common.detector.base.dto.DetectAtBotDto;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @Title: AtBot
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @AllArgsConstructor
-public class DetectAtBot implements BaseDetector{
+public class DetectAtBot implements BaseSubDetector {
 
     public Boolean atBot;
 
@@ -27,6 +29,11 @@ public class DetectAtBot implements BaseDetector{
 
     @Override
     public Boolean valid() {
-        return !atBot;
+        return atBot;
+    }
+
+    @Override
+    public DetectAtBotDto toDto() {
+        return BeanCopyUtils.copyBean(this, DetectAtBotDto.class);
     }
 }

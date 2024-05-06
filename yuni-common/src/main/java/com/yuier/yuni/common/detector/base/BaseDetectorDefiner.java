@@ -1,6 +1,10 @@
 package com.yuier.yuni.common.detector.base;
 
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
+import com.yuier.yuni.common.detector.MessageDetectorDefinerDto;
+import com.yuier.yuni.common.detector.base.dto.BaseDetectorDefinerDto;
+import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
+import com.yuier.yuni.common.detector.base.dto.DetectPrefixDto;
 import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
 import com.yuier.yuni.common.enums.MessageDetectorEnum;
 import lombok.Data;
@@ -33,6 +37,7 @@ public class BaseDetectorDefiner implements MessageDetectorDefiner {
     // 链式调用操作对象
     private static BaseDetectorDefiner detector;
 
+    int conditions;
     // 前缀
     private DetectPrefix detectPrefix;
     // 后缀
@@ -60,116 +65,181 @@ public class BaseDetectorDefiner implements MessageDetectorDefiner {
     }
 
     public BaseDetectorDefiner startWith(String[] pres) {
+        if (!detectPrefix.valid()) {
+            conditions ++;
+        }
         detectPrefix.addPrefix(pres);
         return this;
     }
 
     public BaseDetectorDefiner startWith(String pre) {
+        if (!detectPrefix.valid()) {
+            conditions ++;
+        }
         detectPrefix.addPrefix(pre);
         return this;
     }
 
     public BaseDetectorDefiner startWith(ArrayList<String> pre) {
+        if (!detectPrefix.valid()) {
+            conditions ++;
+        }
         detectPrefix.addPrefix(pre);
         return this;
     }
 
     public BaseDetectorDefiner endWith(String[] ends) {
+        if (!detectSuffix.valid()) {
+            conditions ++;
+        }
         detectSuffix.addSuffix(ends);
         return this;
     }
 
     public BaseDetectorDefiner endWith(String end) {
+        if (!detectSuffix.valid()) {
+            conditions ++;
+        }
         detectSuffix.addSuffix(end);
         return this;
     }
 
     public BaseDetectorDefiner endWith(ArrayList<String> end) {
+        if (!detectSuffix.valid()) {
+            conditions ++;
+        }
         detectSuffix.addSuffix(end);
         return this;
     }
 
     public BaseDetectorDefiner atBot() {
+        if (!detectAtBot.valid()) {
+            conditions ++;
+        }
         detectAtBot.setTrue();
         return this;
     }
 
     public BaseDetectorDefiner atSomeone() {
+        if (!detectAtUser.valid()) {
+            conditions ++;
+        }
         detectAtUser.setTrue();
         return this;
     }
 
     public BaseDetectorDefiner atSomeone(Long userId) {
+        if (!detectAtUser.valid()) {
+            conditions ++;
+        }
         detectAtUser.addTarget(userId);
         return this;
     }
 
     public BaseDetectorDefiner atSomeone(Long userId, BaseDetectorModelEnum model) {
+        if (!detectAtUser.valid()) {
+            conditions ++;
+        }
         detectAtUser.addTarget(userId, model);
         return this;
     }
 
     public BaseDetectorDefiner atSomeone(Long[] userId) {
+        if (!detectAtUser.valid()) {
+            conditions ++;
+        }
         detectAtUser.addTarget(userId);
         return this;
     }
 
     public BaseDetectorDefiner atSomeone(Long[] userId, BaseDetectorModelEnum model) {
+        if (!detectAtUser.valid()) {
+            conditions ++;
+        }
         detectAtUser.addTarget(userId, model);
         return this;
     }
 
     public BaseDetectorDefiner atSomeone(ArrayList<Long> userId) {
+        if (!detectAtUser.valid()) {
+            conditions ++;
+        }
         detectAtUser.addTarget(userId);
         return this;
     }
 
     public BaseDetectorDefiner atSomeone(ArrayList<Long> userId, BaseDetectorModelEnum model) {
+        if (!detectAtUser.valid()) {
+            conditions ++;
+        }
         detectAtUser.addTarget(userId, model);
         return this;
     }
 
     public BaseDetectorDefiner setAtSomeoneDetectModel(BaseDetectorModelEnum model) {
+        conditions ++;
         detectAtUser.setDetectModel(model);
         return this;
     }
 
     public BaseDetectorDefiner containKeyWord(String word) {
+        if (!detectContainKeyWord.valid()) {
+            conditions ++;
+        }
         detectContainKeyWord.addKeyWord(word);
         return this;
     }
 
     public BaseDetectorDefiner containKeyWord(String word, BaseDetectorModelEnum model) {
+        if (!detectContainKeyWord.valid()) {
+            conditions ++;
+        }
         detectContainKeyWord.addKeyWord(word, model);
         return this;
     }
 
     public BaseDetectorDefiner containKeyWord(String[] words) {
+        if (!detectContainKeyWord.valid()) {
+            conditions ++;
+        }
         detectContainKeyWord.addKeyWord(words);
         return this;
     }
 
     public BaseDetectorDefiner containKeyWord(String[] words, BaseDetectorModelEnum model) {
+        if (!detectContainKeyWord.valid()) {
+            conditions ++;
+        }
         detectContainKeyWord.addKeyWord(words, model);
         return this;
     }
 
     public BaseDetectorDefiner containKeyWord(ArrayList<String> words) {
+        if (!detectContainKeyWord.valid()) {
+            conditions ++;
+        }
         detectContainKeyWord.addKeyWord(words);
         return this;
     }
 
     public BaseDetectorDefiner containKeyWord(ArrayList<String> words, BaseDetectorModelEnum model) {
+        if (!detectContainKeyWord.valid()) {
+            conditions ++;
+        }
         detectContainKeyWord.addKeyWord(words, model);
         return this;
     }
 
     public BaseDetectorDefiner setContainKeyWordDetectModel(BaseDetectorModelEnum model) {
+        conditions ++;
         detectContainKeyWord.setDetectModel(model);
         return this;
     }
 
     public BaseDetectorDefiner matchReg(String reg) {
+        if (!detectMatchRegex.valid()) {
+            conditions ++;
+        }
         detectMatchRegex.setRegex(reg);
         return this;
     }
@@ -186,6 +256,36 @@ public class BaseDetectorDefiner implements MessageDetectorDefiner {
 
     @Override
     public Boolean defineValid() {
+        if (conditions == 0 || (conditions > 1 && detectModel == null)) {
+            return false;
+        }
         return true;
+    }
+
+    @Override
+    public MessageDetectorDefinerDto toDto() {
+        BaseDetectorDefinerDto dto = new BaseDetectorDefinerDto();
+        // 设置消息链探测器
+        if (detectPrefix.valid()) {
+            dto.setDetectPrefixDto(detectPrefix.toDto());
+        }
+        if (detectSuffix.valid()) {
+            dto.setDetectSuffixDto(detectSuffix.toDto());
+        }
+        if (detectAtBot.valid()) {
+            dto.setDetectAtBotDto(detectAtBot.toDto());
+        }
+        if (detectAtUser.valid()) {
+            dto.setDetectAtUserDto(detectAtUser.toDto());
+        }
+        if (detectContainKeyWord.valid()) {
+            dto.setDetectContainKeyWordDto(detectContainKeyWord.toDto());
+        }
+        if (detectMatchRegex.valid()) {
+            dto.setDetectMatchRegexDto(detectMatchRegex.toDto());
+        }
+        // 设置匹配模式
+        dto.setDetectModel(detectModel);
+        return dto;
     }
 }

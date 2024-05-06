@@ -1,6 +1,8 @@
 package com.yuier.yuni.core.controller;
 
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
+import com.yuier.yuni.common.domain.message.dto.function.FunctionPluginsDto;
+import com.yuier.yuni.common.domain.message.dto.function.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.core.service.FunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,16 @@ public class FunctionController {
     @PostMapping("/init_func")
     public ResponseResult initializeFunctions(@RequestBody PluginFunctionDto pluginFunctionDto) {
         functionService.initializeFunctions(pluginFunctionDto);
+        return ResponseResult.okResult();
+    }
+
+    @PostMapping("/init_func_plugins")
+    public ResponseResult initializeFunctionPlugins(@RequestBody FunctionPluginsDto functionPluginsDto) {
+        return ResponseResult.okResult();
+    }
+
+    @PostMapping("/init_func_base_plugins")
+    public ResponseResult initializeFunctionBasePlugins(@RequestBody BaseDetectorPluginsDto baseDetectorPluginsDto) {
         return ResponseResult.okResult();
     }
 

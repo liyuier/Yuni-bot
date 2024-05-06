@@ -13,4 +13,6 @@ public interface MessageDetectorDefiner {
 
     MessageDetectorEnum detectorType();
     Boolean defineValid();
+
+    MessageDetectorDefinerDto toDto();
 }

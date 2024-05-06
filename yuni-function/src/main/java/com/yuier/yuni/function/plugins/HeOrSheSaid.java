@@ -7,6 +7,7 @@ import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.MessageSeg;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
+import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
 import com.yuier.yuni.common.enums.MessageDataEnum;
 import com.yuier.yuni.common.enums.MessageTypeEnum;
 import com.yuier.yuni.common.utils.CallOneBot;
@@ -33,7 +34,9 @@ public class HeOrSheSaid implements BaseDetectorPlugin {
     @Override
     public BaseDetectorDefiner detectorDefine() {
         return BaseDetectorDefiner.build()
-                .containKeyWord("我");
+                .containKeyWord("我")
+                .atBot()
+                .setDetectModel(BaseDetectorModelEnum.OR);
     }
 
     @Override

@@ -4,12 +4,21 @@ import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
+import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
+import com.yuier.yuni.common.domain.message.dto.function.base.BaseDetectorPluginDto;
+import com.yuier.yuni.common.domain.message.dto.function.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
+import com.yuier.yuni.common.domain.message.dto.function.FunctionPluginDto;
+import com.yuier.yuni.common.domain.message.dto.function.FunctionPluginsDto;
+import com.yuier.yuni.common.service.YuniHttpService;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
+import com.yuier.yuni.common.utils.CallCore;
 import com.yuier.yuni.function.domain.global.FunctionGlobalData;
 import com.yuier.yuni.function.domain.plugin.FunctionPlugin;
 import com.yuier.yuni.function.domain.plugin.FunctionPlugins;
+import com.yuier.yuni.function.domain.plugin.base.BaseDetectorPlugin;
 import com.yuier.yuni.function.plugins.interf.YuniOrderPlugin;
 import com.yuier.yuni.function.service.FunctionPluginService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +46,8 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
     ApplicationContext applicationContext;
     @Autowired
     FunctionGlobalData functionGlobalData;
+    @Autowired
+    CallCore callCore;
 
     @Override
     public PluginFunctionDto buildPluginFunctionDto() {
@@ -87,6 +98,7 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
                 funcPlugin.setRunMethod(runMethod);
                 MessageDetectorDefiner detectorDefiner = (MessageDetectorDefiner) detectorDefineMethod.invoke(pluginBean);
                 if (!detectorDefiner.defineValid()) {
+                    log.error("插件 " + pluginBean + " 的消息链探测器定义无效！请检查。");
                     continue;
                 }
                 funcPlugin.setDetectorDefiner(detectorDefiner);
@@ -99,7 +111,22 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
     }
 
     private void initialPluginsToCore(FunctionPlugins functionPlugins) {
+        FunctionPluginsDto functionPluginsDto = new FunctionPluginsDto();
+        BaseDetectorPluginsDto baseDetectorPluginsDto = new BaseDetectorPluginsDto();
+        for (FunctionPlugin plugin : functionPlugins.getPluginMap().values()) {
+            FunctionPluginDto functionPluginDto = new FunctionPluginDto();
+            functionPluginDto.setPluginId(plugin.getPluginId());
+            functionPluginDto.setMessageDetectorDefinerDto(plugin.getDetectorDefiner().toDto());
+            functionPluginsDto.getPluginDtoMap().put(functionPluginDto.getPluginId(), functionPluginDto);
 
+            // 如果插件使用了基础消息链探测器
+            if (plugin.useDetector(BaseDetectorDefiner.class)) {
+                BaseDetectorPluginDto baseDetectorPluginDto = new BaseDetectorPluginDto();
+                baseDetectorPluginDto.buildFromFunctionPluginDto(functionPluginDto);
+                baseDetectorPluginsDto.getPluginDtoMap().put(baseDetectorPluginDto.getPluginId(), baseDetectorPluginDto);
+            }
+        }
+        callCore.initialBaseDetectorPluginToCore(baseDetectorPluginsDto);
     }
 
     private ArrayList<String> getFunctionOrderNames() {

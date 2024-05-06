@@ -1,5 +1,8 @@
 package com.yuier.yuni.common.detector.base;
 
+import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
+import com.yuier.yuni.common.detector.base.dto.DetectMatchRegexDto;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class DetectMatchRegex implements BaseDetector{
+public class DetectMatchRegex implements BaseSubDetector {
 
     private String regex;
 
@@ -27,5 +30,10 @@ public class DetectMatchRegex implements BaseDetector{
     @Override
     public Boolean valid() {
         return null != regex && !regex.isEmpty();
+    }
+
+    @Override
+    public DetectMatchRegexDto toDto() {
+        return BeanCopyUtils.copyBean(this, DetectMatchRegexDto.class);
     }
 }

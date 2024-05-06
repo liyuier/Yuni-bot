@@ -1,5 +1,8 @@
 package com.yuier.yuni.common.detector.base;
 
+import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
+import com.yuier.yuni.common.detector.base.dto.DetectSuffixDto;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,7 +17,7 @@ import java.util.ArrayList;
  */
 @Data
 @AllArgsConstructor
-public class DetectSuffix implements BaseDetector{
+public class DetectSuffix implements BaseSubDetector {
 
     /**
      * 可设置检测多个后缀，检测模式固定为 “或”
@@ -43,6 +46,11 @@ public class DetectSuffix implements BaseDetector{
     @Override
     public Boolean valid() {
         return null != suffixes && !suffixes.isEmpty();
+    }
+
+    @Override
+    public DetectSuffixDto toDto() {
+        return BeanCopyUtils.copyBean(this, DetectSuffixDto.class);
     }
 
 }
