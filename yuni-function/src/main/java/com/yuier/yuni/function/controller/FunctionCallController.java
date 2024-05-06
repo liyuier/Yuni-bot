@@ -1,6 +1,7 @@
 package com.yuier.yuni.function.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.yuier.yuni.common.domain.dto.CallFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.function.service.FunctionCallService;
@@ -28,5 +29,10 @@ public class FunctionCallController {
     @PostMapping("/order")
     public ResponseResult orderCallFunction(@RequestBody JsonNode messageEvent) {
         return functionCallService.orderCallFunction(messageEvent);
+    }
+
+    @PostMapping("/plugin")
+    public ResponseResult callPlugin(@RequestBody CallFunctionPluginDto callFunctionPluginDto) {
+        return functionCallService.callPlugin(callFunctionPluginDto);
     }
 }

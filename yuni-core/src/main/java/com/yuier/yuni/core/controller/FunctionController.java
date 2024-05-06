@@ -1,8 +1,8 @@
 package com.yuier.yuni.core.controller;
 
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
-import com.yuier.yuni.common.domain.message.dto.function.FunctionPluginsDto;
-import com.yuier.yuni.common.domain.message.dto.function.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.domain.dto.functionplugin.FunctionPluginsDto;
+import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.core.service.FunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @Title: FunctionPostController
@@ -41,6 +38,7 @@ public class FunctionController {
 
     @PostMapping("/init_func_base_plugins")
     public ResponseResult initializeFunctionBasePlugins(@RequestBody BaseDetectorPluginsDto baseDetectorPluginsDto) {
+        functionService.initialBaseFunctionPlugins(baseDetectorPluginsDto);
         return ResponseResult.okResult();
     }
 

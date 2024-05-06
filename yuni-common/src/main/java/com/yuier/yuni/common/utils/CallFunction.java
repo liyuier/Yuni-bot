@@ -1,6 +1,7 @@
 package com.yuier.yuni.common.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.yuier.yuni.common.domain.dto.CallFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,10 @@ public class CallFunction {
     public ResponseResult orderCallFunction(JsonNode postEventNode) {
         String url = getBaseUrl() + "function/order";
         return yuniHttpService.postRequestForObject(url, postEventNode, ResponseResult.class);
+    }
+
+    public ResponseResult callFunctionPlugin(CallFunctionPluginDto callFunctionPluginDto) {
+        String url = getBaseUrl() + "function/plugin";
+        return yuniHttpService.postRequestForObject(url, callFunctionPluginDto, ResponseResult.class);
     }
 }

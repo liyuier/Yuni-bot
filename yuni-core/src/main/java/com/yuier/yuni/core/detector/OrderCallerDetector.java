@@ -30,7 +30,7 @@ public class OrderCallerDetector implements YuniMsgBaseDetector {
 
     @Override
     public boolean detect(MessageChain chain) {
-        if (null == chain.getContent() ||chain.getContent().isEmpty()) {
+        if (null == chain.getContent() || chain.getContent().isEmpty()) {
             return false;
         }
         ArrayList<MessageSeg> content = chain.getContent();

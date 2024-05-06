@@ -1,6 +1,5 @@
-package com.yuier.yuni.common.domain.message.dto.function.base;
+package com.yuier.yuni.common.domain.dto.functionplugin.base;
 
-import com.yuier.yuni.common.domain.message.dto.function.FunctionPluginDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

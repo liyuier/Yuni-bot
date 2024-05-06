@@ -7,18 +7,15 @@ import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
-import com.yuier.yuni.common.domain.message.dto.function.base.BaseDetectorPluginDto;
-import com.yuier.yuni.common.domain.message.dto.function.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginDto;
+import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
-import com.yuier.yuni.common.domain.message.dto.function.FunctionPluginDto;
-import com.yuier.yuni.common.domain.message.dto.function.FunctionPluginsDto;
-import com.yuier.yuni.common.service.YuniHttpService;
-import com.yuier.yuni.common.utils.BeanCopyUtils;
+import com.yuier.yuni.common.domain.dto.functionplugin.FunctionPluginDto;
+import com.yuier.yuni.common.domain.dto.functionplugin.FunctionPluginsDto;
 import com.yuier.yuni.common.utils.CallCore;
 import com.yuier.yuni.function.domain.global.FunctionGlobalData;
 import com.yuier.yuni.function.domain.plugin.FunctionPlugin;
 import com.yuier.yuni.function.domain.plugin.FunctionPlugins;
-import com.yuier.yuni.function.domain.plugin.base.BaseDetectorPlugin;
 import com.yuier.yuni.function.plugins.interf.YuniOrderPlugin;
 import com.yuier.yuni.function.service.FunctionPluginService;
 import lombok.extern.slf4j.Slf4j;
@@ -121,8 +118,7 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
 
             // 如果插件使用了基础消息链探测器
             if (plugin.useDetector(BaseDetectorDefiner.class)) {
-                BaseDetectorPluginDto baseDetectorPluginDto = new BaseDetectorPluginDto();
-                baseDetectorPluginDto.buildFromFunctionPluginDto(functionPluginDto);
+                BaseDetectorPluginDto baseDetectorPluginDto = new BaseDetectorPluginDto(functionPluginDto);
                 baseDetectorPluginsDto.getPluginDtoMap().put(baseDetectorPluginDto.getPluginId(), baseDetectorPluginDto);
             }
         }

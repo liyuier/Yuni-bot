@@ -1,6 +1,7 @@
 package com.yuier.yuni.function.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.yuier.yuni.common.domain.dto.CallFunctionPluginDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 /**
  * @Title: FunctionCallService
@@ -12,4 +13,6 @@ import com.yuier.yuni.common.utils.ResponseResult;
 public interface FunctionCallService {
 
     ResponseResult orderCallFunction(JsonNode messageEvent);
+
+    ResponseResult callPlugin(CallFunctionPluginDto callFunctionPluginDto);
 }

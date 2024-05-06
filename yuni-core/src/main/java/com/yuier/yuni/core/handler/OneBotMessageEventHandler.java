@@ -4,17 +4,24 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.annotation.FunctionCallerDetector;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
+import com.yuier.yuni.common.domain.dto.CallFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageChain;
+import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
 import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
 import com.yuier.yuni.common.enums.OneBotEventEnum;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.MessageEventService;
+import com.yuier.yuni.common.utils.CallFunction;
 import com.yuier.yuni.common.utils.EventLogUtils;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.common.domain.message.MessageEvent;
+import com.yuier.yuni.core.detector.base.BaseDetectorForUse;
+import com.yuier.yuni.core.detector.base.BasePluginDetector;
+import com.yuier.yuni.core.detector.base.BaseSubDetectorForUse;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import com.yuier.yuni.core.service.MessageRecordService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -31,7 +38,7 @@ import java.util.concurrent.ExecutionException;
  * @description: OneBot 上报消息事件处理器
  */
 
-//@Slf4j
+@Slf4j
 @Component
 @OneBotEventHandler(eventType = OneBotEventEnum.MESSAGE)
 public class OneBotMessageEventHandler {
@@ -57,6 +64,9 @@ public class OneBotMessageEventHandler {
     @Autowired
     EventLogUtils eventLogUtils;
 
+    @Autowired
+    CallFunction callFunction;
+
     String[] callers = {
             FuncBaseCallerEnum.AT.toString(),
             FuncBaseCallerEnum.ORDER.toString(),
@@ -70,6 +80,7 @@ public class OneBotMessageEventHandler {
         eventLogUtils.printRcvMsgEventLog(messageEvent);
         MessageChain chain = messageEvent.getMessage();
         detect(chain, messageEvent);
+        detectBase(chain, postEventNode);
         return ResponseResult.okResult();
     }
 
@@ -81,6 +92,16 @@ public class OneBotMessageEventHandler {
                 if (annotation.callerKind().toString().equals(caller)) {
                     Object o = asyncService.asyncReflective(bean, chain, SystemConstants.PLUGIN_CRITICAL_NAME.MSG_DETECTOR_ENTRY).get();
                 }
+            }
+        }
+    }
+
+    private void detectBase(MessageChain chain, ObjectNode postEventNode) {
+        for (BasePluginDetector basePluginDetector : coreGlobalData.getBasePluginsDetector().getPluginDtoHashMap().values()) {
+            BaseDetectorForUse detector = basePluginDetector.getDetector();
+            if (detector.hit(chain)) {
+                log.info("命中插件" + basePluginDetector.getPluginId());
+                callFunction.callFunctionPlugin(new CallFunctionPluginDto(basePluginDetector.getPluginId(), postEventNode));
             }
         }
     }
