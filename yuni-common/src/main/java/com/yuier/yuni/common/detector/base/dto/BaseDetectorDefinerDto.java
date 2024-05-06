@@ -20,7 +20,6 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class BaseDetectorDefinerDto implements MessageDetectorDefinerDto {
     BaseDetectorModelEnum detectModel;
-//    ArrayList<BaseSubDetectorDto> subDetectors;
     DetectPrefixDto detectPrefixDto;
     DetectSuffixDto detectSuffixDto;
     DetectAtBotDto detectAtBotDto;

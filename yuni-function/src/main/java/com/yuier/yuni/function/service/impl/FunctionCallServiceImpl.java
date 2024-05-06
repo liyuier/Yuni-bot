@@ -3,16 +3,21 @@ package com.yuier.yuni.function.service.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.constants.SystemConstants;
+import com.yuier.yuni.common.domain.dto.CallFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageEventService;
 import com.yuier.yuni.common.utils.ResponseResult;
+import com.yuier.yuni.function.domain.global.FunctionGlobalData;
+import com.yuier.yuni.function.domain.plugin.FunctionPlugin;
+import com.yuier.yuni.function.domain.plugin.FunctionPlugins;
 import com.yuier.yuni.function.service.FunctionCallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
@@ -31,6 +36,8 @@ public class FunctionCallServiceImpl implements FunctionCallService {
     AsyncService asyncService;
     @Autowired
     MessageEventService messageEventService;
+    @Autowired
+    FunctionGlobalData functionGlobalData;
 
     @Override
     public ResponseResult orderCallFunction(JsonNode messageEventNode) {
@@ -46,6 +53,19 @@ public class FunctionCallServiceImpl implements FunctionCallService {
                     e.printStackTrace();
                 }
             }
+        }
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult callPlugin(CallFunctionPluginDto callFunctionPluginDto) {
+        MessageEvent messageEvent = messageEventService.postToMessage(callFunctionPluginDto.getJsonNode(), MessageEvent.class);
+        FunctionPlugins plugins = functionGlobalData.getPlugins();
+        FunctionPlugin plugin = plugins.getPluginMap().get(callFunctionPluginDto.getPluginId());
+        try {
+            asyncService.asyncReflective(plugin.getPluginBean(), messageEvent, SystemConstants.PLUGIN_CRITICAL_NAME.FUNC_PLUGIN_ENTRY);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return ResponseResult.okResult();
     }

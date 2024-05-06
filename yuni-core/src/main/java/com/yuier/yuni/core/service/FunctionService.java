@@ -1,11 +1,8 @@
 package com.yuier.yuni.core.service;
 
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
+import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Title: FunctionService
@@ -16,4 +13,6 @@ import java.util.Map;
  */
 public interface FunctionService {
     ResponseResult initializeFunctions(PluginFunctionDto pluginFunctionDto);
+
+    ResponseResult initialBaseFunctionPlugins(BaseDetectorPluginsDto baseDetectorPluginsDto);
 }

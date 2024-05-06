@@ -1,7 +1,9 @@
 package com.yuier.yuni.core.service.impl;
 
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
+import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
+import com.yuier.yuni.core.detector.base.BasePluginsDetector;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import com.yuier.yuni.core.service.FunctionService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,14 @@ public class FunctionServiceImpl implements FunctionService {
         }
         coreGlobalData.setFunctions(pluginFunctionDto.getFunctionMap());
         log.info("功能初始化成功");
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult initialBaseFunctionPlugins(BaseDetectorPluginsDto baseDetectorPluginsDto) {
+        // 重建基础消息链处理器
+        coreGlobalData.setBasePluginsDetector(new BasePluginsDetector(baseDetectorPluginsDto));
+
         return ResponseResult.okResult();
     }
 }

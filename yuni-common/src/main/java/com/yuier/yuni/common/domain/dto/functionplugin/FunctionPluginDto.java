@@ -1,4 +1,4 @@
-package com.yuier.yuni.common.domain.message.dto.function;
+package com.yuier.yuni.common.domain.dto.functionplugin;
 
 import com.yuier.yuni.common.detector.MessageDetectorDefinerDto;
 import lombok.AllArgsConstructor;
