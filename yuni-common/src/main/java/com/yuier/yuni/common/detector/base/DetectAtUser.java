@@ -1,6 +1,9 @@
 package com.yuier.yuni.common.detector.base;
 
+import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
+import com.yuier.yuni.common.detector.base.dto.DetectAtUserDto;
 import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,7 +19,7 @@ import java.util.Arrays;
  */
 @Data
 @AllArgsConstructor
-public class DetectAtUser implements BaseDetector{
+public class DetectAtUser implements BaseSubDetector {
 
     public Boolean atUser;
     /**
@@ -80,5 +83,10 @@ public class DetectAtUser implements BaseDetector{
             throw new RuntimeException("DetectAtUser 设置多个目标用户，但未设定匹配模式！");
         }
         return true;
+    }
+
+    @Override
+    public DetectAtUserDto toDto() {
+        return BeanCopyUtils.copyBean(this, DetectAtUserDto.class);
     }
 }

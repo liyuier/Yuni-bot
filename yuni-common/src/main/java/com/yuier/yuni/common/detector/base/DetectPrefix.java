@@ -1,5 +1,8 @@
 package com.yuier.yuni.common.detector.base;
 
+import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
+import com.yuier.yuni.common.detector.base.dto.DetectPrefixDto;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,7 +17,7 @@ import java.util.ArrayList;
  */
 @Data
 @AllArgsConstructor
-public class DetectPrefix implements BaseDetector{
+public class DetectPrefix implements BaseSubDetector {
 
     /**
      * 可设置检测多个前缀，检测模式固定为 “或”
@@ -43,5 +46,10 @@ public class DetectPrefix implements BaseDetector{
     @Override
     public Boolean valid() {
         return null != prefixes && !prefixes.isEmpty();
+    }
+
+    @Override
+    public DetectPrefixDto toDto() {
+        return BeanCopyUtils.copyBean(this, DetectPrefixDto.class);
     }
 }
