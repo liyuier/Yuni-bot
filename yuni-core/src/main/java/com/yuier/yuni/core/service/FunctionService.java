@@ -1,6 +1,5 @@
 package com.yuier.yuni.core.service;
 
-import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 
@@ -12,7 +11,6 @@ import com.yuier.yuni.common.utils.ResponseResult;
  * @description: function 相关服务接口
  */
 public interface FunctionService {
-    ResponseResult initializeFunctions(PluginFunctionDto pluginFunctionDto);
 
     ResponseResult initialBaseFunctionPlugins(BaseDetectorPluginsDto baseDetectorPluginsDto);
 }

@@ -1,6 +1,5 @@
 package com.yuier.yuni.common.utils;
 
-import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginsDto;
 import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.service.YuniHttpService;
@@ -30,10 +29,6 @@ public class CallCore {
         return baseUrl;
     }
 
-    public ResponseResult initializeFunction(PluginFunctionDto pluginFunctionDto) {
-        String url = getBaseUrl() + "function/init_func";
-        return yuniHttpService.postRequestForObject(url, pluginFunctionDto, ResponseResult.class);
-    }
 
     public ResponseResult initialPluginsToCore(FunctionPluginsDto functionPluginsDto) {
         String url = getBaseUrl() + "function/init_func_plugins";
