@@ -6,7 +6,6 @@ import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.dto.CallFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageChain;
-import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
 import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
 import com.yuier.yuni.common.enums.OneBotEventEnum;
 import com.yuier.yuni.common.service.AsyncService;
@@ -18,7 +17,7 @@ import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.core.detector.base.BaseDetectorForUse;
 import com.yuier.yuni.core.detector.base.BasePluginDetector;
-import com.yuier.yuni.core.detector.base.BaseSubDetectorForUse;
+import com.yuier.yuni.core.detector.listener.MessageTypeListenerForUse;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import com.yuier.yuni.core.service.MessageRecordService;
 import lombok.extern.slf4j.Slf4j;
@@ -80,7 +79,7 @@ public class OneBotMessageEventHandler {
         eventLogUtils.printRcvMsgEventLog(messageEvent);
         MessageChain chain = messageEvent.getMessage();
         detect(chain, messageEvent);
-        detectBase(chain, postEventNode);
+        detectBase(chain, postEventNode, messageEvent);
         return ResponseResult.okResult();
     }
 
@@ -96,10 +95,11 @@ public class OneBotMessageEventHandler {
         }
     }
 
-    private void detectBase(MessageChain chain, ObjectNode postEventNode) {
+    private void detectBase(MessageChain chain, ObjectNode postEventNode, MessageEvent messageEvent) {
         for (BasePluginDetector basePluginDetector : coreGlobalData.getBasePluginsDetector().getPluginDtoHashMap().values()) {
+            MessageTypeListenerForUse listener = basePluginDetector.getListener();
             BaseDetectorForUse detector = basePluginDetector.getDetector();
-            if (detector.hit(chain)) {
+            if (listener.hit(messageEvent) && detector.hit(chain)) {
                 log.info("命中插件" + basePluginDetector.getPluginId());
                 callFunction.callFunctionPlugin(new CallFunctionPluginDto(basePluginDetector.getPluginId(), postEventNode));
             }

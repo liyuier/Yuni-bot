@@ -1,8 +1,8 @@
 package com.yuier.yuni.core.controller;
 
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
-import com.yuier.yuni.common.domain.dto.functionplugin.FunctionPluginsDto;
-import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginsDto;
+import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.core.service.FunctionService;
 import org.springframework.beans.factory.annotation.Autowired;

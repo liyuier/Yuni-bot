@@ -1,7 +1,7 @@
 package com.yuier.yuni.core.detector.base;
 
-import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginDto;
-import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginDto;
+import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,8 +1,9 @@
-package com.yuier.yuni.function.domain.plugin;
+package com.yuier.yuni.common.plugin;
 
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.enums.MessageTypeEnum;
+import com.yuier.yuni.common.listener.MessageTypeListener;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class FunctionPlugin {
     // 插件文件产生的 Bean
     private Object pluginBean;
     // 插件监听的消息类型
-    private MessageTypeEnum listener;
+    private MessageTypeListener listener;
     // 插件的消息探测器
     private MessageDetectorDefiner detectorDefiner;
     // 插件的描述

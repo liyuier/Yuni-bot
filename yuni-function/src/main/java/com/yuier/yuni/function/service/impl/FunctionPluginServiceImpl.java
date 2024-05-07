@@ -7,15 +7,17 @@ import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
-import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginDto;
-import com.yuier.yuni.common.domain.dto.functionplugin.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.listener.MessageTypeListener;
+import com.yuier.yuni.common.listener.dto.MessageTypeListenerDto;
+import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginDto;
+import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
-import com.yuier.yuni.common.domain.dto.functionplugin.FunctionPluginDto;
-import com.yuier.yuni.common.domain.dto.functionplugin.FunctionPluginsDto;
+import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginDto;
+import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginsDto;
 import com.yuier.yuni.common.utils.CallCore;
 import com.yuier.yuni.function.domain.global.FunctionGlobalData;
-import com.yuier.yuni.function.domain.plugin.FunctionPlugin;
-import com.yuier.yuni.function.domain.plugin.FunctionPlugins;
+import com.yuier.yuni.common.plugin.FunctionPlugin;
+import com.yuier.yuni.common.plugin.FunctionPlugins;
 import com.yuier.yuni.function.plugins.interf.YuniOrderPlugin;
 import com.yuier.yuni.function.service.FunctionPluginService;
 import lombok.extern.slf4j.Slf4j;
@@ -91,7 +93,7 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
                 funcPlugin.setPluginId(pluginId);
                 funcPlugin.setPluginBean(pluginBean);
                 funcPlugin.setDescription((String) descriptionMethod.invoke(pluginBean));
-                funcPlugin.setListener(pluginAnnotation.listener());
+                funcPlugin.setListener(new MessageTypeListener(pluginAnnotation.listener()));
                 funcPlugin.setRunMethod(runMethod);
                 MessageDetectorDefiner detectorDefiner = (MessageDetectorDefiner) detectorDefineMethod.invoke(pluginBean);
                 if (!detectorDefiner.defineValid()) {
@@ -113,6 +115,7 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
         for (FunctionPlugin plugin : functionPlugins.getPluginMap().values()) {
             FunctionPluginDto functionPluginDto = new FunctionPluginDto();
             functionPluginDto.setPluginId(plugin.getPluginId());
+            functionPluginDto.setListenerDto(new MessageTypeListenerDto(plugin.getListener()));
             functionPluginDto.setMessageDetectorDefinerDto(plugin.getDetectorDefiner().toDto());
             functionPluginsDto.getPluginDtoMap().put(functionPluginDto.getPluginId(), functionPluginDto);
 

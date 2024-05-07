@@ -1,6 +1,7 @@
-package com.yuier.yuni.common.domain.dto.functionplugin;
+package com.yuier.yuni.common.plugin.dto.functionplugin;
 
 import com.yuier.yuni.common.detector.MessageDetectorDefinerDto;
+import com.yuier.yuni.common.listener.dto.MessageTypeListenerDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FunctionPluginDto {
     String pluginId;
+    MessageTypeListenerDto listenerDto;
     MessageDetectorDefinerDto messageDetectorDefinerDto;
 }

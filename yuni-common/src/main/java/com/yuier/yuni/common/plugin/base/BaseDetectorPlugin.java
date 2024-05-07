@@ -1,4 +1,4 @@
-package com.yuier.yuni.function.domain.plugin.base;
+package com.yuier.yuni.common.plugin.base;
 
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.enums.MessageTypeEnum;
