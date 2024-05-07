@@ -1,6 +1,9 @@
 package com.yuier.yuni.core.detector.base;
 
+import com.yuier.yuni.common.domain.message.MessageChain;
+import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginDto;
+import com.yuier.yuni.core.detector.PluginForDetector;
 import com.yuier.yuni.core.detector.listener.MessageTypeListenerForUse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,14 +19,24 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BasePluginDetector {
+public class BasePluginForDetector implements PluginForDetector {
     String pluginId;
     MessageTypeListenerForUse listener;
     BaseDetectorForUse detector;
 
-    public BasePluginDetector(BaseDetectorPluginDto dto) {
+    public BasePluginForDetector(BaseDetectorPluginDto dto) {
         pluginId = dto.getPluginId();
         listener = new MessageTypeListenerForUse(dto.getListenerDto());
         detector = new BaseDetectorForUse(dto.getMessageDetectorDefinerDto());
+    }
+
+    @Override
+    public Boolean hitListener(MessageEvent messageEvent) {
+        return listener.hit(messageEvent);
+    }
+
+    @Override
+    public Boolean hitDetector(MessageChain chain) {
+        return detector.hit(chain);
     }
 }

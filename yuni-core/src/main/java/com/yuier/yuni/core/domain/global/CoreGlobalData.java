@@ -1,7 +1,7 @@
 package com.yuier.yuni.core.domain.global;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.yuier.yuni.core.detector.base.BasePluginsDetector;
+import com.yuier.yuni.core.detector.PluginsForDetector;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +22,5 @@ public class CoreGlobalData {
 
     private JsonNode postEventNode;
 
-    private BasePluginsDetector basePluginsDetector;
+    private PluginsForDetector pluginsForDetector;
 }
