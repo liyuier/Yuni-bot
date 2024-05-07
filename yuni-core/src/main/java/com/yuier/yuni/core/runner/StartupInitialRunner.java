@@ -2,7 +2,6 @@ package com.yuier.yuni.core.runner;
 
 import com.yuier.yuni.common.domain.message.dto.*;
 import com.yuier.yuni.common.domain.message.res.*;
-import com.yuier.yuni.common.domain.message.res.data.GetGroupMemberInfoResData;
 import com.yuier.yuni.common.domain.message.res.data.GetMessageResData;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @description: 启动测试类
  */
 @Component
-public class StartupTestRunner implements CommandLineRunner {
+public class StartupInitialRunner implements CommandLineRunner {
     @Autowired
     MessageChainService messageChainService;
     @Autowired
@@ -26,6 +25,8 @@ public class StartupTestRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
+        // 下面是测试用例
         SendGroupMessageDto dto = new SendGroupMessageDto();
         dto.setGroupId((long)930198267);
         dto.setMessage(messageChainService.buildChain("孩子们，我回来了").getContent());

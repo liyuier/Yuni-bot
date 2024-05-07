@@ -1,9 +1,10 @@
-package com.yuier.yuni.common.aspect;
+package com.yuier.yuni.core.aspect;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.service.AsyncService;
+import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,11 +32,15 @@ public class OneBotPostEventDispatchAspect {
     @Autowired
     AsyncService asyncService;
 
+    @Autowired
+    CoreGlobalData coreGlobalData;
+
     // 切入点为打了 @OneBotPostEntrance 注解的方法
     @Around("@annotation(com.yuier.yuni.common.annotation.OneBotPostEntrance)")
     public Object dispatchBasedOnPostType(ProceedingJoinPoint joinPoint) throws Throwable {
         // 解析入参
         JsonNode postEventDto = (JsonNode) joinPoint.getArgs()[SystemConstants.FIRST_INDEX];
+        coreGlobalData.setPostEventNode(postEventDto);
         String postType = postEventDto.get(SystemConstants.POST_KEY_FIELD.POST_TYPE).asText();
 
 

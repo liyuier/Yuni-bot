@@ -22,10 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
 /**
  * @Title: OneBotMessageEventHandler
  * @Author yuier
@@ -63,8 +59,7 @@ public class OneBotMessageEventHandler {
     @Autowired
     CallFunction callFunction;
 
-    public ResponseResult handle(ObjectNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
-        coreGlobalData.setPostEventNode(postEventNode);  // TODO 把这玩意移到 AOP 里边去
+    public ResponseResult handle(ObjectNode postEventNode) {
         MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
         eventLogUtils.printRcvMsgEventLog(messageEvent);
         MessageChain chain = messageEvent.getMessage();
@@ -74,11 +69,14 @@ public class OneBotMessageEventHandler {
 
 
     private void detectBase(MessageChain chain, ObjectNode postEventNode, MessageEvent messageEvent) {
+        if (null == coreGlobalData.getBasePluginsDetector()) {
+            return;
+        }
         for (BasePluginDetector basePluginDetector : coreGlobalData.getBasePluginsDetector().getPluginDtoHashMap().values()) {
             MessageTypeListenerForUse listener = basePluginDetector.getListener();
             BaseDetectorForUse detector = basePluginDetector.getDetector();
             if (listener.hit(messageEvent) && detector.hit(chain)) {
-                log.info("命中插件" + basePluginDetector.getPluginId());
+                log.info("命中插件 " + basePluginDetector.getPluginId());
                 callFunction.callFunctionPlugin(new CallFunctionPluginDto(basePluginDetector.getPluginId(), postEventNode));
             }
         }
