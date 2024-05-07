@@ -47,10 +47,17 @@ public class BaseDetectorForUse {
         if (null != dto.getDetectContainKeyWordDto()) {
             subDetectors.add(BeanCopyUtils.copyBean(dto.getDetectContainKeyWordDto(), DetectContainKeyWordForUse.class));
         }
+        if (null != dto.getDetectFullMatchTextDto()) {
+            subDetectors.add(BeanCopyUtils.copyBean(dto.getDetectFullMatchTextDto(), DetectFullMatchTextForUse.class));
+        }
     }
 
     public Boolean hit(MessageChain chain) {
         Boolean flag = false;
+        // 没有设定匹配模式，说明只有一个探测器
+        if (null == detectModel) {
+            detectModel = BaseDetectorModelEnum.OR;
+        }
         if (detectModel.equals(BaseDetectorModelEnum.OR)) {
             for (BaseSubDetectorForUse subDetector : subDetectors) {
                 if (subDetector.hit(chain)) {

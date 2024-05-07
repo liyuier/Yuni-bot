@@ -26,5 +26,6 @@ public class BaseDetectorDefinerDto implements MessageDetectorDefinerDto {
     DetectAtUserDto detectAtUserDto;
     DetectContainKeyWordDto detectContainKeyWordDto;
     DetectMatchRegexDto detectMatchRegexDto;
+    DetectFullMatchTextDto detectFullMatchTextDto;
 
 }
