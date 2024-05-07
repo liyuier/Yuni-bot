@@ -27,6 +27,7 @@ public class FunctionServiceImpl implements FunctionService {
     public ResponseResult initialBaseFunctionPlugins(BaseDetectorPluginsDto baseDetectorPluginsDto) {
         // 重建基础消息链处理器
         coreGlobalData.setBasePluginsDetector(new BasePluginsDetector(baseDetectorPluginsDto));
+        log.info("基础消息链处理器插件初始化成功");
 
         return ResponseResult.okResult();
     }

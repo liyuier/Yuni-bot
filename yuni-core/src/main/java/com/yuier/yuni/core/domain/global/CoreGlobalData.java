@@ -7,9 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * @Title: GlobalData
  * @Author yuier
@@ -22,7 +19,6 @@ import java.util.HashMap;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CoreGlobalData {
-    private HashMap<String, ArrayList<String>> functions;
 
     private JsonNode postEventNode;
 
