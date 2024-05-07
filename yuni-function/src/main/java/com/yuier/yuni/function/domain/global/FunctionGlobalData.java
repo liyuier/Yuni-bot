@@ -1,6 +1,6 @@
 package com.yuier.yuni.function.domain.global;
 
-import com.yuier.yuni.function.domain.plugin.FunctionPlugins;
+import com.yuier.yuni.common.plugin.FunctionPlugins;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

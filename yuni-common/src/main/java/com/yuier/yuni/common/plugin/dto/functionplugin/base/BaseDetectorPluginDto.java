@@ -1,7 +1,8 @@
-package com.yuier.yuni.common.domain.dto.functionplugin.base;
+package com.yuier.yuni.common.plugin.dto.functionplugin.base;
 
 import com.yuier.yuni.common.detector.base.dto.BaseDetectorDefinerDto;
-import com.yuier.yuni.common.domain.dto.functionplugin.FunctionPluginDto;
+import com.yuier.yuni.common.listener.dto.MessageTypeListenerDto;
+import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BaseDetectorPluginDto {
     String pluginId;
+    MessageTypeListenerDto listenerDto;
     BaseDetectorDefinerDto messageDetectorDefinerDto;
 
     public BaseDetectorPluginDto(FunctionPluginDto functionPluginDto) {
         pluginId = functionPluginDto.getPluginId();
+        listenerDto = functionPluginDto.getListenerDto();
         messageDetectorDefinerDto = (BaseDetectorDefinerDto) functionPluginDto.getMessageDetectorDefinerDto();
     }
 }

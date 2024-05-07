@@ -10,14 +10,13 @@ import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageEventService;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.function.domain.global.FunctionGlobalData;
-import com.yuier.yuni.function.domain.plugin.FunctionPlugin;
-import com.yuier.yuni.function.domain.plugin.FunctionPlugins;
+import com.yuier.yuni.common.plugin.FunctionPlugin;
+import com.yuier.yuni.common.plugin.FunctionPlugins;
 import com.yuier.yuni.function.service.FunctionCallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
@@ -59,7 +58,7 @@ public class FunctionCallServiceImpl implements FunctionCallService {
 
     @Override
     public ResponseResult callPlugin(CallFunctionPluginDto callFunctionPluginDto) {
-        MessageEvent messageEvent = messageEventService.postToMessage(callFunctionPluginDto.getJsonNode(), MessageEvent.class);
+        MessageEvent messageEvent = messageEventService.postToMessage(callFunctionPluginDto.getMessageEventNode(), MessageEvent.class);
         FunctionPlugins plugins = functionGlobalData.getPlugins();
         FunctionPlugin plugin = plugins.getPluginMap().get(callFunctionPluginDto.getPluginId());
         try {

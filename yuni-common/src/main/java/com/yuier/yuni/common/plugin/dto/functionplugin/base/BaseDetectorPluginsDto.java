@@ -1,4 +1,4 @@
-package com.yuier.yuni.common.domain.dto.functionplugin.base;
+package com.yuier.yuni.common.plugin.dto.functionplugin.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
