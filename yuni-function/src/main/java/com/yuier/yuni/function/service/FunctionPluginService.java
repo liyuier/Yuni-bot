@@ -1,7 +1,5 @@
 package com.yuier.yuni.function.service;
 
-import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
-
 /**
  * @Title: PluginService
  * @Author yuier
@@ -10,7 +8,6 @@ import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
  * @description: 插件服务接口
  */
 public interface FunctionPluginService {
-    PluginFunctionDto buildPluginFunctionDto();
 
     void scanAndBuildPlugin();
 }

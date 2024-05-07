@@ -1,17 +1,14 @@
 package com.yuier.yuni.function.service.impl;
 
 import com.yuier.yuni.common.annotation.Plugin;
-import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
-import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.listener.MessageTypeListener;
 import com.yuier.yuni.common.listener.dto.MessageTypeListenerDto;
 import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginDto;
 import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
-import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
 import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginDto;
 import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginsDto;
 import com.yuier.yuni.common.utils.CallCore;
@@ -26,8 +23,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -48,14 +43,6 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
     @Autowired
     CallCore callCore;
 
-    @Override
-    public PluginFunctionDto buildPluginFunctionDto() {
-        HashMap<String, ArrayList<String>> functionMap = new HashMap<>();
-        ArrayList<String> orders = getFunctionOrderNames();
-        functionMap.put(FuncBaseCallerEnum.ORDER.toString(), orders);
-
-        return new PluginFunctionDto(functionMap);
-    }
 
     @Override
     public void scanAndBuildPlugin() {
@@ -128,13 +115,4 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
         callCore.initialBaseDetectorPluginToCore(baseDetectorPluginsDto);
     }
 
-    private ArrayList<String> getFunctionOrderNames() {
-        ArrayList<String> orders = new ArrayList<>();
-        Map<String, Object> orderCallFunctionBeans = applicationContext.getBeansWithAnnotation(OrderCallFunction.class);
-        for (Object bean : orderCallFunctionBeans.values()) {
-            OrderCallFunction annotation = bean.getClass().getAnnotation(OrderCallFunction.class);
-            orders.add(annotation.orderWord());
-        }
-        return orders;
-    }
 }

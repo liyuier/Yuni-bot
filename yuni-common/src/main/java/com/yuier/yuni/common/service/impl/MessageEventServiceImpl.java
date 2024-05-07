@@ -19,7 +19,7 @@ import java.util.Map;
  * @Author yuier
  * @Package com.yuier.yuni.common.service.impl
  * @Date 2024/4/14 23:55
- * @description: 消息事件接口实现类
+ * @description: 消息事件 service 接口实现类
  */
 @Service
 public class MessageEventServiceImpl implements MessageEventService {

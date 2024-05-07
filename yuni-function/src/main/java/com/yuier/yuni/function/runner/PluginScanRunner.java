@@ -1,6 +1,5 @@
 package com.yuier.yuni.function.runner;
 
-import com.yuier.yuni.common.domain.dto.PluginFunctionDto;
 import com.yuier.yuni.common.utils.CallCore;
 import com.yuier.yuni.function.service.FunctionPluginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,6 @@ public class PluginScanRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        PluginFunctionDto dto = functionPluginService.buildPluginFunctionDto();
-        callCore.initializeFunction(dto);
         functionPluginService.scanAndBuildPlugin();
     }
 

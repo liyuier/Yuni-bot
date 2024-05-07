@@ -1,12 +1,9 @@
 package com.yuier.yuni.core.handler;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.yuier.yuni.common.annotation.FunctionCallerDetector;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
-import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.dto.CallFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageChain;
-import com.yuier.yuni.common.enums.FuncBaseCallerEnum;
 import com.yuier.yuni.common.enums.OneBotEventEnum;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageChainService;
@@ -66,34 +63,15 @@ public class OneBotMessageEventHandler {
     @Autowired
     CallFunction callFunction;
 
-    String[] callers = {
-            FuncBaseCallerEnum.AT.toString(),
-            FuncBaseCallerEnum.ORDER.toString(),
-            FuncBaseCallerEnum.KEYWORD.toString(),
-            FuncBaseCallerEnum.REGULAR.toString()
-    };
-
     public ResponseResult handle(ObjectNode postEventNode) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
         coreGlobalData.setPostEventNode(postEventNode);  // TODO 把这玩意移到 AOP 里边去
         MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
         eventLogUtils.printRcvMsgEventLog(messageEvent);
         MessageChain chain = messageEvent.getMessage();
-        detect(chain, messageEvent);
         detectBase(chain, postEventNode, messageEvent);
         return ResponseResult.okResult();
     }
 
-    private void detect(MessageChain chain, MessageEvent messageEvent) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException, ExecutionException, InterruptedException {
-        Map<String, Object> handlerBeans = applicationContext.getBeansWithAnnotation(FunctionCallerDetector.class);
-        for (String caller : callers) {
-            for (Object bean : handlerBeans.values()) {
-                FunctionCallerDetector annotation = bean.getClass().getAnnotation(FunctionCallerDetector.class);
-                if (annotation.callerKind().toString().equals(caller)) {
-                    Object o = asyncService.asyncReflective(bean, chain, SystemConstants.PLUGIN_CRITICAL_NAME.MSG_DETECTOR_ENTRY).get();
-                }
-            }
-        }
-    }
 
     private void detectBase(MessageChain chain, ObjectNode postEventNode, MessageEvent messageEvent) {
         for (BasePluginDetector basePluginDetector : coreGlobalData.getBasePluginsDetector().getPluginDtoHashMap().values()) {
