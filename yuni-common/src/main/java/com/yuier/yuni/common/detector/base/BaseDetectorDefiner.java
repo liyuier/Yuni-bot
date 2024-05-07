@@ -50,6 +50,8 @@ public class BaseDetectorDefiner implements MessageDetectorDefiner {
     private DetectContainKeyWord detectContainKeyWord;
     // 检测消息链是否与正则表达式相匹配
     private DetectMatchRegex detectMatchRegex;
+    // 检测消息链是否完全匹配字符串
+    private DetectFullMatchText detectFullMatchText;
     // 检测模式
     private BaseDetectorModelEnum detectModel;
 
@@ -61,6 +63,7 @@ public class BaseDetectorDefiner implements MessageDetectorDefiner {
         detector.setDetectAtUser(new DetectAtUser());
         detector.setDetectContainKeyWord(new DetectContainKeyWord());
         detector.setDetectMatchRegex(new DetectMatchRegex());
+        detector.setDetectFullMatchText(new DetectFullMatchText());
         return detector;
     }
 
@@ -244,6 +247,30 @@ public class BaseDetectorDefiner implements MessageDetectorDefiner {
         return this;
     }
 
+    public BaseDetectorDefiner addFullMatchText(String string) {
+        if (!detectFullMatchText.valid()) {
+            conditions ++;
+        }
+        detectFullMatchText.addFullText(string);
+        return this;
+    }
+
+    public BaseDetectorDefiner addFullMatchText(String[] string) {
+        if (!detectFullMatchText.valid()) {
+            conditions ++;
+        }
+        detectFullMatchText.addFullText(string);
+        return this;
+    }
+
+    public BaseDetectorDefiner addFullMatchText(ArrayList<String> string) {
+        if (!detectFullMatchText.valid()) {
+            conditions ++;
+        }
+        detectFullMatchText.addFullText(string);
+        return this;
+    }
+
     public BaseDetectorDefiner setDetectModel(BaseDetectorModelEnum model) {
         detectModel = model;
         return this;
@@ -283,6 +310,9 @@ public class BaseDetectorDefiner implements MessageDetectorDefiner {
         }
         if (detectMatchRegex.valid()) {
             dto.setDetectMatchRegexDto(detectMatchRegex.toDto());
+        }
+        if (detectFullMatchText.valid()) {
+            dto.setDetectFullMatchTextDto(detectFullMatchText.toDto());
         }
         // 设置匹配模式
         dto.setDetectModel(detectModel);

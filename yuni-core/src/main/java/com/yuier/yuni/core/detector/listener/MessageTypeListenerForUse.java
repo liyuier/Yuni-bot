@@ -25,6 +25,9 @@ public class MessageTypeListenerForUse {
     }
 
     public Boolean hit(MessageEvent messageEvent) {
+        if (listener.equals(MessageTypeEnum.ALL)) {
+            return true;
+        }
         return messageEvent.getMessageType().equals(listener.getMsgType());
     }
 }

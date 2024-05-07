@@ -2,13 +2,14 @@ package com.yuier.yuni.function.plugins;
 
 import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.annotation.function.OrderCallFunction;
+import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
 import com.yuier.yuni.common.enums.MessageTypeEnum;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.common.utils.ResponseResult;
-import com.yuier.yuni.function.plugins.interf.YuniOrderPlugin;
+import com.yuier.yuni.function.plugins.interf.BaseDetectorPlugin;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,16 +27,20 @@ import java.util.Objects;
  * @description: 原神，启动！
  */
 @Component
-@Plugin(id = "GenShinStart", listener = MessageTypeEnum.ALL)
-@OrderCallFunction(orderWord = "原神")
-public class GenShinStart implements YuniOrderPlugin {
+@Plugin(id = "GenShinStart", listener = MessageTypeEnum.GROUP)
+//@OrderCallFunction(orderWord = "原神")
+public class GenShinStart implements BaseDetectorPlugin {
 
-    @Autowired
-    Environment environment;
     @Autowired
     CallOneBot callOneBot;
     @Autowired
     MessageChainService messageChainService;
+
+    @Override
+    public BaseDetectorDefiner detectorDefine() {
+        return BaseDetectorDefiner.build()
+                .addFullMatchText("/原神");
+    }
 
     @Value("${bot.owner}")
     private Long ownerQQ;
