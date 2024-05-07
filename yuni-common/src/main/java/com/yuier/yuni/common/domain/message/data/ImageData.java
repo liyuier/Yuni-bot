@@ -47,6 +47,10 @@ public class ImageData extends MessageData {
      */
     private String summary;
 
+    public ImageData(String image) {
+        this.file = image;
+    }
+
     @Override
     public String toString() {
         return "[图片" + ((null == this.type) ? "" : "<闪照>") + "<file=" + this.file + ">" + ((null == this.url) ? "" : "<url=" + this.url  + ">") +"]";

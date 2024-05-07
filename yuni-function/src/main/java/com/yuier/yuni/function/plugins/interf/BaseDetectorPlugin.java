@@ -12,6 +12,7 @@ import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
  */
 public interface BaseDetectorPlugin extends YuniPlugin {
 
+    // 插件应用的消息探测器
     @DetectorDefiner
     BaseDetectorDefiner detectorDefine();
 }

@@ -8,9 +8,9 @@ import com.yuier.yuni.common.annotation.MessageDataEntity;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageSeg;
-import com.yuier.yuni.common.domain.message.data.MessageData;
-import com.yuier.yuni.common.domain.message.data.TextData;
+import com.yuier.yuni.common.domain.message.data.*;
 import com.yuier.yuni.common.enums.MessageDataEnum;
+import com.yuier.yuni.common.enums.MessageTypeEnum;
 import com.yuier.yuni.common.service.MessageChainService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -113,4 +114,29 @@ public class MessageChainServiceImpl implements MessageChainService {
         chain.getContent().add(new MessageSeg(MessageDataEnum.TEXT.toString(), new TextData(msgStr)));
         return chain;
     }
+
+    // 传入文件路径，创建一个消息链
+    @Override
+    public MessageChain buildFileChain(String file) {
+        MessageChain chain = new MessageChain();
+        chain.setContent(new ArrayList<>());
+        chain.getContent().add(new MessageSeg(MessageDataEnum.FILE.toString(), new FileData(file)));
+        return chain;
+    }
+
+    // 传入图片路径，创建一个消息链
+    @Override
+    public MessageChain buildImageChainByLocalFile(String image) {
+        String[] imageName = image.split("\\.");
+        if (Arrays.stream((new String[] {"jpg", "jpeg", "png", "gif"}))
+                .noneMatch(s -> s.equals(imageName[imageName.length - 1]))) {
+            throw new RuntimeException("传入的文件不是图片文件！");
+        }
+        MessageChain chain = new MessageChain();
+        chain.setContent(new ArrayList<>());
+        chain.getContent().add(new MessageSeg(MessageDataEnum.IMAGE.toString(), new ImageData(image)));
+        return chain;
+    }
+
+
 }
