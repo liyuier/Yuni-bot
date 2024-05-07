@@ -20,4 +20,8 @@ public interface MessageChainService {
 
     MessageChain buildChain(String msgStr);
 
+    MessageChain buildFileChain(String file);
+
+    MessageChain buildImageChainByLocalFile(String image);
+
 }

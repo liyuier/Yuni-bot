@@ -50,5 +50,5 @@ base-urls:
   function: http://url/to/function/
   dd: http://url/to/dd/
 
-bot:
-  owner: qq_of_owner
+path:
+  setu: path/to/setu

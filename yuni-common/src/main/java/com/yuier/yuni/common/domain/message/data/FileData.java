@@ -29,6 +29,10 @@ public class FileData extends MessageData {
      */
     private String name;
 
+    public FileData(String file) {
+        this.file = file;
+    }
+
     @Override
     public String toString() {
         return "[文件" + "<file=" + this.file + ">]";

@@ -1,7 +1,6 @@
 package com.yuier.yuni.function.plugins;
 
 import com.yuier.yuni.common.annotation.Plugin;
-import com.yuier.yuni.common.annotation.function.OrderCallFunction;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
@@ -13,7 +12,6 @@ import com.yuier.yuni.function.plugins.interf.BaseDetectorPlugin;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -28,7 +26,6 @@ import java.util.Objects;
  */
 @Component
 @Plugin(id = "GenShinStart", listener = MessageTypeEnum.GROUP)
-//@OrderCallFunction(orderWord = "原神")
 public class GenShinStart implements BaseDetectorPlugin {
 
     @Autowired
