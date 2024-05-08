@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.domain.user;
+package com.yuier.yuni.common.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

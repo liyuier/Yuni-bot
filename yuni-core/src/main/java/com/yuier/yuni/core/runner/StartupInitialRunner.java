@@ -2,10 +2,8 @@ package com.yuier.yuni.core.runner;
 
 import com.yuier.yuni.common.domain.message.dto.*;
 import com.yuier.yuni.common.domain.message.res.*;
-import com.yuier.yuni.common.domain.message.res.data.GetMessageResData;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
-import com.yuier.yuni.core.domain.global.detector.PluginsForDetect;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -34,15 +32,6 @@ public class StartupInitialRunner implements CommandLineRunner {
         dto.setGroupId((long)930198267);
         dto.setMessage(messageChainService.buildChain("孩子们，我回来了").getContent());
         dto.setAutoEscape(false);
-        SendMessageRes res = callOneBot.sendGroupMessage(dto);
-//        NoDataRes noDataRes = callOneBot.deleteMsg(new DeleteMsgDto(res.getData().getMessageId()));
-//        NoDataRes noDataRes = callOneBot.sendLike(new SendLikeDto(2937818202L));
-//        GetFriendListRes friendList = callOneBot.getFriendList();
-//        callOneBot.setFriendAddRequest(new SetFriendAddRequestDto("u_N3cMsQzNG31ZGSmth2roUg1713885973", true));
-//        GetGroupInfoRes groupInfo = callOneBot.getGroupInfo(new GetGroupInfoDto(930198267L));
-//        GetGroupListRes groupList = callOneBot.getGroupList();
-//        GetGroupMemberInfoResData groupMemberInfo = callOneBot.getGroupMemberInfo(new GetGroupMemberInfoDto(930198267L, 2937818202L));
-//        GetGroupMemberListRes groupMemberListRes = callOneBot.getGroupMemberListRes(new GetGroupMemberListDto(930198267L));
-        GetMessageResData message = callOneBot.getMessage(new GetMessageDto(-2147476864L));
+        callOneBot.sendGroupMessage(dto);
     }
 }
