@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.detector;
+package com.yuier.yuni.core.domain.global.detector;
 
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageEvent;

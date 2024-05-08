@@ -12,5 +12,5 @@ import org.apache.poi.ss.formula.functions.T;
  * @description: 以指令触发的功能插件接口
  */
 public interface YuniOrderPlugin extends YuniPlugin {
-    ResponseResult<T> run(MessageEvent messageEvent);
+
 }

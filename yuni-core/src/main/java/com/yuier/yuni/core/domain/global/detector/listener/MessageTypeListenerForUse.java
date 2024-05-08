@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.detector.listener;
+package com.yuier.yuni.core.domain.global.detector.listener;
 
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.enums.MessageTypeEnum;

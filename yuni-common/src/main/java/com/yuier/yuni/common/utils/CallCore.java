@@ -1,7 +1,7 @@
 package com.yuier.yuni.common.utils;
 
-import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginsDto;
-import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.function.positive.PositivePluginsDto;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,13 +30,13 @@ public class CallCore {
     }
 
 
-    public ResponseResult initialPluginsToCore(FunctionPluginsDto functionPluginsDto) {
-        String url = getBaseUrl() + "function/init_func_plugins";
-        return yuniHttpService.postRequestForObject(url, functionPluginsDto, ResponseResult.class);
+    public ResponseResult initialBaseDetectorPluginToCore(BaseDetectorPluginsDto baseDetectorPluginsDto) {
+        String url = getBaseUrl() + "function/init_func/base";
+        return yuniHttpService.postRequestForObject(url, baseDetectorPluginsDto, ResponseResult.class);
     }
 
-    public ResponseResult initialBaseDetectorPluginToCore(BaseDetectorPluginsDto baseDetectorPluginsDto) {
-        String url = getBaseUrl() + "function/init_func_base_plugins";
-        return yuniHttpService.postRequestForObject(url, baseDetectorPluginsDto, ResponseResult.class);
+    public ResponseResult initialPositivePluginToCore(PositivePluginsDto positivePluginDto) {
+        String url = getBaseUrl() + "function/init_func/positive";
+        return yuniHttpService.postRequestForObject(url, positivePluginDto, ResponseResult.class);
     }
 }

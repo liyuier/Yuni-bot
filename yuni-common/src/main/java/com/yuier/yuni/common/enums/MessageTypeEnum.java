@@ -14,7 +14,8 @@ public enum MessageTypeEnum {
 
     PRIVATE("private", "私聊消息"),
     GROUP("group", "群聊消息"),
-    ALL("all", "全部消息类型");
+    ALL("all", "全部消息类型"),
+    NONE("none", "不监听消息，用于主动触发的插件");
 
     private final String msgType;
     private final String description;

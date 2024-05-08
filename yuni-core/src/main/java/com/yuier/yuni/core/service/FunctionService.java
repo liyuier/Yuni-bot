@@ -1,6 +1,7 @@
 package com.yuier.yuni.core.service;
 
-import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.function.positive.PositivePluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 
 /**
@@ -13,4 +14,6 @@ import com.yuier.yuni.common.utils.ResponseResult;
 public interface FunctionService {
 
     ResponseResult initialBaseFunctionPlugins(BaseDetectorPluginsDto baseDetectorPluginsDto);
+
+    ResponseResult initialPositiveFunctionPlugins(PositivePluginsDto positivePluginDto);
 }

@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.detector.base;
+package com.yuier.yuni.core.domain.global.detector.base;
 
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageSeg;

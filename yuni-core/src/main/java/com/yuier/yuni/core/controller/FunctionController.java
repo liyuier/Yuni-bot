@@ -1,7 +1,7 @@
 package com.yuier.yuni.core.controller;
 
-import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginsDto;
-import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.function.positive.PositivePluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.core.service.FunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +24,15 @@ public class FunctionController {
     @Autowired
     FunctionService functionService;
 
-    @PostMapping("/init_func_plugins")
-    public ResponseResult initializeFunctionPlugins(@RequestBody FunctionPluginsDto functionPluginsDto) {
+    @PostMapping("/init_func/base")
+    public ResponseResult initializeFunctionBasePlugins(@RequestBody BaseDetectorPluginsDto baseDetectorPluginsDto) {
+        functionService.initialBaseFunctionPlugins(baseDetectorPluginsDto);
         return ResponseResult.okResult();
     }
 
-    @PostMapping("/init_func_base_plugins")
-    public ResponseResult initializeFunctionBasePlugins(@RequestBody BaseDetectorPluginsDto baseDetectorPluginsDto) {
-        functionService.initialBaseFunctionPlugins(baseDetectorPluginsDto);
+    @PostMapping("/init_func/positive")
+    public ResponseResult initializeFunctionPositivePlugins(@RequestBody PositivePluginsDto positivePluginDto) {
+        functionService.initialPositiveFunctionPlugins(positivePluginDto);
         return ResponseResult.okResult();
     }
 
