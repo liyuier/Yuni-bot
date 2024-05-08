@@ -33,7 +33,8 @@ public class YuniFunctionCollect implements PositivePlugin {
     public void run() {
         callOneBot.sendGroupMessage(new SendGroupMessageDto(
                 287900567L,
-                messageChainService.buildChain("偶哈哟，民那桑！")
+                messageChainService.buildChain("【腾讯文档】uni仙贝还要开展哪些业务呢？\n" +
+                        "https://docs.qq.com/sheet/DV0dTbFRZZmlWbElQ?tab=BB08J2")
         ));
     }
 
