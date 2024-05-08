@@ -12,16 +12,16 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * @Title: Ohayou
+ * @Title: YuniFunctionCollect
  * @Author yuier
  * @Package com.yuier.yuni.function.plugins
- * @Date 2024/5/8 23:11
- * @description: 偶哈哟，民那桑
+ * @Date 2024/5/9 0:59
+ * @description: uni 仙贝功能意见收集
  */
 @Slf4j
 @Component
 @Plugin(id = "Ohayou", listener = MessageTypeEnum.NONE)
-public class Ohayou implements PositivePlugin {
+public class YuniFunctionCollect implements PositivePlugin {
 
     @Autowired
     CallOneBot callOneBot;
@@ -29,19 +29,16 @@ public class Ohayou implements PositivePlugin {
     MessageChainService messageChainService;
 
     @Override
-    public String description() {
-        return "偶哈哟，民那桑";
+    @Scheduled(cron = "0 20 * * *")
+    public void run() {
+        callOneBot.sendGroupMessage(new SendGroupMessageDto(
+                287900567L,
+                messageChainService.buildChain("偶哈哟，民那桑！")
+        ));
     }
 
     @Override
-    @Scheduled(cron = "30 8 * * *")
-    public void run() {
-        Long[] groups = new Long[] {930198267L, 287900567L};
-        for (Long groupId : groups) {
-            callOneBot.sendGroupMessage(new SendGroupMessageDto(
-                    groupId,
-                    messageChainService.buildChain("偶哈哟，民那桑！")
-            ));
-        }
+    public String description() {
+        return "uni 仙贝功能意见收集";
     }
 }
