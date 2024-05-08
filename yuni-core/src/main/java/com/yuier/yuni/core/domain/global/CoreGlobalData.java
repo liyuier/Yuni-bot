@@ -1,10 +1,10 @@
 package com.yuier.yuni.core.domain.global;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.yuier.yuni.core.detector.PluginsForDetector;
+import com.yuier.yuni.core.domain.global.detector.PluginsForDetect;
+import com.yuier.yuni.core.domain.global.positiveplugins.PositivePlugins;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,11 +16,17 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@NoArgsConstructor
 @AllArgsConstructor
 public class CoreGlobalData {
 
     private JsonNode postEventNode;
 
-    private PluginsForDetector pluginsForDetector;
+    private PluginsForDetect pluginsForDetect;
+
+    private PositivePlugins positivePlugins;
+
+    public CoreGlobalData() {
+        this.pluginsForDetect = new PluginsForDetect();
+        this.positivePlugins = new PositivePlugins();
+    }
 }

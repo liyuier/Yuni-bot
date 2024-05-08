@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.detector.base;
+package com.yuier.yuni.core.domain.global.detector.base;
 
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.data.TextData;
@@ -9,24 +9,24 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 
 /**
- * @Title: DetectPrefixForUse
+ * @Title: DetectSuffixForUse
  * @Author yuier
  * @Package com.yuier.yuni.core.detector.base
- * @Date 2024/5/6 23:44
- * @description: 实际使用的前缀探测器
+ * @Date 2024/5/6 23:46
+ * @description: 实际使用的后缀探测器
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetectPrefixForUse implements BaseSubDetectorForUse{
-    private ArrayList<String> prefixes;
+public class DetectSuffixForUse implements BaseSubDetectorForUse{
+    private ArrayList<String> suffixes;
 
     @Override
     public Boolean hit(MessageChain chain) {
-        TextData data = chain.firstTextData();
+        TextData data = chain.lastTextData();
         if (null != data) {
-            for (String pre : prefixes) {
-                if (data.getText().startsWith(pre)) {
+            for (String suf : suffixes) {
+                if (data.getText().startsWith(suf)) {
                     return true;
                 }
             }

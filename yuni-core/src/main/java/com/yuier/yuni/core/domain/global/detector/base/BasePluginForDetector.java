@@ -1,10 +1,10 @@
-package com.yuier.yuni.core.detector.base;
+package com.yuier.yuni.core.domain.global.detector.base;
 
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageEvent;
-import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginDto;
-import com.yuier.yuni.core.detector.PluginForDetector;
-import com.yuier.yuni.core.detector.listener.MessageTypeListenerForUse;
+import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginDto;
+import com.yuier.yuni.core.domain.global.detector.PluginForDetector;
+import com.yuier.yuni.core.domain.global.detector.listener.MessageTypeListenerForUse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

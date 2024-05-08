@@ -1,4 +1,4 @@
-package com.yuier.yuni.core.detector;
+package com.yuier.yuni.core.domain.global.detector;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,10 +14,10 @@ import java.util.HashMap;
  */
 @Data
 @AllArgsConstructor
-public class PluginsForDetector {
+public class PluginsForDetect {
     HashMap<String, PluginForDetector> pluginMap;
 
-    public PluginsForDetector() {
+    public PluginsForDetect() {
         pluginMap = new HashMap<>();
     }
 }

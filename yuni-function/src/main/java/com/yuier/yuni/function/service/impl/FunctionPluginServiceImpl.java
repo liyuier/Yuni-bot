@@ -6,16 +6,14 @@ import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.listener.MessageTypeListener;
-import com.yuier.yuni.common.listener.dto.MessageTypeListenerDto;
-import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginDto;
-import com.yuier.yuni.common.plugin.dto.functionplugin.base.BaseDetectorPluginsDto;
-import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginDto;
-import com.yuier.yuni.common.plugin.dto.functionplugin.FunctionPluginsDto;
+import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginDto;
+import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.function.positive.PositivePluginsDto;
 import com.yuier.yuni.common.utils.CallCore;
 import com.yuier.yuni.function.domain.global.FunctionGlobalData;
 import com.yuier.yuni.common.plugin.FunctionPlugin;
 import com.yuier.yuni.common.plugin.FunctionPlugins;
-import com.yuier.yuni.function.plugins.interf.YuniOrderPlugin;
+import com.yuier.yuni.function.plugins.interf.PositivePlugin;
 import com.yuier.yuni.function.service.FunctionPluginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +56,7 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
         try {
             // 对每个插件
             for (Object pluginBean : pluginMap.values()) {
-                if (pluginBean instanceof YuniOrderPlugin) {
-                    continue;
-                }
+
                 // 检查合法性
                 Plugin pluginAnnotation = pluginBean.getClass().getAnnotation(Plugin.class);
                 String pluginId = pluginAnnotation.id();
@@ -68,8 +64,6 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
                     log.error("插件" + pluginBean + "的 ID " + pluginId + " 与其他插件重复，请检查！");
                     continue;
                 }
-                // detectorDefine 方法
-                Method detectorDefineMethod = pluginBean.getClass().getDeclaredMethod(SystemConstants.PLUGIN_CRITICAL_NAME.DETECTOR_DEFINE);
                 // description 方法
                 Method descriptionMethod = pluginBean.getClass().getDeclaredMethod(SystemConstants.PLUGIN_CRITICAL_NAME.DESCRIPTION);
                 // run 方法
@@ -82,12 +76,17 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
                 funcPlugin.setDescription((String) descriptionMethod.invoke(pluginBean));
                 funcPlugin.setListener(new MessageTypeListener(pluginAnnotation.listener()));
                 funcPlugin.setRunMethod(runMethod);
-                MessageDetectorDefiner detectorDefiner = (MessageDetectorDefiner) detectorDefineMethod.invoke(pluginBean);
-                if (!detectorDefiner.defineValid()) {
-                    log.error("插件 " + pluginBean + " 的消息链探测器定义无效！请检查。");
-                    continue;
+                // 如果插件不是主动触发，那么需要定义一个消息链探测器
+                if (!(pluginBean instanceof PositivePlugin)) {
+                    // detectorDefine 方法
+                    Method detectorDefineMethod = pluginBean.getClass().getDeclaredMethod(SystemConstants.PLUGIN_CRITICAL_NAME.DETECTOR_DEFINE);
+                    MessageDetectorDefiner detectorDefiner = (MessageDetectorDefiner) detectorDefineMethod.invoke(pluginBean);
+                    if (!detectorDefiner.defineValid()) {
+                        log.error("插件 " + pluginBean + " 的消息链探测器定义无效！请检查。");
+                        continue;
+                    }
+                    funcPlugin.setDetectorDefiner(detectorDefiner);
                 }
-                funcPlugin.setDetectorDefiner(detectorDefiner);
                 functionPlugins.getPluginMap().put(pluginId, funcPlugin);
             }
         } catch (Exception e) {
@@ -97,22 +96,22 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
     }
 
     private void initialPluginsToCore(FunctionPlugins functionPlugins) {
-        FunctionPluginsDto functionPluginsDto = new FunctionPluginsDto();
         BaseDetectorPluginsDto baseDetectorPluginsDto = new BaseDetectorPluginsDto();
+        PositivePluginsDto positivePluginsDto = new PositivePluginsDto();
         for (FunctionPlugin plugin : functionPlugins.getPluginMap().values()) {
-            FunctionPluginDto functionPluginDto = new FunctionPluginDto();
-            functionPluginDto.setPluginId(plugin.getPluginId());
-            functionPluginDto.setListenerDto(new MessageTypeListenerDto(plugin.getListener()));
-            functionPluginDto.setMessageDetectorDefinerDto(plugin.getDetectorDefiner().toDto());
-            functionPluginsDto.getPluginDtoMap().put(functionPluginDto.getPluginId(), functionPluginDto);
-
-            // 如果插件使用了基础消息链探测器
-            if (plugin.useDetector(BaseDetectorDefiner.class)) {
-                BaseDetectorPluginDto baseDetectorPluginDto = new BaseDetectorPluginDto(functionPluginDto);
-                baseDetectorPluginsDto.getPluginDtoMap().put(baseDetectorPluginDto.getPluginId(), baseDetectorPluginDto);
+            // 如果是主动消息链探测器
+            if (plugin.isPositive()) {
+                positivePluginsDto.getPositivePluginIdList().add(plugin.getPluginId());
+            } else {
+                // 如果插件使用了基础消息链探测器
+                if (plugin.useDetector(BaseDetectorDefiner.class)) {
+                    BaseDetectorPluginDto baseDetectorPluginDto = new BaseDetectorPluginDto(plugin);
+                    baseDetectorPluginsDto.getPluginDtoMap().put(baseDetectorPluginDto.getPluginId(), baseDetectorPluginDto);
+                }
             }
         }
         callCore.initialBaseDetectorPluginToCore(baseDetectorPluginsDto);
+        callCore.initialPositivePluginToCore(positivePluginsDto);
     }
 
 }

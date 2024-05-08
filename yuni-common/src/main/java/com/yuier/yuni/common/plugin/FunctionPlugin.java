@@ -34,6 +34,10 @@ public class FunctionPlugin {
     // 插件的入口
     private Method runMethod;
 
+    public Boolean isPositive() {
+        return null == detectorDefiner;
+    }
+
     public Boolean useDetector(Class<?> detectorClass) {
         return detectorClass.isInstance(detectorDefiner);
     }

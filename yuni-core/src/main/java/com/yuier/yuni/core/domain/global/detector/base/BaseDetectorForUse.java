@@ -1,7 +1,6 @@
-package com.yuier.yuni.core.detector.base;
+package com.yuier.yuni.core.domain.global.detector.base;
 
 import com.yuier.yuni.common.detector.base.dto.BaseDetectorDefinerDto;
-import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
 import com.yuier.yuni.common.utils.BeanCopyUtils;
@@ -9,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
