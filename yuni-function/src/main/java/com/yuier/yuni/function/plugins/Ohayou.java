@@ -34,7 +34,7 @@ public class Ohayou implements PositivePlugin {
     }
 
     @Override
-    @Scheduled(cron = "0 30 8 * * *")
+    @Scheduled(cron = "0 30 8 * * ?")
     public void run() {
         Long[] groups = new Long[] {930198267L, 287900567L};
         for (Long groupId : groups) {
