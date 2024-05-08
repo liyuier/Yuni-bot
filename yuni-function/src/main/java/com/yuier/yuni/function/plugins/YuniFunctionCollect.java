@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@Plugin(id = "Ohayou", listener = MessageTypeEnum.NONE)
+@Plugin(id = "YuniFunctionCollect", listener = MessageTypeEnum.NONE)
 public class YuniFunctionCollect implements PositivePlugin {
 
     @Autowired
