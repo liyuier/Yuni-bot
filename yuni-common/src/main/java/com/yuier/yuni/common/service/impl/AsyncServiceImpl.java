@@ -18,9 +18,16 @@ import java.util.concurrent.CompletableFuture;
 public class AsyncServiceImpl implements AsyncService{
 
     @Override
-    public CompletableFuture<Object> asyncReflective(Object targetBean, Object argsObject, String targetMethodName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public CompletableFuture<Object> asyncReflective(Object targetBean, String targetMethodName, Object argsObject) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method targetMethod = targetBean.getClass().getDeclaredMethod(targetMethodName, argsObject.getClass());
         targetMethod.setAccessible(true);
         return CompletableFuture.completedFuture(targetMethod.invoke(targetBean, argsObject));
+    }
+
+    @Override
+    public CompletableFuture<Object> asyncReflective(Object targetBean, String targetMethodName, Object... argsObjects) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method targetMethod = targetBean.getClass().getDeclaredMethod(targetMethodName, argsObjects.getClass());
+        targetMethod.setAccessible(true);
+        return CompletableFuture.completedFuture(targetMethod.invoke(targetBean, argsObjects));
     }
 }

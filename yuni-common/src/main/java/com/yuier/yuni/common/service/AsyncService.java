@@ -14,5 +14,8 @@ import java.util.concurrent.CompletableFuture;
 public interface AsyncService {
 
     @Async
-    CompletableFuture<Object> asyncReflective(Object targetBean, Object argsObject, String targetMethodName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+    CompletableFuture<Object> asyncReflective(Object targetBean, String targetMethodName, Object argsObject) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+
+    @Async
+    CompletableFuture<Object> asyncReflective(Object targetBean, String targetMethodName, Object... argsObjects) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
 }

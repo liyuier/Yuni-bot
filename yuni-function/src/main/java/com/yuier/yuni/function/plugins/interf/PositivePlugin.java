@@ -8,5 +8,5 @@ package com.yuier.yuni.function.plugins.interf;
  * @description: 主动生效的功能插件接口
  */
 public interface PositivePlugin extends YuniPlugin {
-    
+    void run();
 }

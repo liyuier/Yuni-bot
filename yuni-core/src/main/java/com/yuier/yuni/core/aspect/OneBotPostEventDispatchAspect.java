@@ -49,7 +49,7 @@ public class OneBotPostEventDispatchAspect {
         for (Object bean : handlerBeans.values()) {
             OneBotEventHandler annotation = bean.getClass().getAnnotation(OneBotEventHandler.class);
             if (annotation.eventType().toString().equals(postType)) {
-                return asyncService.asyncReflective(bean, postEventDto, SystemConstants.PLUGIN_CRITICAL_NAME.HANDLER_ENTRY).get();
+                return asyncService.asyncReflective(bean, SystemConstants.PLUGIN_CRITICAL_NAME.HANDLER_ENTRY, postEventDto).get();
             }
         }
 
