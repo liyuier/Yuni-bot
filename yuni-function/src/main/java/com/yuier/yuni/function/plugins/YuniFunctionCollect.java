@@ -29,7 +29,7 @@ public class YuniFunctionCollect implements PositivePlugin {
     MessageChainService messageChainService;
 
     @Override
-    @Scheduled(cron = "0 0 20 * * *")
+    @Scheduled(cron = "0 0 20 * * ?")
     public void run() {
         callOneBot.sendGroupMessage(new SendGroupMessageDto(
                 287900567L,
