@@ -13,4 +13,6 @@ import org.apache.poi.ss.formula.functions.T;
  */
 public interface YuniOrderPlugin extends YuniPlugin {
 
+    // 插件入口
+    ResponseResult<T> run(MessageEvent messageEvent);
 }

@@ -5,6 +5,7 @@ import com.yuier.yuni.core.domain.global.detector.PluginsForDetect;
 import com.yuier.yuni.core.domain.global.positiveplugins.PositivePlugins;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,6 +25,11 @@ public class CoreGlobalData {
     private PluginsForDetect pluginsForDetect;
 
     private PositivePlugins positivePlugins;
+
+    @Value("${bot.self}")
+    private Long botId;
+
+    private String nickname = "uni";
 
     public CoreGlobalData() {
         this.pluginsForDetect = new PluginsForDetect();

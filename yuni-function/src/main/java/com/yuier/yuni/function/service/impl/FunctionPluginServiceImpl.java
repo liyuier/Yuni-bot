@@ -4,7 +4,6 @@ import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
-import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.listener.MessageTypeListener;
 import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginDto;
 import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginsDto;
@@ -21,6 +20,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -67,7 +68,16 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
                 // description 方法
                 Method descriptionMethod = pluginBean.getClass().getDeclaredMethod(SystemConstants.PLUGIN_CRITICAL_NAME.DESCRIPTION);
                 // run 方法
-                Method runMethod = pluginBean.getClass().getDeclaredMethod(SystemConstants.PLUGIN_CRITICAL_NAME.FUNC_PLUGIN_ENTRY, MessageEvent.class);
+                Method runMethod = null;
+                List<Method> methodList = Arrays.stream(pluginBean.getClass().getMethods()).filter(o -> o.getName().equals(SystemConstants.PLUGIN_CRITICAL_NAME.FUNC_PLUGIN_ENTRY)).toList();
+                if (methodList.size() > 1) {
+                    log.error("插件" + pluginBean + "定义了多个入口方法，请检查！");
+                    continue;
+                } else if (methodList.isEmpty()) {
+                    log.error("插件" + pluginBean + "没有定义入口方法，请检查！");
+                    continue;
+                }
+                runMethod = methodList.get(SystemConstants.FIRST_INDEX);
 
                 // 创建 plugin 实例
                 FunctionPlugin funcPlugin = new FunctionPlugin();

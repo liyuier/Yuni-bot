@@ -1,7 +1,7 @@
 package com.yuier.yuni.core.runner;
 
 import com.yuier.yuni.common.domain.message.dto.*;
-import com.yuier.yuni.common.domain.message.res.*;
+import com.yuier.yuni.common.domain.message.res.data.GetLoginInfoResData;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
@@ -27,6 +27,10 @@ public class StartupInitialRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
+        coreGlobalData.setBotId(data.getUserId());
+        coreGlobalData.setNickname(data.getNickname());
+
         // 下面是测试用例
         SendGroupMessageDto dto = new SendGroupMessageDto();
         dto.setGroupId((long)930198267);

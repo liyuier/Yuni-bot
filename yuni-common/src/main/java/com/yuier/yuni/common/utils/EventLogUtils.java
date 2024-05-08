@@ -33,6 +33,13 @@ public class EventLogUtils {
     @Value("${bot.self}")
     private Long botSelf;
 
+    @Value("${bot.self}")
+    private Long botSelfId;
+
+    @Value("${bot.self-name}")
+    private String botSelfName;
+
+
     private String escapeString(String input) {
         StringBuilder escaped = new StringBuilder();
         for (char c : input.toCharArray()) {
@@ -115,19 +122,19 @@ public class EventLogUtils {
 
     public String getSendMessageLog(SendMessageDto dto) {
         StringBuilder sb = new StringBuilder();
-        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
-        String botName = data.getNickname();
-        Long botId = data.getUserId();
+//        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
+//        String botName = data.getNickname();
+//        Long botId = data.getUserId();
         if (dto.getMessageType().equals(MessageTypeEnum.PRIVATE.toString())) {
             sb.append((new SimpleDateFormat("yyyy-MM-dd HH:mm"))
                     .format(new Date(System.currentTimeMillis()))).append(" ")
-                    .append("bot ").append(buildBrightRedLog(botName + "<" + botId + "> "))
+                    .append("bot ").append(buildBrightRedLog(botSelfName + "<" + botSelfId + "> "))
                     .append("向用户 ").append(buildCyanLog(dto.getUserId().toString())).append(" ")
                     .append("发送消息 ").append(buildBrightBlueLog(dto.toString()));
         } else if (dto.getMessageType().equals(MessageTypeEnum.GROUP.toString())) {
             sb.append((new SimpleDateFormat("yyyy-MM-dd HH:mm"))
                             .format(new Date(System.currentTimeMillis() * 1000L))).append(" ")
-                    .append("bot ").append(buildBrightRedLog(botName + "<" + botId + "> "))
+                    .append("bot ").append(buildBrightRedLog(botSelfName + "<" + botSelfId + "> "))
                     .append("向群聊 ").append(buildCyanLog(dto.getGroupId().toString())).append(" ")
                     .append("发送消息 ").append(buildBrightBlueLog(dto.toString()));
         }
@@ -136,12 +143,12 @@ public class EventLogUtils {
     
     public String getSendPrivateMessageLog(SendPrivateMessageDto dto) {
         StringBuilder sb = new StringBuilder();
-        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
-        String botName = data.getNickname();
-        Long botId = data.getUserId();
+//        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
+//        String botName = data.getNickname();
+//        Long botId = data.getUserId();
         sb.append((new SimpleDateFormat("yyyy-MM-dd HH:mm"))
                         .format(new Date(System.currentTimeMillis()))).append(" ")
-                .append("bot ").append(buildBrightRedLog(botName + "<" + botId + "> "))
+                .append("bot ").append(buildBrightRedLog(botSelfName + "<" + botSelfId + "> "))
                 .append("向用户 ").append(buildCyanLog(dto.getUserId().toString())).append(" ")
                 .append("发送消息 ").append(buildBrightBlueLog(dto.toString()));
         return escapeString(sb.toString());
@@ -149,12 +156,12 @@ public class EventLogUtils {
 
     public String getSendGroupMessageLog(SendGroupMessageDto dto) {
         StringBuilder sb = new StringBuilder();
-        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
-        String botName = data.getNickname();
-        Long botId = data.getUserId();
+//        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
+//        String botName = data.getNickname();
+//        Long botId = data.getUserId();
         sb.append((new SimpleDateFormat("yyyy-MM-dd HH:mm"))
                         .format(new Date(System.currentTimeMillis()))).append(" ")
-                .append("bot ").append(buildBrightRedLog(botName + "<" + botId + "> "))
+                .append("bot ").append(buildBrightRedLog(botSelfName + "<" + botSelfId + "> "))
                 .append("向群聊 ").append(buildCyanLog(dto.getGroupId().toString())).append(" ")
                 .append("发送消息 ").append(buildBrightBlueLog(dto.toString()));
         return escapeString(sb.toString());

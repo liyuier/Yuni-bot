@@ -16,7 +16,4 @@ public interface YuniPlugin {
     // 插件描述
     String description();
 
-    // 插件入口
-    ResponseResult<T> run(MessageEvent messageEvent);
-
 }
