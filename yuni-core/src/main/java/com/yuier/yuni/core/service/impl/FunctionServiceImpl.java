@@ -1,8 +1,8 @@
 package com.yuier.yuni.core.service.impl;
 
-import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginDto;
-import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginsDto;
-import com.yuier.yuni.common.plugin.dto.function.positive.PositivePluginsDto;
+import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginDto;
+import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.positive.PositivePluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.core.domain.global.detector.PluginForDetector;
 import com.yuier.yuni.core.domain.global.detector.base.BasePluginForDetector;
@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
