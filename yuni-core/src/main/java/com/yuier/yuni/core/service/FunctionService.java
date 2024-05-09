@@ -1,7 +1,7 @@
 package com.yuier.yuni.core.service;
 
-import com.yuier.yuni.common.plugin.dto.function.base.BaseDetectorPluginsDto;
-import com.yuier.yuni.common.plugin.dto.function.positive.PositivePluginsDto;
+import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.positive.PositivePluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 
 /**

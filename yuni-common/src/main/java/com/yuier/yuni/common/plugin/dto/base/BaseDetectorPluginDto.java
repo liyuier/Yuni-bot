@@ -1,4 +1,4 @@
-package com.yuier.yuni.common.plugin.dto.function.base;
+package com.yuier.yuni.common.plugin.dto.base;
 
 import com.yuier.yuni.common.detector.base.dto.BaseDetectorDefinerDto;
 import com.yuier.yuni.common.listener.dto.MessageTypeListenerDto;

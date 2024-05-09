@@ -1,4 +1,4 @@
-package com.yuier.yuni.common.plugin.dto.function.positive;
+package com.yuier.yuni.common.plugin.dto.positive;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
