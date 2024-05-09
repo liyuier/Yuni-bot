@@ -8,7 +8,7 @@ import com.yuier.yuni.common.enums.MessageTypeEnum;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.common.utils.ResponseResult;
-import com.yuier.yuni.function.plugins.interf.BaseDetectorPlugin;
+import com.yuier.yuni.common.plugin.interf.BaseDetectorPlugin;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;

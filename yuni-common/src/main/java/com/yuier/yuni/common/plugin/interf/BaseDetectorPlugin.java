@@ -1,4 +1,4 @@
-package com.yuier.yuni.function.plugins.interf;
+package com.yuier.yuni.common.plugin.interf;
 
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.domain.message.MessageEvent;

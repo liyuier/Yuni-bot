@@ -12,7 +12,7 @@ import com.yuier.yuni.common.utils.CallCore;
 import com.yuier.yuni.function.domain.global.FunctionGlobalData;
 import com.yuier.yuni.common.plugin.FunctionPlugin;
 import com.yuier.yuni.common.plugin.FunctionPlugins;
-import com.yuier.yuni.function.plugins.interf.PositivePlugin;
+import com.yuier.yuni.common.plugin.interf.PositivePlugin;
 import com.yuier.yuni.function.service.FunctionPluginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
