@@ -17,6 +17,8 @@ import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
+
 /**
  * @Title: HeOrSheSaid
  * @Author yuier
@@ -46,6 +48,11 @@ public class HeOrSheSaid implements BaseDetectorPlugin {
 
     @Override
     public ResponseResult<T> run(MessageEvent messageEvent) {
+        Random random = new Random();
+        double probability = random.nextDouble();
+        if (probability < 0.5) {
+            return ResponseResult.okResult();
+        }
         String senderName = "";
         if (messageEvent.isAnonymousMessage()) {
             senderName = messageEvent.getSender().getNickname();

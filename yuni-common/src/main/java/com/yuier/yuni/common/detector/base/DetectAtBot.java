@@ -1,6 +1,5 @@
 package com.yuier.yuni.common.detector.base;
 
-import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
 import com.yuier.yuni.common.detector.base.dto.DetectAtBotDto;
 import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
