@@ -30,7 +30,7 @@ public class Ohayou implements PositivePlugin {
 
     @Override
     public String description() {
-        return "偶哈哟，民那桑";
+        return "哦哈哟，民那桑！";
     }
 
     @Override
