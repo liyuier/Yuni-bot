@@ -34,7 +34,7 @@ public class FunctionServiceImpl implements FunctionService {
     @Override
     public ResponseResult initialBaseFunctionPlugins(BaseDetectorPluginsDto baseDetectorPluginsDto) {
         // 重建基础消息链处理器
-        HashMap<String, PluginForDetect> pluginMap = coreGlobalData.getPluginsForDetect().getPluginMap();
+        HashMap<String, PluginForDetect> pluginMap = coreGlobalData.getBasePlugins().getPluginMap();
         HashMap<String, BaseDetectorPluginDto> pluginDtoMap = baseDetectorPluginsDto.getPluginDtoMap();
         for (String pluginId : pluginDtoMap.keySet()) {
             pluginMap.put(pluginId, new BasePluginForDetect(pluginDtoMap.get(pluginId)));
@@ -54,11 +54,12 @@ public class FunctionServiceImpl implements FunctionService {
     @Override
     public ResponseResult initialOrderFunctionPlugins(OrderDetectorPluginsDto orderDetectorPluginsDto) {
         // 重建指令探测器
-        HashMap<String, PluginForDetect> pluginMap = coreGlobalData.getPluginsForDetect().getPluginMap();
+        HashMap<String, PluginForDetect> pluginMap = coreGlobalData.getOrderPlugins().getPluginMap();
         HashMap<String, OrderDetectorPluginDto> pluginDtoMap = orderDetectorPluginsDto.getPluginDtoMap();
         for (String pluginId : pluginDtoMap.keySet()) {
             pluginMap.put(pluginId, new OrderPluginForDetect(pluginDtoMap.get(pluginId)));
         }
+        log.info("指令探测器插件初始化成功");
         return ResponseResult.okResult();
     }
 }

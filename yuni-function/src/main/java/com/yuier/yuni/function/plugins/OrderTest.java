@@ -25,11 +25,11 @@ public class OrderTest implements YuniOrderPlugin {
     @Override
     public YuniOrderDefiner detectorDefine() {
         return YuniOrderDefiner.build()
-                .setOrderHead("/test")
+                .setOrderHead("test")
                 .addRequiredArg("testStr", YuniOrderArgContentTypeEnum.TEXT)
                 .addRequiredArg("testAt", YuniOrderArgContentTypeEnum.AT)
                 .addRequiredArg("testNumber", YuniOrderArgContentTypeEnum.NUMBER)
-                .addOptionalArg("testImage", YuniOrderArgContentTypeEnum.Image)
+                .addOptionalArg("testImage", YuniOrderArgContentTypeEnum.IMAGE)
                 .addOption("testOpt1", "-1", new YuniOrderRequiredArg(
                         "opt1Arg1"
                 ));

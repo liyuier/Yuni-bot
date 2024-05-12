@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @Title: OrderOptionsDetectorForUse
@@ -19,13 +20,31 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderOptionsDetectorForUse {
-    private ArrayList<OrderOptionDetectorForUse> optionList;
+    private HashMap<String, OrderOptionDetectorForUse> optionMap;
+
+    public Boolean argsContainsReply() {
+        for (OrderOptionDetectorForUse optionDetector : optionMap.values()) {
+            if (optionDetector.getOptionArgs().argsContainsReply()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public OrderOptionsDetectorForUse(YuniOrderOptionsDto dto) {
-        optionList = new ArrayList<>();
+        optionMap = new HashMap<>();
         ArrayList<YuniOrderOptionDto> optionListDto = dto.getOptionList();
         for (YuniOrderOptionDto optionDto : optionListDto) {
-            optionList.add(new OrderOptionDetectorForUse(optionDto));
+            optionMap.put(optionDto.getFlag(), new OrderOptionDetectorForUse(optionDto));
         }
+    }
+
+    public Boolean hasFlag(String str) {
+        for (OrderOptionDetectorForUse orderOption : optionMap.values()) {
+            if (orderOption.getFlag().equals(str)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
  * @description: 被匹配提取出来的参数实体类
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class OrderArgMatchedOut {
     private String name;
@@ -21,4 +20,13 @@ public class OrderArgMatchedOut {
 
     private OrderDataMatchedOut data;
     private String helpInfo;
+
+    public OrderArgMatchedOut() {
+        name = "";
+        contentType = YuniOrderArgContentTypeEnum.TEXT;
+        data = new OrderDataMatchedOut();
+        helpInfo = "";
+    }
+
+
 }

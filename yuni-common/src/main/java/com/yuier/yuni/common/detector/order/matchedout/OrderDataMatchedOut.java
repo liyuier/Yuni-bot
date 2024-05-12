@@ -2,6 +2,7 @@ package com.yuier.yuni.common.detector.order.matchedout;
 
 import com.yuier.yuni.common.domain.message.data.AtData;
 import com.yuier.yuni.common.domain.message.data.ImageData;
+import com.yuier.yuni.common.domain.message.data.ReplyData;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,4 +22,5 @@ public class OrderDataMatchedOut {
     private TextData text;
     private AtData at;
     private ImageData image;
+    private ReplyData reply;
 }

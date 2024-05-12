@@ -2,7 +2,7 @@ package com.yuier.yuni.function.service.impl;
 
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
-import com.yuier.yuni.common.domain.dto.CallFunctionPluginDto;
+import com.yuier.yuni.common.domain.dto.CallBaseFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageEventService;
@@ -35,10 +35,10 @@ public class FunctionCallServiceImpl implements FunctionCallService {
     FunctionGlobalData functionGlobalData;
 
     @Override
-    public ResponseResult callPlugin(CallFunctionPluginDto callFunctionPluginDto) {
-        MessageEvent messageEvent = messageEventService.postToMessage(callFunctionPluginDto.getMessageEventNode(), MessageEvent.class);
+    public ResponseResult callPlugin(CallBaseFunctionPluginDto callBaseFunctionPluginDto) {
+        MessageEvent messageEvent = messageEventService.postToMessage(callBaseFunctionPluginDto.getMessageEventNode(), MessageEvent.class);
         FunctionPlugins plugins = functionGlobalData.getPlugins();
-        FunctionPlugin plugin = plugins.getPluginMap().get(callFunctionPluginDto.getPluginId());
+        FunctionPlugin plugin = plugins.getPluginMap().get(callBaseFunctionPluginDto.getPluginId());
         try {
             if (plugin.useDetector(BaseDetectorDefiner.class)) {
                 asyncService.asyncReflective(plugin.getPluginBean(), SystemConstants.PLUGIN_CRITICAL_NAME.FUNC_PLUGIN_ENTRY, messageEvent);

@@ -3,6 +3,7 @@ package com.yuier.yuni.core.domain.global.detector.order;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderArgsDto;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderOptionalArgDto;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderRequiredArgDto;
+import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,20 @@ import java.util.ArrayList;
 public class OrderArgsDetectorForUse {
     private ArrayList<OrderRequiredArgDetectorForUse> requiredArgList;
     private ArrayList<OrderOptionalArgDetectorForUse> optionalArgList;
+
+    public Boolean argsContainsReply() {
+        for (OrderRequiredArgDetectorForUse requiredArg : requiredArgList) {
+            if (requiredArg.getContentType().equals(YuniOrderArgContentTypeEnum.REPLY)) {
+                return true;
+            }
+        }
+        for (OrderOptionalArgDetectorForUse requiredArg : optionalArgList) {
+            if (requiredArg.getContentType().equals(YuniOrderArgContentTypeEnum.REPLY)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public OrderArgsDetectorForUse(YuniOrderArgsDto dto) {
         requiredArgList = new ArrayList<>();

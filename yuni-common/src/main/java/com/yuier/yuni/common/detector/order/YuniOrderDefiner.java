@@ -44,107 +44,107 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
     }
 
     public YuniOrderDefiner setOrderHead(String headName) {
-        head.setHeadName(headName);
+        head.setHeadName(headName.trim());
         return this;
     }
 
     public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType) {
-        args.addArg(argName, requireType);
+        args.addArg(argName.trim(), requireType);
         return this;
     }
 
     public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType, YuniOrderArgContentTypeEnum contentType) {
-        args.addArg(argName, requireType, contentType);
+        args.addArg(argName.trim(), requireType, contentType);
         return this;
     }
 
     public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType, String helpInfo) {
-        args.addArg(argName, requireType, helpInfo);
+        args.addArg(argName.trim(), requireType, helpInfo);
         return this;
     }
 
     public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
-        args.addArg(argName, requireType, contentType, helpInfo);
+        args.addArg(argName.trim(), requireType, contentType, helpInfo);
         return this;
     }
 
     public YuniOrderDefiner addRequiredArg(String argName) {
-        args.addRequiredArg(argName);
+        args.addRequiredArg(argName.trim());
         return this;
     }
 
     public YuniOrderDefiner addRequiredArg(String argName, YuniOrderArgContentTypeEnum contentType) {
-        args.addRequiredArg(argName, contentType);
+        args.addRequiredArg(argName.trim(), contentType);
         return this;
     }
 
     public YuniOrderDefiner addRequiredArg(String argName, String helpInfo) {
-        args.addRequiredArg(argName, helpInfo);
+        args.addRequiredArg(argName.trim(), helpInfo);
         return this;
     }
 
     public YuniOrderDefiner addRequiredArg(String argName, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
-        args.addRequiredArg(argName, contentType, helpInfo);
+        args.addRequiredArg(argName.trim(), contentType, helpInfo);
         return this;
     }
 
     public YuniOrderDefiner addOptionalArg(String argName) {
-        args.addOptionalArg(argName);
+        args.addOptionalArg(argName.trim());
         return this;
     }
 
     public YuniOrderDefiner addOptionalArg(String argName, YuniOrderArgContentTypeEnum contentType) {
-        args.addOptionalArg(argName, contentType);
+        args.addOptionalArg(argName.trim(), contentType);
         return this;
     }
 
     public YuniOrderDefiner addOptionalArg(String argName, String helpInfo) {
-        args.addOptionalArg(argName, helpInfo);
+        args.addOptionalArg(argName.trim(), helpInfo);
         return this;
     }
 
     public YuniOrderDefiner addOptionalArg(String argName, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
-        args.addOptionalArg(argName, contentType, helpInfo);
+        args.addOptionalArg(argName.trim(), contentType, helpInfo);
         return this;
     }
 
     public YuniOrderDefiner addOption(String optName, String optFlag) {
-        options.addOption(optName, optFlag);
+        options.addOption(optName.trim(), optFlag.trim());
         return this;
     }
 
     public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderRequiredArg arg) {
-        options.addOption(optName, optFlag, arg);
+        options.addOption(optName.trim(), optFlag.trim(), arg);
         return this;
     }
 
     public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderOptionalArg arg) {
-        options.addOption(optName, optFlag, arg);
+        options.addOption(optName.trim(), optFlag.trim(), arg);
         return this;
     }
 
     public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderArgs args) {
-        options.addOption(optName, optFlag, args);
+        options.addOption(optName.trim(), optFlag.trim(), args);
         return this;
     }
 
     public YuniOrderDefiner addOption(String optName, String optFlag, String helpInfo) {
-        options.addOption(optName, optFlag, helpInfo);
+        options.addOption(optName.trim(), optFlag.trim(), helpInfo);
         return this;
     }
 
     public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderRequiredArg arg, String helpInfo) {
-        options.addOption(optName, optFlag, arg, helpInfo);
+        options.addOption(optName.trim(), optFlag.trim(), arg, helpInfo);
         return this;
     }
 
     public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderOptionalArg arg, String helpInfo) {
-        options.addOption(optName, optFlag, arg, helpInfo);
+        options.addOption(optName.trim(), optFlag.trim(), arg, helpInfo);
         return this;
     }
 
     public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderArgs args, String helpInfo) {
-        options.addOption(optName, optFlag, args, helpInfo);
+        options.addOption(optName.trim(), optFlag.trim(), args, helpInfo);
         return this;
     }
 

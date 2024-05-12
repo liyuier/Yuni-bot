@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CallFunctionPluginDto {
+public class CallBaseFunctionPluginDto {
     private String pluginId;
     JsonNode messageEventNode;
 }
