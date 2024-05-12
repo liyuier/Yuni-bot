@@ -40,7 +40,7 @@ public class Ohayou implements PositivePlugin {
         for (Long groupId : groups) {
             callOneBot.sendGroupMessage(new SendGroupMessageDto(
                     groupId,
-                    messageChainService.buildChain("偶哈哟，民那桑！")
+                    messageChainService.buildChain("哦哈哟，民那桑！")
             ));
         }
     }

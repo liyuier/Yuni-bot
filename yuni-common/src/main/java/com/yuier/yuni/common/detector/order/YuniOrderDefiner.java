@@ -2,11 +2,12 @@ package com.yuier.yuni.common.detector.order;
 
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.MessageDetectorDefinerDto;
-import com.yuier.yuni.common.enums.MessageDetectorEnum;
+import com.yuier.yuni.common.detector.order.dto.YuniOrderDefinerDto;
+import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
+import com.yuier.yuni.common.enums.YuniOrderArgRequireTypeEnum;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 /**
  * @Title: YuniOrderDefiner
@@ -43,9 +44,99 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
         return definer;
     }
 
-    @Override
-    public MessageDetectorEnum detectorType() {
-        return MessageDetectorEnum.ORDER;
+    public YuniOrderDefiner setOrderHead(String headName) {
+        head.setHeadName(headName);
+        return this;
+    }
+
+    public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType) {
+        args.addArg(argName, requireType);
+        return this;
+    }
+
+    public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType, YuniOrderArgContentTypeEnum contentType) {
+        args.addArg(argName, requireType, contentType);
+        return this;
+    }
+
+    public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType, String helpInfo) {
+        args.addArg(argName, requireType, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
+        args.addArg(argName, requireType, contentType, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addRequiredArg(String argName) {
+        args.addRequiredArg(argName);
+        return this;
+    }
+
+    public YuniOrderDefiner addRequiredArg(String argName, YuniOrderArgContentTypeEnum contentType) {
+        args.addRequiredArg(argName, contentType);
+        return this;
+    }
+
+    public YuniOrderDefiner addRequiredArg(String argName, String helpInfo) {
+        args.addRequiredArg(argName, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addRequiredArg(String argName, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
+        args.addRequiredArg(argName, contentType, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addOptionalArg(String argName) {
+        args.addOptionalArg(argName);
+        return this;
+    }
+
+    public YuniOrderDefiner addOptionalArg(String argName, YuniOrderArgContentTypeEnum contentType) {
+        args.addOptionalArg(argName, contentType);
+        return this;
+    }
+
+    public YuniOrderDefiner addOptionalArg(String argName, String helpInfo) {
+        args.addOptionalArg(argName, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addOptionalArg(String argName, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
+        args.addOptionalArg(argName, contentType, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag) {
+        options.addOption(optName, optFlag);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderArg arg) {
+        options.addOption(optName, optFlag, arg);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderArgs args) {
+        options.addOption(optName, optFlag, args);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, String helpInfo) {
+        options.addOption(optName, optFlag, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderArg arg, String helpInfo) {
+        options.addOption(optName, optFlag, arg, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderArgs args, String helpInfo) {
+        options.addOption(optName, optFlag, args, helpInfo);
+        return this;
     }
 
     @Override
@@ -55,6 +146,6 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
 
     @Override
     public MessageDetectorDefinerDto toDto() {
-        return null;
+        return BeanCopyUtils.copyBean(this, YuniOrderDefinerDto.class);
     }
 }

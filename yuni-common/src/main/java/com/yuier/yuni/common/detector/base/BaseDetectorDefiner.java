@@ -3,10 +3,7 @@ package com.yuier.yuni.common.detector.base;
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.MessageDetectorDefinerDto;
 import com.yuier.yuni.common.detector.base.dto.BaseDetectorDefinerDto;
-import com.yuier.yuni.common.detector.base.dto.BaseSubDetectorDto;
-import com.yuier.yuni.common.detector.base.dto.DetectPrefixDto;
 import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
-import com.yuier.yuni.common.enums.MessageDetectorEnum;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -274,11 +271,6 @@ public class BaseDetectorDefiner implements MessageDetectorDefiner {
     public BaseDetectorDefiner setDetectModel(BaseDetectorModelEnum model) {
         detectModel = model;
         return this;
-    }
-
-    @Override
-    public MessageDetectorEnum detectorType() {
-        return MessageDetectorEnum.BASE;
     }
 
     @Override

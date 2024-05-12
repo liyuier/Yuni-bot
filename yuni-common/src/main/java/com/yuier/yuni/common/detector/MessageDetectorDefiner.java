@@ -11,7 +11,6 @@ import com.yuier.yuni.common.enums.MessageDetectorEnum;
  */
 public interface MessageDetectorDefiner {
 
-    MessageDetectorEnum detectorType();
     Boolean defineValid();
 
     MessageDetectorDefinerDto toDto();

@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.plugin.interf;
 
+import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
+import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.utils.ResponseResult;
 import org.apache.poi.ss.formula.functions.T;
@@ -13,6 +15,9 @@ import org.apache.poi.ss.formula.functions.T;
  */
 public interface YuniOrderPlugin extends YuniPlugin {
 
+    // 插件应用的消息探测器
+    YuniOrderDefiner detectorDefine();
+
     // 插件入口
-    ResponseResult<T> run(MessageEvent messageEvent);
+    ResponseResult<T> run(MessageEvent messageEvent, OrderMatchedOut order);
 }

@@ -1,11 +1,15 @@
 package com.yuier.yuni.common.detector.order;
 
+import com.yuier.yuni.common.detector.order.dto.YuniOrderArgDto;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderSegDto;
 import com.yuier.yuni.common.enums.MessageDataEnum;
 import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
 import com.yuier.yuni.common.enums.YuniOrderArgRequireTypeEnum;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.time.temporal.ChronoUnit;
 
 /**
  * @Title: YuniOrderArgs
@@ -31,8 +35,33 @@ public class YuniOrderArg implements YuniOrderSeg{
     private String helpInfo;
 
     public YuniOrderArg() {
+        // 默认必选
+        requireType = YuniOrderArgRequireTypeEnum.REQUIRED;
         // 默认接收字符串类型的消息
         contentType = YuniOrderArgContentTypeEnum.TEXT;
+    }
+
+    public YuniOrderArg(String name) {
+        this();
+        this.name = name;
+    }
+
+    public YuniOrderArg(String name, YuniOrderArgRequireTypeEnum requireType) {
+        this();
+        this.name = name;
+        this.requireType = requireType;
+    }
+
+    public YuniOrderArg(String name, YuniOrderArgContentTypeEnum contentType) {
+        this();
+        this.name = name;
+        this.contentType = contentType;
+    }
+
+    public YuniOrderArg(String name, YuniOrderArgRequireTypeEnum requireType, YuniOrderArgContentTypeEnum contentType) {
+        this.name = name;
+        this.requireType = requireType;
+        this.contentType = contentType;
     }
 
     @Override
@@ -41,7 +70,7 @@ public class YuniOrderArg implements YuniOrderSeg{
     }
 
     @Override
-    public YuniOrderSegDto toDto() {
-        return null;
+    public YuniOrderArgDto toDto() {
+        return BeanCopyUtils.copyBean(this, YuniOrderArgDto.class);
     }
 }

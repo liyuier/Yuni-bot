@@ -1,6 +1,8 @@
 package com.yuier.yuni.common.detector.order;
 
+import com.yuier.yuni.common.detector.order.dto.YuniOrderHeadDto;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderSegDto;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,13 +23,20 @@ public class YuniOrderHead implements YuniOrderSeg{
         name = "";
     }
 
+    public void setHeadName(String headName) {
+        if (null == headName || headName.isEmpty()) {
+            throw new RuntimeException("指令头名称无效！");
+        }
+        name = headName;
+    }
+
     @Override
     public Boolean valid() {
         return !name.isEmpty();
     }
 
     @Override
-    public YuniOrderSegDto toDto() {
-        return null;
+    public YuniOrderHeadDto toDto() {
+        return BeanCopyUtils.copyBean(this, YuniOrderHeadDto.class);
     }
 }
