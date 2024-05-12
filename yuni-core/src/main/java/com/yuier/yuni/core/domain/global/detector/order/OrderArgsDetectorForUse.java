@@ -24,20 +24,6 @@ public class OrderArgsDetectorForUse {
     private ArrayList<OrderRequiredArgDetectorForUse> requiredArgList;
     private ArrayList<OrderOptionalArgDetectorForUse> optionalArgList;
 
-    public Boolean argsContainsReply() {
-        for (OrderRequiredArgDetectorForUse requiredArg : requiredArgList) {
-            if (requiredArg.getContentType().equals(YuniOrderArgContentTypeEnum.REPLY)) {
-                return true;
-            }
-        }
-        for (OrderOptionalArgDetectorForUse requiredArg : optionalArgList) {
-            if (requiredArg.getContentType().equals(YuniOrderArgContentTypeEnum.REPLY)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public OrderArgsDetectorForUse(YuniOrderArgsDto dto) {
         requiredArgList = new ArrayList<>();
         optionalArgList = new ArrayList<>();

@@ -22,15 +22,6 @@ import java.util.HashMap;
 public class OrderOptionsDetectorForUse {
     private HashMap<String, OrderOptionDetectorForUse> optionMap;
 
-    public Boolean argsContainsReply() {
-        for (OrderOptionDetectorForUse optionDetector : optionMap.values()) {
-            if (optionDetector.getOptionArgs().argsContainsReply()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public OrderOptionsDetectorForUse(YuniOrderOptionsDto dto) {
         optionMap = new HashMap<>();
         ArrayList<YuniOrderOptionDto> optionListDto = dto.getOptionList();

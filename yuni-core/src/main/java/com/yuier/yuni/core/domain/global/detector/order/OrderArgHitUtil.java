@@ -105,17 +105,6 @@ public class OrderArgHitUtil {
                     (TextData) messageSeg.getData()
             );
             return true;
-        } else if (contentType.equals(YuniOrderArgContentTypeEnum.REPLY)) {
-            // 匹配类型为回复
-            if (!messageSeg.typeOf(MessageDataEnum.REPLY)) {
-                return false;
-            }
-            setOrderArgMatchedOut(
-                    orderArgMatchedOut,
-                    name,
-                    contentType,
-                    (ReplyData) messageSeg.getData()
-            );
         }
         return false;
     }
@@ -136,12 +125,6 @@ public class OrderArgHitUtil {
         orderArgMatchedOut.setName(name);
         orderArgMatchedOut.setContentType(contentType);
         orderArgMatchedOut.getData().setImage(imageData);
-    }
-
-    private static void setOrderArgMatchedOut(OrderArgMatchedOut orderArgMatchedOut, String name, YuniOrderArgContentTypeEnum contentType, ReplyData replyData) {
-        orderArgMatchedOut.setName(name);
-        orderArgMatchedOut.setContentType(contentType);
-        orderArgMatchedOut.getData().setReply(replyData);
     }
 
     public static boolean isValidURL(String urlString) {

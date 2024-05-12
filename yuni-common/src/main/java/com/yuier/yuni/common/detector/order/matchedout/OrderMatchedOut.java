@@ -2,7 +2,6 @@ package com.yuier.yuni.common.detector.order.matchedout;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @Title: OrderMatcheOut
@@ -22,11 +21,11 @@ public class OrderMatchedOut {
         options = new OrderOptionsMatchedOut();
     }
 
-    public OrderArgMatchedOut getArg(String argName) {
+    public OrderArgMatchedOut getArgByName(String argName) {
         return args.getArgMap().get(argName);
     }
 
-    public OrderOptionMatchedOut getOption(String optName) {
+    public OrderOptionMatchedOut getOptionByName(String optName) {
         return options.getOptionMap().get(optName);
     }
 }

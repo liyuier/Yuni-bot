@@ -31,15 +31,18 @@ public class YuniOrderOptionalArg implements YuniOrderSeg{
     }
 
     public YuniOrderOptionalArg(String name) {
+        this();
         this.name = name;
     }
 
     public YuniOrderOptionalArg(String name, YuniOrderArgContentTypeEnum contentType) {
+        this();
         this.name = name;
         this.contentType = contentType;
     }
 
     public YuniOrderOptionalArg(String name, String helpInfo) {
+        this();
         this.name = name;
         this.helpInfo = helpInfo;
     }

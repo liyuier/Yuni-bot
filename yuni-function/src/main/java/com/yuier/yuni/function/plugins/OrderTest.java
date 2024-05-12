@@ -2,6 +2,7 @@ package com.yuier.yuni.function.plugins;
 
 import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
+import com.yuier.yuni.common.detector.order.YuniOrderOptionalArg;
 import com.yuier.yuni.common.detector.order.YuniOrderRequiredArg;
 import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageEvent;
@@ -30,7 +31,8 @@ public class OrderTest implements YuniOrderPlugin {
                 .addRequiredArg("testAt", YuniOrderArgContentTypeEnum.AT)
                 .addRequiredArg("testNumber", YuniOrderArgContentTypeEnum.NUMBER)
                 .addOptionalArg("testImage", YuniOrderArgContentTypeEnum.IMAGE)
-                .addOption("testOpt1", "-1", new YuniOrderRequiredArg(
+                .addOptionalArg("testOpArg2", YuniOrderArgContentTypeEnum.TEXT)
+                .addOption("testOpt1", "-1", new YuniOrderOptionalArg(
                         "opt1Arg1"
                 ));
     }
