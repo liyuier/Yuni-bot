@@ -39,6 +39,7 @@ public class FunctionController {
 
     @PostMapping("/init_func/order")
     public ResponseResult initializeFunctionOrderPlugins(@RequestBody OrderDetectorPluginsDto orderDetectorPluginsDto) {
+        functionService.initialOrderFunctionPlugins(orderDetectorPluginsDto);
         return ResponseResult.okResult();
     }
 
