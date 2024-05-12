@@ -1,5 +1,6 @@
 package com.yuier.yuni.common.domain.message;
 
+import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.data.AtData;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.enums.MessageDataEnum;
@@ -58,6 +59,35 @@ public class MessageChain {
             if (messageSeg.typeOf(MessageDataEnum.TEXT)) {
                 TextData data = (TextData) messageSeg.getData();
                 if (data.getText().contains(str)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Boolean onlyTextData() {
+        for (MessageSeg messageSeg : content) {
+            if (!messageSeg.typeOf(MessageDataEnum.TEXT)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Boolean startWithTextData() {
+        return content.get(SystemConstants.FIRST_INDEX).typeOf(MessageDataEnum.TEXT) &&
+                !((TextData) content.get(SystemConstants.FIRST_INDEX).getData()).getText().trim().isEmpty();
+    }
+
+    public Boolean startWithReplyData() {
+        return content.get(SystemConstants.FIRST_INDEX).typeOf(MessageDataEnum.REPLY);
+    }
+
+    public Boolean startWithTextDataFollowingReplyData() {
+        if (startWithReplyData()) {
+            if (content.get(SystemConstants.FIRST_INDEX + 1).typeOf(MessageDataEnum.TEXT)) {
+                if (!((TextData) content.get(SystemConstants.FIRST_INDEX + 1).getData()).getText().trim().isEmpty()) {
                     return true;
                 }
             }

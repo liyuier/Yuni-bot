@@ -12,12 +12,15 @@ import lombok.NoArgsConstructor;
  * @description: 命中指令后被提取出来的指令类
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class OrderMatchedOut {
-    private String head;
     private OrderArgsMatchedOut args;
     private OrderOptionsMatchedOut options;
+
+    public OrderMatchedOut() {
+        args = new OrderArgsMatchedOut();
+        options = new OrderOptionsMatchedOut();
+    }
 
     public OrderArgMatchedOut getArg(String argName) {
         return args.getArgMap().get(argName);

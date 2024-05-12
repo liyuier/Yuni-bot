@@ -14,8 +14,11 @@ import java.util.HashMap;
  * @description: 指令中被提取出的参数列表
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class OrderArgsMatchedOut {
     private HashMap<String, OrderArgMatchedOut> argMap;
+
+    public OrderArgsMatchedOut() {
+        argMap = new HashMap<>();
+    }
 }

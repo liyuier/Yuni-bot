@@ -14,8 +14,11 @@ import java.util.HashMap;
  * @description: 命中指令后被提取出来的选项集合
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class OrderOptionsMatchedOut {
     private HashMap<String, OrderOptionMatchedOut> optionMap;
+
+    public OrderOptionsMatchedOut() {
+        optionMap = new HashMap<>();
+    }
 }

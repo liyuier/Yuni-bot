@@ -35,7 +35,6 @@ public class BasePluginForDetect implements PluginForDetect {
         return listener.hit(messageEvent);
     }
 
-    @Override
     public Boolean hitDetector(MessageChain chain) {
         return detector.hit(chain);
     }
