@@ -12,7 +12,7 @@ import com.yuier.yuni.common.utils.CallFunction;
 import com.yuier.yuni.common.utils.EventLogUtils;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.common.domain.message.MessageEvent;
-import com.yuier.yuni.core.domain.global.detector.PluginForDetector;
+import com.yuier.yuni.core.domain.global.detector.PluginForDetect;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import com.yuier.yuni.core.service.MessageRecordService;
 import lombok.extern.slf4j.Slf4j;
@@ -69,10 +69,10 @@ public class OneBotMessageEventHandler {
 
 
     private void detectBase(MessageChain chain, ObjectNode postEventNode, MessageEvent messageEvent) {
-        HashMap<String, PluginForDetector> pluginMap = coreGlobalData.getPluginsForDetect().getPluginMap();
+        HashMap<String, PluginForDetect> pluginMap = coreGlobalData.getPluginsForDetect().getPluginMap();
         for (String pluginId : pluginMap.keySet()) {
-            PluginForDetector pluginForDetector = pluginMap.get(pluginId);
-            if (pluginForDetector.hitListener(messageEvent) && pluginForDetector.hitDetector(chain)) {
+            PluginForDetect pluginForDetect = pluginMap.get(pluginId);
+            if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chain)) {
                 log.info("命中插件 " + pluginId);
                 callFunction.callFunctionPlugin(new CallFunctionPluginDto(pluginId, postEventNode));
             }

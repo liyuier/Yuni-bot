@@ -1,23 +1,24 @@
 package com.yuier.yuni.common.detector.order.dto;
 
 import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
-import com.yuier.yuni.common.enums.YuniOrderArgRequireTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @Title: YuniOrderArgDto
+ * @Title: YuniOrderRequiredArgDto
  * @Author yuier
  * @Package com.yuier.yuni.common.detector.order.dto
- * @Date 2024/5/11 23:08
- * @description: 指令参数 dto
+ * @Date 2024/5/12 22:07
+ * @description: 必选参数 dto
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class YuniOrderArgDto implements YuniOrderSegDto{
+public class YuniOrderRequiredArgDto implements YuniOrderSegDto{
+    // 参数名称
     private String name;
-    private YuniOrderArgRequireTypeEnum requireType;
+
+    // 参数可以接受的消息数据类型
     private YuniOrderArgContentTypeEnum contentType;
 }

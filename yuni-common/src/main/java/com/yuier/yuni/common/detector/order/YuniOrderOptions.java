@@ -46,7 +46,18 @@ public class YuniOrderOptions implements YuniOrderSeg{
         optionList.add(option);
     }
 
-    public void addOption(String optName, String optFlag, YuniOrderArg arg) {
+    public void addOption(String optName, String optFlag, YuniOrderRequiredArg arg) {
+        checkNameAndFlagValid(optName, optFlag);
+        YuniOrderOption option = new YuniOrderOption();
+        option.setName(optName);
+        option.setFlag(optFlag);
+        YuniOrderArgs args = new YuniOrderArgs();
+        args.addArg(arg);
+        option.setOptionArgs(args);
+        optionList.add(option);
+    }
+
+    public void addOption(String optName, String optFlag, YuniOrderOptionalArg arg) {
         checkNameAndFlagValid(optName, optFlag);
         YuniOrderOption option = new YuniOrderOption();
         option.setName(optName);
@@ -75,7 +86,17 @@ public class YuniOrderOptions implements YuniOrderSeg{
         optionList.add(option);
     }
 
-    public void addOption(String optName, String optFlag, YuniOrderArg arg, String helpInfo) {
+    public void addOption(String optName, String optFlag, YuniOrderRequiredArg arg, String helpInfo) {
+        checkNameAndFlagValid(optName, optFlag);
+        YuniOrderOption option = new YuniOrderOption();
+        option.setName(optName);
+        option.setFlag(optFlag);
+        option.getOptionArgs().addArg(arg);
+        option.setHelpInfo(helpInfo);
+        optionList.add(option);
+    }
+
+    public void addOption(String optName, String optFlag, YuniOrderOptionalArg arg, String helpInfo) {
         checkNameAndFlagValid(optName, optFlag);
         YuniOrderOption option = new YuniOrderOption();
         option.setName(optName);
