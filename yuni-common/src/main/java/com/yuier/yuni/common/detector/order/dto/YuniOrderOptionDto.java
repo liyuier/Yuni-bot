@@ -18,6 +18,5 @@ import lombok.NoArgsConstructor;
 public class YuniOrderOptionDto implements YuniOrderSegDto{
     private String name;
     private String flag;
-    private YuniOrderArgs optionArgs;
-    private String helpInfo;
+    private YuniOrderArgsDto optionArgs;
 }

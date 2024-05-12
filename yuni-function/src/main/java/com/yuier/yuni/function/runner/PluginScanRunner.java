@@ -17,9 +17,6 @@ import org.springframework.stereotype.Component;
 public class PluginScanRunner implements CommandLineRunner {
 
     @Autowired
-    CallCore callCore;
-
-    @Autowired
     FunctionPluginService functionPluginService;
 
     @Override

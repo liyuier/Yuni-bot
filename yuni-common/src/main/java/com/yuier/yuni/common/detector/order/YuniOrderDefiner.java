@@ -5,7 +5,6 @@ import com.yuier.yuni.common.detector.MessageDetectorDefinerDto;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderDefinerDto;
 import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
 import com.yuier.yuni.common.enums.YuniOrderArgRequireTypeEnum;
-import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
@@ -146,6 +145,10 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
 
     @Override
     public MessageDetectorDefinerDto toDto() {
-        return BeanCopyUtils.copyBean(this, YuniOrderDefinerDto.class);
+        YuniOrderDefinerDto dto = new YuniOrderDefinerDto();
+        dto.setHead(head.toDto());
+        dto.setArgs(args.toDto());
+        dto.setOptions(options.toDto());
+        return dto;
     }
 }

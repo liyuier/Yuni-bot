@@ -1,5 +1,6 @@
 package com.yuier.yuni.common.detector.order;
 
+import com.yuier.yuni.common.detector.order.dto.YuniOrderOptionDto;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderOptionsDto;
 import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
@@ -108,6 +109,12 @@ public class YuniOrderOptions implements YuniOrderSeg{
 
     @Override
     public YuniOrderOptionsDto toDto() {
-        return BeanCopyUtils.copyBean(this, YuniOrderOptionsDto.class);
+        YuniOrderOptionsDto dto = new YuniOrderOptionsDto();
+        ArrayList<YuniOrderOptionDto> optionListDto = new ArrayList<>();
+        for (YuniOrderOption option : optionList) {
+            optionListDto.add(option.toDto());
+        }
+        dto.setOptionList(optionListDto);
+        return dto;
     }
 }
