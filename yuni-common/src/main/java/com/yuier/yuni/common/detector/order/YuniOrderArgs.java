@@ -1,7 +1,7 @@
 package com.yuier.yuni.common.detector.order;
 
+import com.yuier.yuni.common.detector.order.dto.YuniOrderArgDto;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderArgsDto;
-import com.yuier.yuni.common.detector.order.dto.YuniOrderSegDto;
 import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
 import com.yuier.yuni.common.enums.YuniOrderArgRequireTypeEnum;
 import com.yuier.yuni.common.utils.BeanCopyUtils;
@@ -21,14 +21,16 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class YuniOrderArgs implements YuniOrderSeg{
 
-    private ArrayList<YuniOrderArg> argList;
+    private ArrayList<YuniOrderArg> requiredArgList;
+    private ArrayList<YuniOrderArg> optionalArgList;
 
     public YuniOrderArgs() {
-        argList = new ArrayList<>();
+        requiredArgList = new ArrayList<>();
+        optionalArgList = new ArrayList<>();
     }
 
     private Boolean argNameExists(String argName) {
-        for (YuniOrderArg arg : argList) {
+        for (YuniOrderArg arg : requiredArgList) {
             if (arg.getName().equals(argName)) {
                 return true;
             }
@@ -45,17 +47,32 @@ public class YuniOrderArgs implements YuniOrderSeg{
         }
     }
 
+    private void checkArgRequireTypeValid() {
+        if (!optionalArgList.isEmpty()) {
+            throw new RuntimeException("必选参数必须定义在所有可选参数之前！");
+        }
+    }
+
     public void addArg(String argName, YuniOrderArgRequireTypeEnum requireType) {
         checkNameValid(argName);
         YuniOrderArg arg = new YuniOrderArg();
         arg.setRequireType(requireType);
         arg.setName(argName);
-        argList.add(arg);
+        if (requireType.equals(YuniOrderArgRequireTypeEnum.REQUIRED)) {
+            requiredArgList.add(arg);
+        } else if (requireType.equals(YuniOrderArgRequireTypeEnum.OPTIONAL)) {
+            optionalArgList.add(arg);
+        }
     }
 
     public void addArg(YuniOrderArg arg) {
         checkNameValid(arg.getName());
-        argList.add(arg);
+        YuniOrderArgRequireTypeEnum requireType = arg.getRequireType();
+        if (requireType.equals(YuniOrderArgRequireTypeEnum.REQUIRED)) {
+            requiredArgList.add(arg);
+        } else if (requireType.equals(YuniOrderArgRequireTypeEnum.OPTIONAL)) {
+            optionalArgList.add(arg);
+        }
     }
 
     public void addArg(String argName, YuniOrderArgRequireTypeEnum requireType, YuniOrderArgContentTypeEnum contentType) {
@@ -64,7 +81,11 @@ public class YuniOrderArgs implements YuniOrderSeg{
         arg.setRequireType(requireType);
         arg.setName(argName);
         arg.setContentType(contentType);
-        argList.add(arg);
+        if (requireType.equals(YuniOrderArgRequireTypeEnum.REQUIRED)) {
+            requiredArgList.add(arg);
+        } else if (requireType.equals(YuniOrderArgRequireTypeEnum.OPTIONAL)) {
+            optionalArgList.add(arg);
+        }
 
     }
 
@@ -74,7 +95,11 @@ public class YuniOrderArgs implements YuniOrderSeg{
         arg.setRequireType(requireType);
         arg.setName(argName);
         arg.setHelpInfo(helpInfo);
-        argList.add(arg);
+        if (requireType.equals(YuniOrderArgRequireTypeEnum.REQUIRED)) {
+            requiredArgList.add(arg);
+        } else if (requireType.equals(YuniOrderArgRequireTypeEnum.OPTIONAL)) {
+            optionalArgList.add(arg);
+        }
     }
 
     public void addArg(String argName, YuniOrderArgRequireTypeEnum requireType, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
@@ -84,7 +109,11 @@ public class YuniOrderArgs implements YuniOrderSeg{
         arg.setName(argName);
         arg.setContentType(contentType);
         arg.setHelpInfo(helpInfo);
-        argList.add(arg);
+        if (requireType.equals(YuniOrderArgRequireTypeEnum.REQUIRED)) {
+            requiredArgList.add(arg);
+        } else if (requireType.equals(YuniOrderArgRequireTypeEnum.OPTIONAL)) {
+            optionalArgList.add(arg);
+        }
     }
 
     public void addRequiredArg(String argName) {
@@ -92,7 +121,7 @@ public class YuniOrderArgs implements YuniOrderSeg{
         YuniOrderArg arg = new YuniOrderArg();
         arg.setRequireType(YuniOrderArgRequireTypeEnum.REQUIRED);
         arg.setName(argName);
-        argList.add(arg);
+        requiredArgList.add(arg);
     }
 
     public void addRequiredArg(String argName, YuniOrderArgContentTypeEnum contentType) {
@@ -101,7 +130,7 @@ public class YuniOrderArgs implements YuniOrderSeg{
         arg.setRequireType(YuniOrderArgRequireTypeEnum.REQUIRED);
         arg.setName(argName);
         arg.setContentType(contentType);
-        argList.add(arg);
+        requiredArgList.add(arg);
     }
 
     public void addRequiredArg(String argName, String helpInfo) {
@@ -110,7 +139,7 @@ public class YuniOrderArgs implements YuniOrderSeg{
         arg.setRequireType(YuniOrderArgRequireTypeEnum.REQUIRED);
         arg.setName(argName);
         arg.setHelpInfo(helpInfo);
-        argList.add(arg);
+        requiredArgList.add(arg);
     }
 
     public void addRequiredArg(String argName, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
@@ -120,7 +149,7 @@ public class YuniOrderArgs implements YuniOrderSeg{
         arg.setName(argName);
         arg.setContentType(contentType);
         arg.setHelpInfo(helpInfo);
-        argList.add(arg);
+        requiredArgList.add(arg);
     }
 
     public void addOptionalArg(String argName) {
@@ -128,7 +157,7 @@ public class YuniOrderArgs implements YuniOrderSeg{
         YuniOrderArg arg = new YuniOrderArg();
         arg.setRequireType(YuniOrderArgRequireTypeEnum.OPTIONAL);
         arg.setName(argName);
-        argList.add(arg);
+        optionalArgList.add(arg);
     }
 
     public void addOptionalArg(String argName, YuniOrderArgContentTypeEnum contentType) {
@@ -137,7 +166,7 @@ public class YuniOrderArgs implements YuniOrderSeg{
         arg.setRequireType(YuniOrderArgRequireTypeEnum.OPTIONAL);
         arg.setName(argName);
         arg.setContentType(contentType);
-        argList.add(arg);
+        optionalArgList.add(arg);
     }
 
     public void addOptionalArg(String argName, String helpInfo) {
@@ -146,7 +175,7 @@ public class YuniOrderArgs implements YuniOrderSeg{
         arg.setRequireType(YuniOrderArgRequireTypeEnum.OPTIONAL);
         arg.setName(argName);
         arg.setHelpInfo(helpInfo);
-        argList.add(arg);
+        optionalArgList.add(arg);
     }
 
     public void addOptionalArg(String argName, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
@@ -156,11 +185,11 @@ public class YuniOrderArgs implements YuniOrderSeg{
         arg.setName(argName);
         arg.setContentType(contentType);
         arg.setHelpInfo(helpInfo);
-        argList.add(arg);
+        optionalArgList.add(arg);
     }
 
     public void addArgs(YuniOrderArgs args) {
-        for (YuniOrderArg arg : args.getArgList()) {
+        for (YuniOrderArg arg : args.getRequiredArgList()) {
             addArg(arg);
         }
     }
@@ -168,7 +197,7 @@ public class YuniOrderArgs implements YuniOrderSeg{
     @Override
     public Boolean valid() {
         boolean flag = true;
-        for (YuniOrderArg arg : argList) {
+        for (YuniOrderArg arg : requiredArgList) {
             if (!arg.valid()) {
                 flag = false;
                 break;
@@ -179,6 +208,17 @@ public class YuniOrderArgs implements YuniOrderSeg{
 
     @Override
     public YuniOrderArgsDto toDto() {
-        return BeanCopyUtils.copyBean(this, YuniOrderArgsDto.class);
+        YuniOrderArgsDto dto = new YuniOrderArgsDto();
+        ArrayList<YuniOrderArgDto> requiredArgListDto = new ArrayList<>();
+        ArrayList<YuniOrderArgDto> optionalArgListDto = new ArrayList<>();
+        for (YuniOrderArg arg : requiredArgList) {
+            requiredArgListDto.add(arg.toDto());
+        }
+        for (YuniOrderArg arg : optionalArgList) {
+            optionalArgListDto.add(arg.toDto());
+        }
+        dto.setRequiredArgList(requiredArgListDto);
+        dto.setOptionalArgList(optionalArgListDto);
+        return dto;
     }
 }

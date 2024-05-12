@@ -17,5 +17,6 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class YuniOrderArgsDto implements YuniOrderSegDto{
-    private ArrayList<YuniOrderArgDto> argList;
+    private ArrayList<YuniOrderArgDto> requiredArgList;
+    private ArrayList<YuniOrderArgDto> optionalArgList;
 }

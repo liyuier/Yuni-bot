@@ -1,6 +1,7 @@
 package com.yuier.yuni.common.utils;
 
 import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginsDto;
 import com.yuier.yuni.common.plugin.dto.positive.PositivePluginsDto;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,10 @@ public class CallCore {
     public ResponseResult initialPositivePluginToCore(PositivePluginsDto positivePluginDto) {
         String url = getBaseUrl() + "function/init_func/positive";
         return yuniHttpService.postRequestForObject(url, positivePluginDto, ResponseResult.class);
+    }
+
+    public ResponseResult initialOrderPositivePluginToCore(OrderDetectorPluginsDto orderDetectorPluginsDto) {
+        String url = getBaseUrl() + "function/init_func/order";
+        return yuniHttpService.postRequestForObject(url, orderDetectorPluginsDto, ResponseResult.class);
     }
 }

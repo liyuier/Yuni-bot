@@ -39,6 +39,10 @@ public class YuniOrderOption implements YuniOrderSeg{
 
     @Override
     public YuniOrderOptionDto toDto() {
-        return BeanCopyUtils.copyBean(this, YuniOrderOptionDto.class);
+        YuniOrderOptionDto dto = new YuniOrderOptionDto();
+        dto.setName(name);
+        dto.setFlag(flag);
+        dto.setOptionArgs(optionArgs.toDto());
+        return dto;
     }
 }

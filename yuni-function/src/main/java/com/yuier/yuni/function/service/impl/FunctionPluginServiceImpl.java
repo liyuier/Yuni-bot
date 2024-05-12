@@ -8,6 +8,8 @@ import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
 import com.yuier.yuni.common.listener.MessageTypeListener;
 import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginDto;
 import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginDto;
+import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginsDto;
 import com.yuier.yuni.common.plugin.dto.positive.PositivePluginsDto;
 import com.yuier.yuni.common.utils.CallCore;
 import com.yuier.yuni.function.domain.global.FunctionGlobalData;
@@ -109,7 +111,7 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
     private void initialPluginsToCore(FunctionPlugins functionPlugins) {
         BaseDetectorPluginsDto baseDetectorPluginsDto = new BaseDetectorPluginsDto();
         PositivePluginsDto positivePluginsDto = new PositivePluginsDto();
-        YuniOrderPlugins
+        OrderDetectorPluginsDto orderDetectorPluginsDto = new OrderDetectorPluginsDto();
         for (FunctionPlugin plugin : functionPlugins.getPluginMap().values()) {
             // 如果是主动消息链探测器
             if (plugin.isPositive()) {
@@ -120,12 +122,14 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
                     BaseDetectorPluginDto baseDetectorPluginDto = new BaseDetectorPluginDto(plugin);
                     baseDetectorPluginsDto.getPluginDtoMap().put(baseDetectorPluginDto.getPluginId(), baseDetectorPluginDto);
                 } else if (plugin.useDetector(YuniOrderDefiner.class)) {
-
+                    OrderDetectorPluginDto orderDetectorPluginDto = new OrderDetectorPluginDto(plugin);
+                    orderDetectorPluginsDto.getPluginDtoMap().put(orderDetectorPluginDto.getPluginId(), orderDetectorPluginDto);
                 }
             }
         }
         callCore.initialBaseDetectorPluginToCore(baseDetectorPluginsDto);
         callCore.initialPositivePluginToCore(positivePluginsDto);
+        callCore.initialOrderPositivePluginToCore(orderDetectorPluginsDto);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.yuier.yuni.core.controller;
 
 import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginsDto;
 import com.yuier.yuni.common.plugin.dto.positive.PositivePluginsDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.core.service.FunctionService;
@@ -33,6 +34,11 @@ public class FunctionController {
     @PostMapping("/init_func/positive")
     public ResponseResult initializeFunctionPositivePlugins(@RequestBody PositivePluginsDto positivePluginDto) {
         functionService.initialPositiveFunctionPlugins(positivePluginDto);
+        return ResponseResult.okResult();
+    }
+
+    @PostMapping("/init_func/order")
+    public ResponseResult initializeFunctionOrderPlugins(@RequestBody OrderDetectorPluginsDto orderDetectorPluginsDto) {
         return ResponseResult.okResult();
     }
 
