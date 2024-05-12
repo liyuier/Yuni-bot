@@ -10,7 +10,7 @@ import com.yuier.yuni.common.domain.message.MessageEvent;
  * @Date 2024/5/7 23:49
  * @description: 单个插件的探测器的接口
  */
-public interface PluginForDetector {
+public interface PluginForDetect {
     Boolean hitListener(MessageEvent messageEvent);
     Boolean hitDetector(MessageChain chain);
 }

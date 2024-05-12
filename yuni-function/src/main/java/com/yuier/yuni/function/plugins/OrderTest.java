@@ -1,13 +1,12 @@
 package com.yuier.yuni.function.plugins;
 
 import com.yuier.yuni.common.annotation.Plugin;
-import com.yuier.yuni.common.detector.order.YuniOrderArg;
 import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
+import com.yuier.yuni.common.detector.order.YuniOrderRequiredArg;
 import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.enums.MessageTypeEnum;
 import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
-import com.yuier.yuni.common.enums.YuniOrderArgRequireTypeEnum;
 import com.yuier.yuni.common.plugin.interf.YuniOrderPlugin;
 import com.yuier.yuni.common.utils.ResponseResult;
 import org.apache.poi.ss.formula.functions.T;
@@ -31,9 +30,8 @@ public class OrderTest implements YuniOrderPlugin {
                 .addRequiredArg("testAt", YuniOrderArgContentTypeEnum.AT)
                 .addRequiredArg("testNumber", YuniOrderArgContentTypeEnum.NUMBER)
                 .addOptionalArg("testImage", YuniOrderArgContentTypeEnum.Image)
-                .addOption("testOpt1", "-1", new YuniOrderArg(
-                        "opt1Arg1",
-                        YuniOrderArgRequireTypeEnum.REQUIRED
+                .addOption("testOpt1", "-1", new YuniOrderRequiredArg(
+                        "opt1Arg1"
                 ));
     }
 

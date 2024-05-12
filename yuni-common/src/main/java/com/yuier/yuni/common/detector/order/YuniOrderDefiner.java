@@ -113,7 +113,12 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
         return this;
     }
 
-    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderArg arg) {
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderRequiredArg arg) {
+        options.addOption(optName, optFlag, arg);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderOptionalArg arg) {
         options.addOption(optName, optFlag, arg);
         return this;
     }
@@ -128,7 +133,12 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
         return this;
     }
 
-    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderArg arg, String helpInfo) {
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderRequiredArg arg, String helpInfo) {
+        options.addOption(optName, optFlag, arg, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderOptionalArg arg, String helpInfo) {
         options.addOption(optName, optFlag, arg, helpInfo);
         return this;
     }

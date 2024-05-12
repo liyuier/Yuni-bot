@@ -15,7 +15,7 @@ import java.util.HashMap;
 @Data
 @AllArgsConstructor
 public class PluginsForDetect {
-    HashMap<String, PluginForDetector> pluginMap;
+    HashMap<String, PluginForDetect> pluginMap;
 
     public PluginsForDetect() {
         pluginMap = new HashMap<>();
