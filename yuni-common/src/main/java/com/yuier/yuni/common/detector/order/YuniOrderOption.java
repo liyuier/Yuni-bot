@@ -1,10 +1,9 @@
 package com.yuier.yuni.common.detector.order;
 
-import com.yuier.yuni.common.detector.order.dto.YuniOrderSegDto;
+import com.yuier.yuni.common.detector.order.dto.YuniOrderOptionDto;
+import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.ArrayList;
 
 /**
  * @Title: YuniOrderOption
@@ -20,7 +19,7 @@ public class YuniOrderOption implements YuniOrderSeg{
     // 选项的名称
     private String name;
 
-    // 选项的标识
+    // 选项的标识，即能够触发该选项的字符串
     private String flag;
 
     // 选项携带的参数
@@ -39,7 +38,7 @@ public class YuniOrderOption implements YuniOrderSeg{
     }
 
     @Override
-    public YuniOrderSegDto toDto() {
-        return null;
+    public YuniOrderOptionDto toDto() {
+        return BeanCopyUtils.copyBean(this, YuniOrderOptionDto.class);
     }
 }

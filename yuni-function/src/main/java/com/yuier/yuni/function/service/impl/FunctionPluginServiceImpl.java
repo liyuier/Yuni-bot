@@ -4,6 +4,7 @@ import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
+import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
 import com.yuier.yuni.common.listener.MessageTypeListener;
 import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginDto;
 import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginsDto;
@@ -108,6 +109,7 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
     private void initialPluginsToCore(FunctionPlugins functionPlugins) {
         BaseDetectorPluginsDto baseDetectorPluginsDto = new BaseDetectorPluginsDto();
         PositivePluginsDto positivePluginsDto = new PositivePluginsDto();
+        YuniOrderPlugins
         for (FunctionPlugin plugin : functionPlugins.getPluginMap().values()) {
             // 如果是主动消息链探测器
             if (plugin.isPositive()) {
@@ -117,6 +119,8 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
                 if (plugin.useDetector(BaseDetectorDefiner.class)) {
                     BaseDetectorPluginDto baseDetectorPluginDto = new BaseDetectorPluginDto(plugin);
                     baseDetectorPluginsDto.getPluginDtoMap().put(baseDetectorPluginDto.getPluginId(), baseDetectorPluginDto);
+                } else if (plugin.useDetector(YuniOrderDefiner.class)) {
+
                 }
             }
         }
