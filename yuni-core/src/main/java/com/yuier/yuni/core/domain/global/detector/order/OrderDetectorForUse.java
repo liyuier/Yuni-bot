@@ -3,12 +3,15 @@ package com.yuier.yuni.core.domain.global.detector.order;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderDefinerDto;
 import com.yuier.yuni.common.detector.order.matchedout.OrderArgMatchedOut;
+import com.yuier.yuni.common.detector.order.matchedout.OrderArgsMatchedOut;
 import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
+import com.yuier.yuni.common.detector.order.matchedout.OrderOptionMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageChainForOrder;
 import com.yuier.yuni.common.domain.message.MessageSeg;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.enums.MessageDataEnum;
+import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,10 +37,6 @@ public class OrderDetectorForUse {
 
     @Autowired
     CoreGlobalData coreGlobalData;
-
-    public Boolean argsContainsReply() {
-        return args.argsContainsReply() || options.argsContainsReply();
-    }
 
     public OrderDetectorForUse(YuniOrderDefinerDto dto) {
         head = new OrderHeadDetectorForUse(dto.getHead());
@@ -102,7 +101,8 @@ public class OrderDetectorForUse {
         if (!matchRequiredArgs(
                 args,
                 chainForOrder,
-                orderMatchedOut
+                orderMatchedOut,
+                null
         )) {
             return false;
         }
@@ -115,7 +115,8 @@ public class OrderDetectorForUse {
         matchOptionalArgs(
                 args,
                 chainForOrder,
-                orderMatchedOut
+                orderMatchedOut,
+                null
         );
         // 如果匹配完了，返回 true
         if (chainForOrder.getCurSegIndex() == chainForOrder.getContent().size()) {
@@ -135,7 +136,11 @@ public class OrderDetectorForUse {
             matchOption(option, chainForOrder, orderMatchedOut);
         }
         // 如果匹配完了，返回 true；否则返回 false
-        return chainForOrder.getCurSegIndex() == chainForOrder.getContent().size();
+        if (chainForOrder.getCurSegIndex() == chainForOrder.getContent().size()) {
+            return true;
+        } else {
+            return chainForOrder.getContent().get(chainForOrder.getCurSegIndex()).typeOf(MessageDataEnum.REPLY);
+        }
     }
 
     /**
@@ -147,7 +152,8 @@ public class OrderDetectorForUse {
      */
     public Boolean matchRequiredArgs(OrderArgsDetectorForUse args,
                                      MessageChainForOrder chainForOrder,
-                                     OrderMatchedOut orderMatchedOut) {
+                                     OrderMatchedOut orderMatchedOut,
+                                     String optionName) {
         ArrayList<OrderRequiredArgDetectorForUse> requiredArgList = args.getRequiredArgList();
         for (int i = 0; i < requiredArgList.size(); i ++) {
             // 遍历所有必选参数
@@ -160,7 +166,12 @@ public class OrderDetectorForUse {
                 return false;
             }
             // 将提取出来的参数保存起来
-            orderMatchedOut.getArgs().getArgMap().put(requiredArg.getName(), orderArgMatchedOut);
+            if (optionName == null) {
+                orderMatchedOut.getArgs().getArgMap().put(requiredArg.getName(), orderArgMatchedOut);
+            } else {
+                orderMatchedOut.getOptions().getOptionMap().get(optionName)
+                        .getArgs().getArgMap().put(requiredArg.getName(), orderArgMatchedOut);
+            }
             chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() + 1);
         }
         return true;
@@ -168,7 +179,8 @@ public class OrderDetectorForUse {
 
     public void matchOptionalArgs(OrderArgsDetectorForUse args,
                                      MessageChainForOrder chainForOrder,
-                                     OrderMatchedOut orderMatchedOut) {
+                                     OrderMatchedOut orderMatchedOut,
+                                     String optionName) {
         ArrayList<OrderOptionalArgDetectorForUse> optionalArgList = args.getOptionalArgList();
         for (int i = 0; i < optionalArgList.size(); i ++) {
             // 遍历所有可选参数
@@ -185,13 +197,19 @@ public class OrderDetectorForUse {
             }
             OrderOptionalArgDetectorForUse optionalArg = optionalArgList.get(i);
             OrderArgMatchedOut orderArgMatchedOut = new OrderArgMatchedOut();
-            // 如果非必选参数匹配不上当前消息段，返回 false
+            // 如果非必选参数匹配不上当前消息段，返回
             if (!OrderArgHitUtil.hit(messageSeg, orderArgMatchedOut,
                     optionalArg.getName(), optionalArg.getContentType())) {
                 return;
             }
             // 将提取出来的参数保存起来
-            orderMatchedOut.getArgs().getArgMap().put(optionalArg.getName(), orderArgMatchedOut);
+            // 将提取出来的参数保存起来
+            if (optionName == null) {
+                orderMatchedOut.getArgs().getArgMap().put(optionalArg.getName(), orderArgMatchedOut);
+            } else {
+                orderMatchedOut.getOptions().getOptionMap().get(optionName)
+                        .getArgs().getArgMap().put(optionalArg.getName(), orderArgMatchedOut);
+            }
             chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() + 1);
             // 如果匹配完了，返回
             if (chainForOrder.getCurSegIndex() == chainForOrder.getContent().size()) {
@@ -222,14 +240,22 @@ public class OrderDetectorForUse {
         if (!text.equals(option.getFlag())) {
             return;
         }
-        // 匹配当前选项标识，指针右移一位
+        // 匹配当前选项标识，指针右移一位，添加选项
         chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() + 1);
+        orderMatchedOut.getOptions().getOptionMap().put(option.getName(), new OrderOptionMatchedOut(
+           option.getName(),
+           new OrderArgsMatchedOut(),
+           ""
+        ));
+        // 如果匹配不上，恢复现场
         if (!matchRequiredArgs(
                 option.getOptionArgs(),
                 chainForOrder,
-                orderMatchedOut
+                orderMatchedOut,
+                option.getName()
         )) {
             chainForOrder.setCurSegIndex(rawSegIndex);
+            orderMatchedOut.getOptions().getOptionMap().remove(option.getName());
             return;
         }
         // 如果匹配完了，返回
@@ -240,7 +266,8 @@ public class OrderDetectorForUse {
         matchOptionalArgs(
                 option.getOptionArgs(),
                 chainForOrder,
-                orderMatchedOut
+                orderMatchedOut,
+                option.getName()
         );
     }
 
