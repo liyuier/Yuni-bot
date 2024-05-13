@@ -2,9 +2,13 @@ package com.yuier.yuni.function.plugins;
 
 import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
+import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
+import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.dto.SendGroupMessageDto;
 import com.yuier.yuni.common.enums.MessageTypeEnum;
+import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
+import com.yuier.yuni.common.plugin.interf.YuniOrderPlugin;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.common.utils.ResponseResult;
@@ -34,7 +38,7 @@ import java.util.Random;
 @Slf4j
 @Component
 @Plugin(id = "Setu", listener = MessageTypeEnum.GROUP)
-public class Setu implements BaseDetectorPlugin {
+public class Setu implements YuniOrderPlugin {
 
 
     @Autowired
@@ -46,18 +50,14 @@ public class Setu implements BaseDetectorPlugin {
     private String setuPath;
 
     @Override
-    public BaseDetectorDefiner detectorDefine() {
-        return BaseDetectorDefiner.build()
-                .addFullMatchText("/色图");
+    public YuniOrderDefiner detectorDefine() {
+        return YuniOrderDefiner.build()
+                .setOrderHead("色图")
+                .addOptionalArg("imageNum", YuniOrderArgContentTypeEnum.NUMBER);
     }
 
     @Override
-    public String description() {
-        return "群友最喜闻乐见的色图功能";
-    }
-
-    @Override
-    public ResponseResult<T> run(MessageEvent messageEvent) {
+    public ResponseResult<T> run(MessageEvent messageEvent, OrderMatchedOut order) {
         Path setuDirectory = Paths.get(setuPath);
         List<Path> files = new ArrayList<>();
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(setuDirectory, "*.{jpg,jpeg,png,gif}")) {
@@ -80,5 +80,10 @@ public class Setu implements BaseDetectorPlugin {
             log.info("目录中没有色图图片！");
         }
         return ResponseResult.okResult();
+    }
+
+    @Override
+    public String description() {
+        return "群友最喜闻乐见的色图功能";
     }
 }
