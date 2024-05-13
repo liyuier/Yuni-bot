@@ -1,6 +1,7 @@
 package com.yuier.yuni.function.service;
 
 import com.yuier.yuni.common.domain.dto.CallBaseFunctionPluginDto;
+import com.yuier.yuni.common.domain.dto.CallOrderFunctionPluginDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 /**
  * @Title: FunctionCallService
@@ -11,5 +12,7 @@ import com.yuier.yuni.common.utils.ResponseResult;
  */
 public interface FunctionCallService {
 
-    ResponseResult callPlugin(CallBaseFunctionPluginDto callBaseFunctionPluginDto);
+    ResponseResult callBasePlugin(CallBaseFunctionPluginDto callBaseFunctionPluginDto);
+
+    ResponseResult callOrderPlugin(CallOrderFunctionPluginDto callOrderFunctionPluginDto);
 }

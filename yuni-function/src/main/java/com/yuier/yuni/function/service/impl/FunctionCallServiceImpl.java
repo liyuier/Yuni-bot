@@ -2,7 +2,9 @@ package com.yuier.yuni.function.service.impl;
 
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
+import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.dto.CallBaseFunctionPluginDto;
+import com.yuier.yuni.common.domain.dto.CallOrderFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageEventService;
@@ -35,14 +37,26 @@ public class FunctionCallServiceImpl implements FunctionCallService {
     FunctionGlobalData functionGlobalData;
 
     @Override
-    public ResponseResult callPlugin(CallBaseFunctionPluginDto callBaseFunctionPluginDto) {
+    public ResponseResult callBasePlugin(CallBaseFunctionPluginDto callBaseFunctionPluginDto) {
         MessageEvent messageEvent = messageEventService.postToMessage(callBaseFunctionPluginDto.getMessageEventNode(), MessageEvent.class);
         FunctionPlugins plugins = functionGlobalData.getPlugins();
         FunctionPlugin plugin = plugins.getPluginMap().get(callBaseFunctionPluginDto.getPluginId());
         try {
-            if (plugin.useDetector(BaseDetectorDefiner.class)) {
-                asyncService.asyncReflective(plugin.getPluginBean(), SystemConstants.PLUGIN_CRITICAL_NAME.FUNC_PLUGIN_ENTRY, messageEvent);
-            }
+            asyncService.asyncReflective(plugin.getPluginBean(), SystemConstants.PLUGIN_CRITICAL_NAME.FUNC_PLUGIN_ENTRY, messageEvent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult callOrderPlugin(CallOrderFunctionPluginDto callOrderFunctionPluginDto) {
+        MessageEvent messageEvent = messageEventService.postToMessage(callOrderFunctionPluginDto.getMessageEventNode(), MessageEvent.class);
+        FunctionPlugins plugins = functionGlobalData.getPlugins();
+        FunctionPlugin plugin = plugins.getPluginMap().get(callOrderFunctionPluginDto.getPluginId());
+        OrderMatchedOut orderMatchedOut = callOrderFunctionPluginDto.getOrderMatchedOut();
+        try {
+            asyncService.asyncReflective(plugin.getPluginBean(), SystemConstants.PLUGIN_CRITICAL_NAME.FUNC_PLUGIN_ENTRY, messageEvent, orderMatchedOut);
         } catch (Exception e) {
             e.printStackTrace();
         }

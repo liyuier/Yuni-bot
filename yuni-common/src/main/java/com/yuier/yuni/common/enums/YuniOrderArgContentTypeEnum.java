@@ -16,7 +16,8 @@ public enum YuniOrderArgContentTypeEnum {
     NUMBER("number", "数字"),
     AT("at", "@ 用户"),
     IMAGE("image", "图片"),
-    URL("url", "url");
+    URL("url", "url"),
+    REPLY("reply", "回复消息");
 
     private final String type;
     private final String description;

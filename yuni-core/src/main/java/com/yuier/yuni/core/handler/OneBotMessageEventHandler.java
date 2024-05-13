@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
 import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.dto.CallBaseFunctionPluginDto;
+import com.yuier.yuni.common.domain.dto.CallOrderFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.enums.OneBotEventEnum;
 import com.yuier.yuni.common.service.AsyncService;
@@ -80,7 +81,7 @@ public class OneBotMessageEventHandler {
             OrderMatchedOut orderMatchedOut = new OrderMatchedOut();
             if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chain, orderMatchedOut, coreGlobalData.getOrderMark().toString())) {
                 log.info("命中插件 " + pluginId);
-                callFunction.callBaseFunctionPlugin(new CallBaseFunctionPluginDto(pluginId, postEventNode));
+                callFunction.callOrderFunctionPlugin(new CallOrderFunctionPluginDto(pluginId, postEventNode, orderMatchedOut));
             }
         }
         return flag;

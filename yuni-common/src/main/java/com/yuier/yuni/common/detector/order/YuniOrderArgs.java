@@ -160,6 +160,10 @@ public class YuniOrderArgs implements YuniOrderSeg{
         requiredArgList.add(arg);
     }
 
+    public void addRequiredArg(YuniOrderRequiredArg arg) {
+        requiredArgList.add(arg);
+    }
+
     public void addOptionalArg(String argName) {
         checkNameValid(argName);
         YuniOrderOptionalArg arg = new YuniOrderOptionalArg();
@@ -192,12 +196,34 @@ public class YuniOrderArgs implements YuniOrderSeg{
         optionalArgList.add(arg);
     }
 
+    public void addOptionalArg(YuniOrderOptionalArg arg) {
+        optionalArgList.add(arg);
+    }
+
     public void addArgs(YuniOrderArgs args) {
         for (YuniOrderRequiredArg arg : args.getRequiredArgList()) {
             addArg(arg);
         }
         for (YuniOrderOptionalArg arg : args.getOptionalArgList()) {
             addArg(arg);
+        }
+    }
+
+    public void addRequiredArgArray(YuniOrderRequiredArg[] args) {
+        for (YuniOrderRequiredArg arg : args) {
+            if (!arg.valid()) {
+                throw new RuntimeException("定义参数不合法！");
+            }
+            requiredArgList.add(arg);
+        }
+    }
+
+    public void addOptionalArgArray(YuniOrderOptionalArg[] args) {
+        for (YuniOrderOptionalArg arg : args) {
+            if (!arg.valid()) {
+                throw new RuntimeException("定义参数不合法！");
+            }
+            optionalArgList.add(arg);
         }
     }
 

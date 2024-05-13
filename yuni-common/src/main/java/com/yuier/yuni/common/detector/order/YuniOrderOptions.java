@@ -2,7 +2,6 @@ package com.yuier.yuni.common.detector.order;
 
 import com.yuier.yuni.common.detector.order.dto.YuniOrderOptionDto;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderOptionsDto;
-import com.yuier.yuni.common.utils.BeanCopyUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -112,6 +111,44 @@ public class YuniOrderOptions implements YuniOrderSeg{
         option.setName(optName);
         option.setFlag(optFlag);
         option.getOptionArgs().addArgs(args);
+        option.setHelpInfo(helpInfo);
+        optionList.add(option);
+    }
+
+    public void addOption(String optName, String optFlag, YuniOrderRequiredArg[] args) {
+        checkNameAndFlagValid(optName, optFlag);
+        YuniOrderOption option = new YuniOrderOption();
+        option.setName(optName);
+        option.setFlag(optFlag);
+        option.getOptionArgs().addRequiredArgArray(args);
+        optionList.add(option);
+    }
+
+    public void addOption(String optName, String optFlag, YuniOrderOptionalArg[] args) {
+        checkNameAndFlagValid(optName, optFlag);
+        YuniOrderOption option = new YuniOrderOption();
+        option.setName(optName);
+        option.setFlag(optFlag);
+        option.getOptionArgs().addOptionalArgArray(args);
+        optionList.add(option);
+    }
+
+    public void addOption(String optName, String optFlag, YuniOrderRequiredArg[] args, String helpInfo) {
+        checkNameAndFlagValid(optName, optFlag);
+        YuniOrderOption option = new YuniOrderOption();
+        option.setName(optName);
+        option.setFlag(optFlag);
+        option.getOptionArgs().addRequiredArgArray(args);
+        option.setHelpInfo(helpInfo);
+        optionList.add(option);
+    }
+
+    public void addOption(String optName, String optFlag, YuniOrderOptionalArg[] args, String helpInfo) {
+        checkNameAndFlagValid(optName, optFlag);
+        YuniOrderOption option = new YuniOrderOption();
+        option.setName(optName);
+        option.setFlag(optFlag);
+        option.getOptionArgs().addOptionalArgArray(args);
         option.setHelpInfo(helpInfo);
         optionList.add(option);
     }

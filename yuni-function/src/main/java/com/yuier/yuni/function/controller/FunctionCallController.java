@@ -1,6 +1,7 @@
 package com.yuier.yuni.function.controller;
 
 import com.yuier.yuni.common.domain.dto.CallBaseFunctionPluginDto;
+import com.yuier.yuni.common.domain.dto.CallOrderFunctionPluginDto;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.function.service.FunctionCallService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,13 @@ public class FunctionCallController {
     @Autowired
     FunctionCallService functionCallService;
 
-    @PostMapping("/plugin")
-    public ResponseResult callPlugin(@RequestBody CallBaseFunctionPluginDto callBaseFunctionPluginDto) {
-        return functionCallService.callPlugin(callBaseFunctionPluginDto);
+    @PostMapping("/plugin/base")
+    public ResponseResult callBasePlugin(@RequestBody CallBaseFunctionPluginDto callBaseFunctionPluginDto) {
+        return functionCallService.callBasePlugin(callBaseFunctionPluginDto);
+    }
+    
+    @PostMapping("/plugin/order")
+    public ResponseResult callOrderPlugin(@RequestBody CallOrderFunctionPluginDto callOrderFunctionPluginDto) {
+        return functionCallService.callOrderPlugin(callOrderFunctionPluginDto);
     }
 }

@@ -30,4 +30,10 @@ public class AsyncServiceImpl implements AsyncService{
         targetMethod.setAccessible(true);
         return CompletableFuture.completedFuture(targetMethod.invoke(targetBean, argsObjects));
     }
+
+    public CompletableFuture<Object> asyncReflective(Object targetBean, String targetMethodName, Object argsObject1, Object argsObject2) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method targetMethod = targetBean.getClass().getDeclaredMethod(targetMethodName, argsObject1.getClass(), argsObject2.getClass());
+        targetMethod.setAccessible(true);
+        return CompletableFuture.completedFuture(targetMethod.invoke(targetBean, argsObject1, argsObject2));
+    }
 }

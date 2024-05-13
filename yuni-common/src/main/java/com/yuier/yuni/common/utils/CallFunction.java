@@ -2,6 +2,7 @@ package com.yuier.yuni.common.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.domain.dto.CallBaseFunctionPluginDto;
+import com.yuier.yuni.common.domain.dto.CallOrderFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +31,13 @@ public class CallFunction {
         return baseUrl;
     }
 
-    public ResponseResult orderCallFunction(MessageEvent messageEvent) {
-        String url = getBaseUrl() + "function/order";
-        return yuniHttpService.postRequestForObject(url, messageEvent, ResponseResult.class);
-    }
-
-    public ResponseResult orderCallFunction(JsonNode postEventNode) {
-        String url = getBaseUrl() + "function/order";
-        return yuniHttpService.postRequestForObject(url, postEventNode, ResponseResult.class);
-    }
-
     public ResponseResult callBaseFunctionPlugin(CallBaseFunctionPluginDto callBaseFunctionPluginDto) {
-        String url = getBaseUrl() + "function/plugin";
+        String url = getBaseUrl() + "function/plugin/base";
         return yuniHttpService.postRequestForObject(url, callBaseFunctionPluginDto, ResponseResult.class);
+    }
+
+    public ResponseResult callOrderFunctionPlugin(CallOrderFunctionPluginDto callOrderFunctionPluginDto) {
+        String url = getBaseUrl() + "function/plugin/order";
+        return yuniHttpService.postRequestForObject(url, callOrderFunctionPluginDto, ResponseResult.class);
     }
 }
