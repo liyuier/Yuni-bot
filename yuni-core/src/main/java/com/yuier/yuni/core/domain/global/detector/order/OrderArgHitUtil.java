@@ -109,22 +109,28 @@ public class OrderArgHitUtil {
         return false;
     }
 
-    private static void setOrderArgMatchedOut(OrderArgMatchedOut orderArgMatchedOut, String name, YuniOrderArgContentTypeEnum contentType, TextData textData) {
+    public static void setOrderArgMatchedOut(OrderArgMatchedOut orderArgMatchedOut, String name, YuniOrderArgContentTypeEnum contentType, TextData textData) {
         orderArgMatchedOut.setName(name);
         orderArgMatchedOut.setContentType(contentType);
         orderArgMatchedOut.getData().setText(textData);
     }
 
-    private static void setOrderArgMatchedOut(OrderArgMatchedOut orderArgMatchedOut, String name, YuniOrderArgContentTypeEnum contentType, AtData atData) {
+    public static void setOrderArgMatchedOut(OrderArgMatchedOut orderArgMatchedOut, String name, YuniOrderArgContentTypeEnum contentType, AtData atData) {
         orderArgMatchedOut.setName(name);
         orderArgMatchedOut.setContentType(contentType);
         orderArgMatchedOut.getData().setAt(atData);
     }
 
-    private static void setOrderArgMatchedOut(OrderArgMatchedOut orderArgMatchedOut, String name, YuniOrderArgContentTypeEnum contentType, ImageData imageData) {
+    public static void setOrderArgMatchedOut(OrderArgMatchedOut orderArgMatchedOut, String name, YuniOrderArgContentTypeEnum contentType, ImageData imageData) {
         orderArgMatchedOut.setName(name);
         orderArgMatchedOut.setContentType(contentType);
         orderArgMatchedOut.getData().setImage(imageData);
+    }
+
+    public static void setOrderArgMatchedOut(OrderArgMatchedOut orderArgMatchedOut, String name, YuniOrderArgContentTypeEnum contentType, ReplyData replyData) {
+        orderArgMatchedOut.setName(name);
+        orderArgMatchedOut.setContentType(contentType);
+        orderArgMatchedOut.getData().setReplyData(replyData);
     }
 
     public static boolean isValidURL(String urlString) {

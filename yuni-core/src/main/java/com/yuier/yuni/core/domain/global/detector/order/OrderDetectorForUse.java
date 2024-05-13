@@ -9,14 +9,21 @@ import com.yuier.yuni.common.detector.order.matchedout.OrderOptionMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageChainForOrder;
 import com.yuier.yuni.common.domain.message.MessageSeg;
+import com.yuier.yuni.common.domain.message.MessageSender;
+import com.yuier.yuni.common.domain.message.data.AtData;
+import com.yuier.yuni.common.domain.message.data.ReplyData;
 import com.yuier.yuni.common.domain.message.data.TextData;
+import com.yuier.yuni.common.domain.message.dto.GetMessageDto;
+import com.yuier.yuni.common.domain.message.res.data.GetMessageResData;
 import com.yuier.yuni.common.enums.MessageDataEnum;
 import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
+import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.ArrayList;
 
@@ -35,13 +42,35 @@ public class OrderDetectorForUse {
     private OrderArgsDetectorForUse args;
     private OrderOptionsDetectorForUse options;
 
+    private ReplyData replyData;
+
     @Autowired
     CoreGlobalData coreGlobalData;
+//    @Lazy
+//    @Autowired
+//    CallOneBot callOneBot;
 
     public OrderDetectorForUse(YuniOrderDefinerDto dto) {
         head = new OrderHeadDetectorForUse(dto.getHead());
         args = new OrderArgsDetectorForUse(dto.getArgs());
         options = new OrderOptionsDetectorForUse(dto.getOptions());
+    }
+
+    private void removeReplyData(MessageChain chain) {
+        // 将开头的回复消息保存下来
+        replyData = (ReplyData) chain.getContent().remove(0).getData();
+//        // 如果回复时 @ 了原消息发送人，将这个 @ 删除
+//        Long userId = callOneBot.getMessage(new GetMessageDto(
+//                Long.parseLong(replyData.getId())
+//        )).getUserId();
+//        for (MessageSeg messageSeg : chain.getContent()) {
+//            if (messageSeg.typeOf(MessageDataEnum.AT)) {
+//                if (((AtData) messageSeg.getData()).getQq().equals(String.valueOf(userId))) {
+//                    chain.getContent().remove(messageSeg);
+//                    return;
+//                }
+//            }
+//        }
     }
 
     /**
@@ -61,7 +90,7 @@ public class OrderDetectorForUse {
          * 预处理一下，由于回复消息固定在消息链的第一条，所以将其放至最后一条，避免干扰判断
          */
         if (chain.startWithReplyData()) {
-            chain.getContent().add(chain.getContent().remove(0));
+            removeReplyData(chain);
         }
         // 开始判断
         // 如果消息链不是以有效文本开头，直接判不匹配
@@ -155,15 +184,32 @@ public class OrderDetectorForUse {
                                      OrderMatchedOut orderMatchedOut,
                                      String optionName) {
         ArrayList<OrderRequiredArgDetectorForUse> requiredArgList = args.getRequiredArgList();
-        for (int i = 0; i < requiredArgList.size(); i ++) {
+        for (OrderRequiredArgDetectorForUse requiredArg : requiredArgList) {
             // 遍历所有必选参数
-            OrderRequiredArgDetectorForUse requiredArg = requiredArgList.get(i);
             MessageSeg messageSeg = chainForOrder.getContent().get(chainForOrder.getCurSegIndex());
             OrderArgMatchedOut orderArgMatchedOut = new OrderArgMatchedOut();
-            // 如果必选参数匹配不上当前消息段，返回 false
-            if (!OrderArgHitUtil.hit(messageSeg, orderArgMatchedOut,
-                    requiredArg.getName(), requiredArg.getContentType())) {
-                return false;
+            // 如果当前参数匹配回复消息段，需要特殊处理
+            if (requiredArg.getContentType().equals(YuniOrderArgContentTypeEnum.REPLY)) {
+                if (null == replyData) {
+                    return false;
+                }
+                if (!messageSeg.typeOf(MessageDataEnum.AT)) {
+                    return false;
+                }
+                OrderArgHitUtil.setOrderArgMatchedOut(
+                        orderArgMatchedOut,
+                        requiredArg.getName(),
+                        YuniOrderArgContentTypeEnum.REPLY,
+                        replyData
+                );
+//                // 这里是为了适配后边的指针移动
+//                chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() - 1);
+            } else {
+                // 如果必选参数匹配不上当前消息段，返回 false
+                if (!OrderArgHitUtil.hit(messageSeg, orderArgMatchedOut,
+                        requiredArg.getName(), requiredArg.getContentType())) {
+                    return false;
+                }
             }
             // 将提取出来的参数保存起来
             if (optionName == null) {
@@ -182,7 +228,11 @@ public class OrderDetectorForUse {
                                      OrderMatchedOut orderMatchedOut,
                                      String optionName) {
         ArrayList<OrderOptionalArgDetectorForUse> optionalArgList = args.getOptionalArgList();
-        for (int i = 0; i < optionalArgList.size(); i ++) {
+        /**
+         * 非贪婪匹配的实现
+         * 如果匹配非必选参数的时候，匹配到某个选项的标识，那么跳出匹配
+         */
+        for (OrderOptionalArgDetectorForUse optionalArg : optionalArgList) {
             // 遍历所有可选参数
             MessageSeg messageSeg = chainForOrder.getContent().get(chainForOrder.getCurSegIndex());
             /**
@@ -195,12 +245,29 @@ public class OrderDetectorForUse {
                     return;
                 }
             }
-            OrderOptionalArgDetectorForUse optionalArg = optionalArgList.get(i);
             OrderArgMatchedOut orderArgMatchedOut = new OrderArgMatchedOut();
-            // 如果非必选参数匹配不上当前消息段，返回
-            if (!OrderArgHitUtil.hit(messageSeg, orderArgMatchedOut,
-                    optionalArg.getName(), optionalArg.getContentType())) {
-                return;
+            // 如果当前参数匹配回复消息段，需要特殊处理
+            if (optionalArg.getContentType().equals(YuniOrderArgContentTypeEnum.REPLY)) {
+                if (null == replyData) {
+                    return;
+                }
+                if (!messageSeg.typeOf(MessageDataEnum.AT)) {
+                    return;
+                }
+                OrderArgHitUtil.setOrderArgMatchedOut(
+                        orderArgMatchedOut,
+                        optionalArg.getName(),
+                        YuniOrderArgContentTypeEnum.REPLY,
+                        replyData
+                );
+//                // 这里是为了适配后边的指针移动
+//                chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() - 1);
+            } else {
+                // 如果非必选参数匹配不上当前消息段，返回
+                if (!OrderArgHitUtil.hit(messageSeg, orderArgMatchedOut,
+                        optionalArg.getName(), optionalArg.getContentType())) {
+                    return;
+                }
             }
             // 将提取出来的参数保存起来
             // 将提取出来的参数保存起来
@@ -240,7 +307,7 @@ public class OrderDetectorForUse {
         if (!text.equals(option.getFlag())) {
             return;
         }
-        // 匹配当前选项标识，指针右移一位，添加选项
+        // 匹配当前选项标识，指针右移一位，在 orderMatchedOut 中插入当前选项
         chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() + 1);
         orderMatchedOut.getOptions().getOptionMap().put(option.getName(), new OrderOptionMatchedOut(
            option.getName(),

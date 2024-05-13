@@ -28,6 +28,19 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
     // 指令选项，每个选项都是可选的。其结构分为选项标识与选项参数
     private YuniOrderOptions options;
 
+    // 用于辅助判断输入合法性
+    private Boolean replyArgDefined = false;
+
+    private void checkArgTypeValid(YuniOrderArgContentTypeEnum contentType) {
+        if (!contentType.equals(YuniOrderArgContentTypeEnum.REPLY)) {
+            return;
+        }
+        if (replyArgDefined.equals(true)) {
+            throw new RuntimeException("不允许多次定义接收回复消息的参数！");
+        }
+        replyArgDefined = true;
+    }
+
     // 链式调用的操作对象
     private static YuniOrderDefiner definer;
 
@@ -54,6 +67,7 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
     }
 
     public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType, YuniOrderArgContentTypeEnum contentType) {
+        checkArgTypeValid(contentType);
         args.addArg(argName.trim(), requireType, contentType);
         return this;
     }
@@ -64,6 +78,7 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
     }
 
     public YuniOrderDefiner addArg(String argName, YuniOrderArgRequireTypeEnum requireType, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
+        checkArgTypeValid(contentType);
         args.addArg(argName.trim(), requireType, contentType, helpInfo);
         return this;
     }
@@ -74,6 +89,7 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
     }
 
     public YuniOrderDefiner addRequiredArg(String argName, YuniOrderArgContentTypeEnum contentType) {
+        checkArgTypeValid(contentType);
         args.addRequiredArg(argName.trim(), contentType);
         return this;
     }
@@ -84,6 +100,7 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
     }
 
     public YuniOrderDefiner addRequiredArg(String argName, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
+        checkArgTypeValid(contentType);
         args.addRequiredArg(argName.trim(), contentType, helpInfo);
         return this;
     }
@@ -94,6 +111,7 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
     }
 
     public YuniOrderDefiner addOptionalArg(String argName, YuniOrderArgContentTypeEnum contentType) {
+        checkArgTypeValid(contentType);
         args.addOptionalArg(argName.trim(), contentType);
         return this;
     }
@@ -104,7 +122,36 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
     }
 
     public YuniOrderDefiner addOptionalArg(String argName, YuniOrderArgContentTypeEnum contentType, String helpInfo) {
+        checkArgTypeValid(contentType);
         args.addOptionalArg(argName.trim(), contentType, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addArgs(YuniOrderArgs args) {
+        for (YuniOrderRequiredArg arg : args.getRequiredArgList()) {
+            checkArgTypeValid(arg.getContentType());
+            this.args.addRequiredArg(arg);
+        }
+        for (YuniOrderOptionalArg arg : args.getOptionalArgList()) {
+            checkArgTypeValid(arg.getContentType());
+            this.args.addOptionalArg(arg);
+        }
+        return this;
+    }
+
+    public YuniOrderDefiner addRequiredArgArray(YuniOrderRequiredArg[] args) {
+        for (YuniOrderRequiredArg arg : args) {
+            checkArgTypeValid(arg.getContentType());
+            this.args.addRequiredArg(arg);
+        }
+        return this;
+    }
+
+    public YuniOrderDefiner addOptionalArgArray(YuniOrderOptionalArg[] args) {
+        for (YuniOrderOptionalArg arg : args) {
+            checkArgTypeValid(arg.getContentType());
+            this.args.addOptionalArg(arg);
+        }
         return this;
     }
 
@@ -145,6 +192,38 @@ public class YuniOrderDefiner implements MessageDetectorDefiner {
 
     public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderArgs args, String helpInfo) {
         options.addOption(optName.trim(), optFlag.trim(), args, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderRequiredArg[] args) {
+        for (YuniOrderRequiredArg arg : args) {
+            checkArgTypeValid(arg.getContentType());
+        }
+        options.addOption(optName, optFlag, args);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderOptionalArg[] args) {
+        for (YuniOrderOptionalArg arg : args) {
+            checkArgTypeValid(arg.getContentType());
+        }
+        options.addOption(optName, optFlag, args);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderRequiredArg[] args, String helpInfo) {
+        for (YuniOrderRequiredArg arg : args) {
+            checkArgTypeValid(arg.getContentType());
+        }
+        options.addOption(optName, optFlag, args, helpInfo);
+        return this;
+    }
+
+    public YuniOrderDefiner addOption(String optName, String optFlag, YuniOrderOptionalArg[] args, String helpInfo) {
+        for (YuniOrderOptionalArg arg : args) {
+            checkArgTypeValid(arg.getContentType());
+        }
+        options.addOption(optName, optFlag, args, helpInfo);
         return this;
     }
 

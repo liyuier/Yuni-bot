@@ -18,4 +18,7 @@ public interface AsyncService {
 
     @Async
     CompletableFuture<Object> asyncReflective(Object targetBean, String targetMethodName, Object... argsObjects) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+
+    @Async
+    CompletableFuture<Object> asyncReflective(Object targetBean, String targetMethodName, Object argsObject1, Object argsObject2) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
 }
