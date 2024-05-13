@@ -22,5 +22,5 @@ public class OrderDataMatchedOut {
     private TextData text;
     private AtData at;
     private ImageData image;
-    private ReplyData replyData;
+    private ReplyData reply;
 }

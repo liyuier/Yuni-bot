@@ -130,7 +130,7 @@ public class OrderArgHitUtil {
     public static void setOrderArgMatchedOut(OrderArgMatchedOut orderArgMatchedOut, String name, YuniOrderArgContentTypeEnum contentType, ReplyData replyData) {
         orderArgMatchedOut.setName(name);
         orderArgMatchedOut.setContentType(contentType);
-        orderArgMatchedOut.getData().setReplyData(replyData);
+        orderArgMatchedOut.getData().setReply(replyData);
     }
 
     public static boolean isValidURL(String urlString) {

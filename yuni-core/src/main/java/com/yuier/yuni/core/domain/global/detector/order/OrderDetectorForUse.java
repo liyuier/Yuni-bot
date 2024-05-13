@@ -1,6 +1,5 @@
 package com.yuier.yuni.core.domain.global.detector.order;
 
-import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderDefinerDto;
 import com.yuier.yuni.common.detector.order.matchedout.OrderArgMatchedOut;
 import com.yuier.yuni.common.detector.order.matchedout.OrderArgsMatchedOut;
@@ -40,9 +39,6 @@ public class OrderDetectorForUse {
 
     @Autowired
     CoreGlobalData coreGlobalData;
-//    @Lazy
-//    @Autowired
-//    CallOneBot callOneBot;
 
     public OrderDetectorForUse(YuniOrderDefinerDto dto) {
         head = new OrderHeadDetectorForUse(dto.getHead());
@@ -52,7 +48,7 @@ public class OrderDetectorForUse {
 
     private void removeReplyData(MessageChain chain) {
         // 将开头的回复消息保存下来
-        replyData = (ReplyData) chain.getContent().remove(0).getData();
+        replyData = (ReplyData) chain.getContent().get(0).getData();
     }
 
     /**
@@ -76,7 +72,7 @@ public class OrderDetectorForUse {
         }
         // 开始判断
         // 如果消息链不是以有效文本开头，直接判不匹配
-        if (!chain.startWithTextData()) {
+        if (!chain.startWithTextData() && !chain.startWithTextDataFollowingReplyData()) {
             return false;
         }
         // 拆分消息段，供指令探测器匹配
@@ -97,8 +93,16 @@ public class OrderDetectorForUse {
         if (chainForOrder.getContent().size() < leastSegNum()) {
             return false;
         }
+        TextData firstTextData = null;
         // 匹配指令头
-        if (!((TextData) chainForOrder.getContent().get(SystemConstants.FIRST_INDEX).getData()).getText().equals(orderMark + head.getName())) {
+        if (chain.startWithReplyData()) {
+            firstTextData = (TextData) chainForOrder.getContent().get(1).getData();
+            chainForOrder.setCurSegIndex(2);
+        } else {
+            firstTextData = (TextData) chainForOrder.getContent().get(0).getData();
+            chainForOrder.setCurSegIndex(1);
+        }
+        if (!firstTextData.getText().equals(orderMark + head.getName())) {
             return false;
         }
 
@@ -108,7 +112,6 @@ public class OrderDetectorForUse {
          */
 
         // 匹配必选参数
-        chainForOrder.setCurSegIndex(1);
         if (!matchRequiredArgs(
                 args,
                 chainForOrder,

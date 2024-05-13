@@ -28,4 +28,8 @@ public class OrderMatchedOut {
     public OrderOptionMatchedOut getOptionByName(String optName) {
         return options.getOptionMap().get(optName);
     }
+
+    public OrderArgMatchedOut getOptionArgByName(String optName, String argName) {
+        return options.getOptionMap().get(optName).getArgs().getArgMap().get(argName);
+    }
 }
