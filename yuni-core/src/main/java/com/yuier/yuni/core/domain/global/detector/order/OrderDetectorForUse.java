@@ -9,21 +9,15 @@ import com.yuier.yuni.common.detector.order.matchedout.OrderOptionMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.domain.message.MessageChainForOrder;
 import com.yuier.yuni.common.domain.message.MessageSeg;
-import com.yuier.yuni.common.domain.message.MessageSender;
-import com.yuier.yuni.common.domain.message.data.AtData;
 import com.yuier.yuni.common.domain.message.data.ReplyData;
 import com.yuier.yuni.common.domain.message.data.TextData;
-import com.yuier.yuni.common.domain.message.dto.GetMessageDto;
-import com.yuier.yuni.common.domain.message.res.data.GetMessageResData;
 import com.yuier.yuni.common.enums.MessageDataEnum;
 import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
-import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 
 import java.util.ArrayList;
 
@@ -59,18 +53,6 @@ public class OrderDetectorForUse {
     private void removeReplyData(MessageChain chain) {
         // 将开头的回复消息保存下来
         replyData = (ReplyData) chain.getContent().remove(0).getData();
-//        // 如果回复时 @ 了原消息发送人，将这个 @ 删除
-//        Long userId = callOneBot.getMessage(new GetMessageDto(
-//                Long.parseLong(replyData.getId())
-//        )).getUserId();
-//        for (MessageSeg messageSeg : chain.getContent()) {
-//            if (messageSeg.typeOf(MessageDataEnum.AT)) {
-//                if (((AtData) messageSeg.getData()).getQq().equals(String.valueOf(userId))) {
-//                    chain.getContent().remove(messageSeg);
-//                    return;
-//                }
-//            }
-//        }
     }
 
     /**
@@ -202,8 +184,6 @@ public class OrderDetectorForUse {
                         YuniOrderArgContentTypeEnum.REPLY,
                         replyData
                 );
-//                // 这里是为了适配后边的指针移动
-//                chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() - 1);
             } else {
                 // 如果必选参数匹配不上当前消息段，返回 false
                 if (!OrderArgHitUtil.hit(messageSeg, orderArgMatchedOut,
@@ -260,8 +240,6 @@ public class OrderDetectorForUse {
                         YuniOrderArgContentTypeEnum.REPLY,
                         replyData
                 );
-//                // 这里是为了适配后边的指针移动
-//                chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() - 1);
             } else {
                 // 如果非必选参数匹配不上当前消息段，返回
                 if (!OrderArgHitUtil.hit(messageSeg, orderArgMatchedOut,
