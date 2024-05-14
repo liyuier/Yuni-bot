@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -46,7 +47,12 @@ public class FunctionServiceImpl implements FunctionService {
 
     @Override
     public ResponseResult initialPositiveFunctionPlugins(PositivePluginsDto positivePluginDto) {
-        coreGlobalData.getPositivePlugins().setPositivePluginIdList(positivePluginDto.getPositivePluginIdList());
+        HashMap<String, ArrayList<String>> positivePluginMap = new HashMap<>();
+        positivePluginMap.put(
+          positivePluginDto.getModule().getName(),
+          positivePluginDto.getPositivePluginIdList()
+        );
+        coreGlobalData.getPositivePlugins().setPositivePluginMap(positivePluginMap);
         log.info("主动触发插件初始化成功");
         return ResponseResult.okResult();
     }

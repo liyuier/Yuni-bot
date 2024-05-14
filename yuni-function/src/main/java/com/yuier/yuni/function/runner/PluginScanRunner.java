@@ -1,6 +1,6 @@
 package com.yuier.yuni.function.runner;
 
-import com.yuier.yuni.common.utils.CallCore;
+import com.yuier.yuni.common.enums.YuniModuleEnum;
 import com.yuier.yuni.function.service.FunctionPluginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +21,7 @@ public class PluginScanRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args){
-        functionPluginService.scanAndBuildPlugin();
+        functionPluginService.scanAndBuildPlugin(YuniModuleEnum.FUNCTION);
     }
 
 

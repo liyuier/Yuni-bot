@@ -1,6 +1,7 @@
 package com.yuier.yuni.common.plugin.dto.base;
 
 import com.yuier.yuni.common.detector.base.dto.BaseDetectorDefinerDto;
+import com.yuier.yuni.common.enums.YuniModuleEnum;
 import com.yuier.yuni.common.listener.dto.MessageTypeListenerDto;
 import com.yuier.yuni.common.plugin.FunctionPlugin;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseDetectorPluginDto {
+    YuniModuleEnum module;
     String pluginId;
     MessageTypeListenerDto listenerDto;
     BaseDetectorDefinerDto messageDetectorDefinerDto;
@@ -26,5 +28,10 @@ public class BaseDetectorPluginDto {
         pluginId = plugin.getPluginId();
         listenerDto = new MessageTypeListenerDto(plugin.getListener());
         messageDetectorDefinerDto = (BaseDetectorDefinerDto) plugin.getDetectorDefiner().toDto();
+    }
+
+    public BaseDetectorPluginDto(FunctionPlugin plugin, YuniModuleEnum module) {
+        this(plugin);
+        this.module = module;
     }
 }

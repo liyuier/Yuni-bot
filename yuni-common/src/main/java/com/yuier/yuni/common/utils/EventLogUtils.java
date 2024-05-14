@@ -122,9 +122,6 @@ public class EventLogUtils {
 
     public String getSendMessageLog(SendMessageDto dto) {
         StringBuilder sb = new StringBuilder();
-//        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
-//        String botName = data.getNickname();
-//        Long botId = data.getUserId();
         if (dto.getMessageType().equals(MessageTypeEnum.PRIVATE.toString())) {
             sb.append((new SimpleDateFormat("yyyy-MM-dd HH:mm"))
                     .format(new Date(System.currentTimeMillis()))).append(" ")
@@ -143,9 +140,6 @@ public class EventLogUtils {
     
     public String getSendPrivateMessageLog(SendPrivateMessageDto dto) {
         StringBuilder sb = new StringBuilder();
-//        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
-//        String botName = data.getNickname();
-//        Long botId = data.getUserId();
         sb.append((new SimpleDateFormat("yyyy-MM-dd HH:mm"))
                         .format(new Date(System.currentTimeMillis()))).append(" ")
                 .append("bot ").append(buildBrightRedLog(botSelfName + "<" + botSelfId + "> "))
@@ -156,9 +150,6 @@ public class EventLogUtils {
 
     public String getSendGroupMessageLog(SendGroupMessageDto dto) {
         StringBuilder sb = new StringBuilder();
-//        GetLoginInfoResData data = callOneBot.getLoginInfo().getData();
-//        String botName = data.getNickname();
-//        Long botId = data.getUserId();
         sb.append((new SimpleDateFormat("yyyy-MM-dd HH:mm"))
                         .format(new Date(System.currentTimeMillis()))).append(" ")
                 .append("bot ").append(buildBrightRedLog(botSelfName + "<" + botSelfId + "> "))

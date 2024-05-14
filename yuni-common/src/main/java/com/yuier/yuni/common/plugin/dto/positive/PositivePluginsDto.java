@@ -1,5 +1,6 @@
 package com.yuier.yuni.common.plugin.dto.positive;
 
+import com.yuier.yuni.common.enums.YuniModuleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,9 +16,16 @@ import java.util.ArrayList;
 @Data
 @AllArgsConstructor
 public class PositivePluginsDto {
+    YuniModuleEnum module;
+
     ArrayList<String> positivePluginIdList;
 
     public PositivePluginsDto() {
         this.positivePluginIdList = new ArrayList<>();
+    }
+
+    public PositivePluginsDto(YuniModuleEnum module) {
+        this();
+        this.module = module;
     }
 }

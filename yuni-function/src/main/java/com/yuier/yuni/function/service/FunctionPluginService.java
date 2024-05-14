@@ -1,5 +1,7 @@
 package com.yuier.yuni.function.service;
 
+import com.yuier.yuni.common.enums.YuniModuleEnum;
+
 /**
  * @Title: PluginService
  * @Author yuier
@@ -10,4 +12,6 @@ package com.yuier.yuni.function.service;
 public interface FunctionPluginService {
 
     void scanAndBuildPlugin();
+
+    void scanAndBuildPlugin(YuniModuleEnum module);
 }
