@@ -1,9 +1,8 @@
 package com.yuier.yuni.common.utils;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.domain.dto.CallBaseFunctionPluginDto;
 import com.yuier.yuni.common.domain.dto.CallOrderFunctionPluginDto;
-import com.yuier.yuni.common.domain.message.MessageEvent;
+import com.yuier.yuni.common.enums.YuniModuleEnum;
 import com.yuier.yuni.common.service.YuniHttpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,22 +21,31 @@ public class CallFunction {
     YuniHttpService yuniHttpService;
 
     @Value("${base-urls.function}")
-    private String baseUrl;
+    private String functionBaseUrl;
 
-    private String getBaseUrl() {
+    @Value("${base-urls.dd}")
+    private String ddBaseUrl;
+
+    private String getBaseUrl(YuniModuleEnum module) {
+        String baseUrl = "";
+        if (module.equals(YuniModuleEnum.FUNCTION)) {
+            baseUrl = functionBaseUrl;
+        } else if (module.equals(YuniModuleEnum.DD)) {
+            baseUrl = ddBaseUrl;
+        }
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }
         return baseUrl;
     }
 
-    public ResponseResult callBaseFunctionPlugin(CallBaseFunctionPluginDto callBaseFunctionPluginDto) {
-        String url = getBaseUrl() + "function/plugin/base";
+    public ResponseResult callBaseFunctionPlugin(CallBaseFunctionPluginDto callBaseFunctionPluginDto, YuniModuleEnum module) {
+        String url = getBaseUrl(module) + "function/plugin/base";
         return yuniHttpService.postRequestForObject(url, callBaseFunctionPluginDto, ResponseResult.class);
     }
 
-    public ResponseResult callOrderFunctionPlugin(CallOrderFunctionPluginDto callOrderFunctionPluginDto) {
-        String url = getBaseUrl() + "function/plugin/order";
+    public ResponseResult callOrderFunctionPlugin(CallOrderFunctionPluginDto callOrderFunctionPluginDto, YuniModuleEnum module) {
+        String url = getBaseUrl(module) + "function/plugin/order";
         return yuniHttpService.postRequestForObject(url, callOrderFunctionPluginDto, ResponseResult.class);
     }
 }

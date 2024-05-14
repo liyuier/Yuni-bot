@@ -7,6 +7,7 @@ import com.yuier.yuni.common.enums.YuniModuleEnum;
 import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginDto;
 import com.yuier.yuni.core.domain.global.detector.PluginForDetect;
 import com.yuier.yuni.core.domain.global.detector.listener.MessageTypeListenerForUse;
+import lombok.Getter;
 
 /**
  * @Title: OrderPluginForDetect
@@ -15,6 +16,7 @@ import com.yuier.yuni.core.domain.global.detector.listener.MessageTypeListenerFo
  * @Date 2024/5/12 21:48
  * @description: 采用了指令探测器的单个插件的探测器
  */
+@Getter
 public class OrderPluginForDetect implements PluginForDetect {
     YuniModuleEnum module;
     String pluginId;
