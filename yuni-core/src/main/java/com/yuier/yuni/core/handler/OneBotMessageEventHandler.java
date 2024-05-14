@@ -95,7 +95,7 @@ public class OneBotMessageEventHandler {
             OrderMatchedOut orderMatchedOut = new OrderMatchedOut();
             if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chainForOrder, orderMatchedOut, coreGlobalData.getOrderMark().toString())) {
                 log.info("命中插件 " + pluginId);
-                callFunction.callOrderFunctionPlugin(new CallOrderFunctionPluginDto(pluginId, postEventNode, orderMatchedOut));
+                callFunction.callOrderFunctionPlugin(new CallOrderFunctionPluginDto(pluginId, postEventNode, orderMatchedOut), pluginForDetect.getModule());
             }
         }
         return flag;
@@ -107,7 +107,7 @@ public class OneBotMessageEventHandler {
             BasePluginForDetect pluginForDetect = (BasePluginForDetect) pluginMap.get(pluginId);
             if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chain)) {
                 log.info("命中插件 " + pluginId);
-                callFunction.callBaseFunctionPlugin(new CallBaseFunctionPluginDto(pluginId, postEventNode));
+                callFunction.callBaseFunctionPlugin(new CallBaseFunctionPluginDto(pluginId, postEventNode), pluginForDetect.getModule());
             }
         }
     }
