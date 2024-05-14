@@ -36,16 +36,16 @@ public class CallFunction {
         if (!baseUrl.endsWith("/")) {
             baseUrl += "/";
         }
-        return baseUrl;
+        return baseUrl + module.getName();
     }
 
     public ResponseResult callBaseFunctionPlugin(CallBaseFunctionPluginDto callBaseFunctionPluginDto, YuniModuleEnum module) {
-        String url = getBaseUrl(module) + "function/plugin/base";
+        String url = getBaseUrl(module) + "/plugin/base";
         return yuniHttpService.postRequestForObject(url, callBaseFunctionPluginDto, ResponseResult.class);
     }
 
     public ResponseResult callOrderFunctionPlugin(CallOrderFunctionPluginDto callOrderFunctionPluginDto, YuniModuleEnum module) {
-        String url = getBaseUrl(module) + "function/plugin/order";
+        String url = getBaseUrl(module) + "/plugin/order";
         return yuniHttpService.postRequestForObject(url, callOrderFunctionPluginDto, ResponseResult.class);
     }
 }
