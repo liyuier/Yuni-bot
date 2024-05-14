@@ -1,5 +1,7 @@
 package com.yuier.yuni.common.domain.message;
 
+import com.yuier.yuni.common.constants.SystemConstants;
+import com.yuier.yuni.common.domain.message.data.ReplyData;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.enums.MessageDataEnum;
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 public class MessageChainForOrder {
     private int curSegIndex;
     private ArrayList<MessageSeg> content;
+    private ReplyData replyData;
 
     public MessageChainForOrder() {
         curSegIndex = 0;
@@ -30,5 +33,14 @@ public class MessageChainForOrder {
                 MessageDataEnum.TEXT.toString(),
                 new TextData(text)
         ));
+    }
+
+    public Boolean startWithTextData() {
+        return content.get(SystemConstants.FIRST_INDEX).typeOf(MessageDataEnum.TEXT) &&
+                !((TextData) content.get(SystemConstants.FIRST_INDEX).getData()).getText().trim().isEmpty();
+    }
+
+    public Boolean startWithReplyData() {
+        return content.get(SystemConstants.FIRST_INDEX).typeOf(MessageDataEnum.REPLY);
     }
 }

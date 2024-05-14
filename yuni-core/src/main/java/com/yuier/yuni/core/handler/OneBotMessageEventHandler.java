@@ -6,11 +6,19 @@ import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.dto.CallBaseFunctionPluginDto;
 import com.yuier.yuni.common.domain.dto.CallOrderFunctionPluginDto;
 import com.yuier.yuni.common.domain.message.MessageChain;
+import com.yuier.yuni.common.domain.message.MessageChainForOrder;
+import com.yuier.yuni.common.domain.message.MessageSeg;
+import com.yuier.yuni.common.domain.message.data.AtData;
+import com.yuier.yuni.common.domain.message.data.ReplyData;
+import com.yuier.yuni.common.domain.message.data.TextData;
+import com.yuier.yuni.common.domain.message.dto.GetMessageDto;
+import com.yuier.yuni.common.enums.MessageDataEnum;
 import com.yuier.yuni.common.enums.OneBotEventEnum;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.MessageEventService;
 import com.yuier.yuni.common.utils.CallFunction;
+import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.common.utils.EventLogUtils;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.common.domain.message.MessageEvent;
@@ -63,6 +71,9 @@ public class OneBotMessageEventHandler {
     @Autowired
     CallFunction callFunction;
 
+    @Autowired
+    CallOneBot callOneBot;
+
     public ResponseResult handle(ObjectNode postEventNode) {
         MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
         eventLogUtils.printRcvMsgEventLog(messageEvent);
@@ -74,12 +85,15 @@ public class OneBotMessageEventHandler {
     }
 
     private Boolean detectForOrderPlugin(MessageChain chain, ObjectNode postEventNode, MessageEvent messageEvent) {
+        // 预处理，将 chain 拆分为便于指令解析的结构
+        MessageChainForOrder chainForOrder = splitChainForOrder(chain);
         Boolean flag = false;
         HashMap<String, PluginForDetect> pluginMap = coreGlobalData.getOrderPlugins().getPluginMap();
         for (String pluginId : pluginMap.keySet()) {
+            chainForOrder.setCurSegIndex(0);
             OrderPluginForDetect pluginForDetect = (OrderPluginForDetect) pluginMap.get(pluginId);
             OrderMatchedOut orderMatchedOut = new OrderMatchedOut();
-            if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chain, orderMatchedOut, coreGlobalData.getOrderMark().toString())) {
+            if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chainForOrder, orderMatchedOut, coreGlobalData.getOrderMark().toString())) {
                 log.info("命中插件 " + pluginId);
                 callFunction.callOrderFunctionPlugin(new CallOrderFunctionPluginDto(pluginId, postEventNode, orderMatchedOut));
             }
@@ -96,5 +110,40 @@ public class OneBotMessageEventHandler {
                 callFunction.callBaseFunctionPlugin(new CallBaseFunctionPluginDto(pluginId, postEventNode));
             }
         }
+    }
+
+    private MessageChainForOrder splitChainForOrder(MessageChain chain) {
+        MessageChainForOrder chainForOrder = new MessageChainForOrder();
+        for (MessageSeg messageSeg : chain.getContent()) {
+            if (messageSeg.typeOf(MessageDataEnum.TEXT)) {
+                String[] strArr = ((TextData) messageSeg.getData()).getText().split(" ");
+                for (String str : strArr) {
+                    if (!str.trim().isEmpty()) {
+                        chainForOrder.addTextSeg(str);
+                    }
+                }
+            } else {
+                chainForOrder.getContent().add(messageSeg);
+            }
+        }
+        /** 如果存在回复消息，进行额外处理
+         * 1. 将头部的回复类消息拆下，存放起来
+         * 2. 删除一个回复消息自带的 @ 消息
+         */
+        if (chainForOrder.startWithReplyData()) {
+            chainForOrder.setReplyData((ReplyData) chainForOrder.getContent().remove(0).getData());
+            Long userId = callOneBot.getMessage(new GetMessageDto(
+                    Long.parseLong(chainForOrder.getReplyData().getId())
+            )).getUserId();
+            for (MessageSeg messageSeg : chainForOrder.getContent()) {
+                if (messageSeg.typeOf(MessageDataEnum.AT)) {
+                    if (((AtData) messageSeg.getData()).getQq().equals(String.valueOf(userId))) {
+                        chainForOrder.getContent().remove(messageSeg);
+                        break;
+                    }
+                }
+            }
+        }
+        return chainForOrder;
     }
 }

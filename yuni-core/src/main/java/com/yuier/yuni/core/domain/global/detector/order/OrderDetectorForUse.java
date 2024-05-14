@@ -63,45 +63,17 @@ public class OrderDetectorForUse {
         return 1 + option.getOptionArgs().getRequiredArgList().size();
     }
 
-    public Boolean hit(MessageChain chain, OrderMatchedOut orderMatchedOut, String orderMark) {
-        /**
-         * 预处理一下，由于回复消息固定在消息链的第一条，所以将其放至最后一条，避免干扰判断
-         */
-        if (chain.startWithReplyData()) {
-            removeReplyData(chain);
-        }
+    public Boolean hit(MessageChainForOrder chainForOrder, OrderMatchedOut orderMatchedOut, String orderMark) {
         // 开始判断
         // 如果消息链不是以有效文本开头，直接判不匹配
-        if (!chain.startWithTextData() && !chain.startWithTextDataFollowingReplyData()) {
+        if (!chainForOrder.startWithTextData()) {
             return false;
-        }
-        // 拆分消息段，供指令探测器匹配
-        MessageChainForOrder chainForOrder = new MessageChainForOrder();
-        for (MessageSeg messageSeg : chain.getContent()) {
-            if (messageSeg.typeOf(MessageDataEnum.TEXT)) {
-                String[] strArr = ((TextData) messageSeg.getData()).getText().split(" ");
-                for (String str : strArr) {
-                    if (!str.trim().isEmpty()) {
-                        chainForOrder.addTextSeg(str);
-                    }
-                }
-            } else {
-                chainForOrder.getContent().add(messageSeg);
-            }
         }
         // 如果拆分出来的消息段数量不能满足指令的最低要求，返回 false
         if (chainForOrder.getContent().size() < leastSegNum()) {
             return false;
         }
-        TextData firstTextData = null;
-        // 匹配指令头
-        if (chain.startWithReplyData()) {
-            firstTextData = (TextData) chainForOrder.getContent().get(1).getData();
-            chainForOrder.setCurSegIndex(2);
-        } else {
-            firstTextData = (TextData) chainForOrder.getContent().get(0).getData();
-            chainForOrder.setCurSegIndex(1);
-        }
+        TextData firstTextData = (TextData) chainForOrder.getContent().get(0).getData();
         if (!firstTextData.getText().equals(orderMark + head.getName())) {
             return false;
         }
@@ -111,6 +83,7 @@ public class OrderDetectorForUse {
          * 采用非贪婪匹配，即如果某段文本消息与选项标识匹配，那么就开始匹配该选项
          */
 
+        chainForOrder.setCurSegIndex(1);
         // 匹配必选参数
         if (!matchRequiredArgs(
                 args,
@@ -175,18 +148,16 @@ public class OrderDetectorForUse {
             OrderArgMatchedOut orderArgMatchedOut = new OrderArgMatchedOut();
             // 如果当前参数匹配回复消息段，需要特殊处理
             if (requiredArg.getContentType().equals(YuniOrderArgContentTypeEnum.REPLY)) {
-                if (null == replyData) {
-                    return false;
-                }
-                if (!messageSeg.typeOf(MessageDataEnum.AT)) {
+                if (null == chainForOrder.getReplyData()) {
                     return false;
                 }
                 OrderArgHitUtil.setOrderArgMatchedOut(
                         orderArgMatchedOut,
                         requiredArg.getName(),
                         YuniOrderArgContentTypeEnum.REPLY,
-                        replyData
+                        chainForOrder.getReplyData()
                 );
+                chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() - 1);
             } else {
                 // 如果必选参数匹配不上当前消息段，返回 false
                 if (!OrderArgHitUtil.hit(messageSeg, orderArgMatchedOut,
@@ -231,7 +202,7 @@ public class OrderDetectorForUse {
             OrderArgMatchedOut orderArgMatchedOut = new OrderArgMatchedOut();
             // 如果当前参数匹配回复消息段，需要特殊处理
             if (optionalArg.getContentType().equals(YuniOrderArgContentTypeEnum.REPLY)) {
-                if (null == replyData) {
+                if (null == chainForOrder.getReplyData()) {
                     return;
                 }
                 if (!messageSeg.typeOf(MessageDataEnum.AT)) {
@@ -241,8 +212,9 @@ public class OrderDetectorForUse {
                         orderArgMatchedOut,
                         optionalArg.getName(),
                         YuniOrderArgContentTypeEnum.REPLY,
-                        replyData
+                        chainForOrder.getReplyData()
                 );
+                chainForOrder.setCurSegIndex(chainForOrder.getCurSegIndex() - 1);
             } else {
                 // 如果非必选参数匹配不上当前消息段，返回
                 if (!OrderArgHitUtil.hit(messageSeg, orderArgMatchedOut,
