@@ -3,6 +3,7 @@ package com.yuier.yuni.core.domain.global.detector.order;
 import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageChainForOrder;
 import com.yuier.yuni.common.domain.message.MessageEvent;
+import com.yuier.yuni.common.enums.YuniModuleEnum;
 import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginDto;
 import com.yuier.yuni.core.domain.global.detector.PluginForDetect;
 import com.yuier.yuni.core.domain.global.detector.listener.MessageTypeListenerForUse;
@@ -15,11 +16,13 @@ import com.yuier.yuni.core.domain.global.detector.listener.MessageTypeListenerFo
  * @description: 采用了指令探测器的单个插件的探测器
  */
 public class OrderPluginForDetect implements PluginForDetect {
+    YuniModuleEnum module;
     String pluginId;
     MessageTypeListenerForUse listener;
     OrderDetectorForUse detector;
 
     public OrderPluginForDetect(OrderDetectorPluginDto dto) {
+        module = dto.getModule();
         pluginId = dto.getPluginId();
         listener = new MessageTypeListenerForUse(dto.getListenerDto());
         detector = new OrderDetectorForUse(dto.getMessageDetectorDefinerDto());

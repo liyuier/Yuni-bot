@@ -5,6 +5,7 @@ import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
+import com.yuier.yuni.common.enums.YuniModuleEnum;
 import com.yuier.yuni.common.listener.MessageTypeListener;
 import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginDto;
 import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginsDto;
@@ -53,6 +54,15 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
         loadPlugins(functionPlugins);
         initialPluginsToCore(functionPlugins);
     }
+
+    @Override
+    public void scanAndBuildPlugin(YuniModuleEnum module) {
+        FunctionPlugins functionPlugins = new FunctionPlugins();
+        functionGlobalData.setPlugins(functionPlugins);
+        loadPlugins(functionPlugins);
+        initialPluginsToCore(functionPlugins, module);
+    }
+
 
     private void loadPlugins(FunctionPlugins functionPlugins) {
         // 扫描加了 Plugin 注解的插件
@@ -123,6 +133,30 @@ public class FunctionPluginServiceImpl implements FunctionPluginService {
                     baseDetectorPluginsDto.getPluginDtoMap().put(baseDetectorPluginDto.getPluginId(), baseDetectorPluginDto);
                 } else if (plugin.useDetector(YuniOrderDefiner.class)) {
                     OrderDetectorPluginDto orderDetectorPluginDto = new OrderDetectorPluginDto(plugin);
+                    orderDetectorPluginsDto.getPluginDtoMap().put(orderDetectorPluginDto.getPluginId(), orderDetectorPluginDto);
+                }
+            }
+        }
+        callCore.initialBaseDetectorPluginToCore(baseDetectorPluginsDto);
+        callCore.initialPositivePluginToCore(positivePluginsDto);
+        callCore.initialOrderPositivePluginToCore(orderDetectorPluginsDto);
+    }
+
+    private void initialPluginsToCore(FunctionPlugins functionPlugins, YuniModuleEnum module) {
+        BaseDetectorPluginsDto baseDetectorPluginsDto = new BaseDetectorPluginsDto();
+        PositivePluginsDto positivePluginsDto = new PositivePluginsDto(module);
+        OrderDetectorPluginsDto orderDetectorPluginsDto = new OrderDetectorPluginsDto();
+        for (FunctionPlugin plugin : functionPlugins.getPluginMap().values()) {
+            // 如果是主动消息链探测器
+            if (plugin.isPositive()) {
+                positivePluginsDto.getPositivePluginIdList().add(plugin.getPluginId());
+            } else {
+                // 如果插件使用了基础消息链探测器
+                if (plugin.useDetector(BaseDetectorDefiner.class)) {
+                    BaseDetectorPluginDto baseDetectorPluginDto = new BaseDetectorPluginDto(plugin, module);
+                    baseDetectorPluginsDto.getPluginDtoMap().put(baseDetectorPluginDto.getPluginId(), baseDetectorPluginDto);
+                } else if (plugin.useDetector(YuniOrderDefiner.class)) {
+                    OrderDetectorPluginDto orderDetectorPluginDto = new OrderDetectorPluginDto(plugin, module);
                     orderDetectorPluginsDto.getPluginDtoMap().put(orderDetectorPluginDto.getPluginId(), orderDetectorPluginDto);
                 }
             }

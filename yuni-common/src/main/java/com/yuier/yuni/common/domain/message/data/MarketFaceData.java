@@ -20,10 +20,14 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @MessageDataEntity(dataType = MessageDataEnum.MARKETFACE)
 public class MarketFaceData extends MessageData {
-    private String text;
+    private String summary;
+    private String url;
+    private String emojiId;
+    private String emojiPackageId;
+    private String key;
 
     @Override
     public String toString() {
-        return "[商城表情#" + this.text + "]";
+        return "[商城表情#" + this.summary + "]";
     }
 }

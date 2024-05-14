@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @Title: PositivePlugins
@@ -15,9 +16,9 @@ import java.util.ArrayList;
 @Data
 @AllArgsConstructor
 public class PositivePlugins {
-    ArrayList<String> positivePluginIdList;
+    HashMap<String, ArrayList<String>> positivePluginMap;
 
     public PositivePlugins() {
-        positivePluginIdList = new ArrayList<>();
+        positivePluginMap = new HashMap<>();
     }
 }
