@@ -1,9 +1,8 @@
 package com.yuier.yuni.core.domain.global.detector.order;
 
 import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
-import com.yuier.yuni.common.domain.message.MessageChain;
+import com.yuier.yuni.common.domain.message.MessageChainForOrder;
 import com.yuier.yuni.common.domain.message.MessageEvent;
-import com.yuier.yuni.common.listener.dto.MessageTypeListenerDto;
 import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginDto;
 import com.yuier.yuni.core.domain.global.detector.PluginForDetect;
 import com.yuier.yuni.core.domain.global.detector.listener.MessageTypeListenerForUse;
@@ -32,7 +31,7 @@ public class OrderPluginForDetect implements PluginForDetect {
         return listener.hit(messageEvent);
     }
 
-    public Boolean hitDetector(MessageChain chain, OrderMatchedOut orderMatchedOut, String orderMark) {
-        return detector.hit(chain, orderMatchedOut, orderMark);
+    public Boolean hitDetector(MessageChainForOrder chainForOrder, OrderMatchedOut orderMatchedOut, String orderMark) {
+        return detector.hit(chainForOrder, orderMatchedOut, orderMark);
     }
 }
