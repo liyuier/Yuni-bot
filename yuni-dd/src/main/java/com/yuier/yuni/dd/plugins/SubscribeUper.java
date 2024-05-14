@@ -2,6 +2,8 @@ package com.yuier.yuni.dd.plugins;
 
 import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
+import com.yuier.yuni.common.detector.order.YuniOrderOptionalArg;
+import com.yuier.yuni.common.detector.order.matchedout.OrderArgMatchedOut;
 import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.enums.MessageTypeEnum;
@@ -25,11 +27,15 @@ public class SubscribeUper implements YuniOrderPlugin {
     public YuniOrderDefiner detectorDefine() {
         return YuniOrderDefiner.build()
                 .setOrderHead("订阅")
-                .addRequiredArg("upNameOrUid", YuniOrderArgContentTypeEnum.TEXT);
+                .addOptionalArg("upNameOrUid", YuniOrderArgContentTypeEnum.TEXT)
+                .addOption("check", "-check",
+                        new YuniOrderOptionalArg("upNameOrUid", YuniOrderArgContentTypeEnum.TEXT));
     }
 
     @Override
     public ResponseResult<T> run(MessageEvent messageEvent, OrderMatchedOut order) {
+        OrderArgMatchedOut upNameOrUid = order.getArgByName("upNameOrUid");
+
         return ResponseResult.okResult();
     }
 
