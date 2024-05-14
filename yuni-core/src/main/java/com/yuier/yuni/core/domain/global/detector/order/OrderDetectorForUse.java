@@ -46,11 +46,6 @@ public class OrderDetectorForUse {
         options = new OrderOptionsDetectorForUse(dto.getOptions());
     }
 
-    private void removeReplyData(MessageChain chain) {
-        // 将开头的回复消息保存下来
-        replyData = (ReplyData) chain.getContent().get(0).getData();
-    }
-
     /**
      * 要能匹配上指令，消息要求能拆分成的最少消息段数量
      * 数量为：消息头 1 段加上必要参数数量
