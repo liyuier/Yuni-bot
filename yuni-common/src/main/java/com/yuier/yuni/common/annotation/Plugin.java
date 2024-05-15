@@ -1,6 +1,7 @@
 package com.yuier.yuni.common.annotation;
 
 import com.yuier.yuni.common.enums.MessageTypeEnum;
+import com.yuier.yuni.common.enums.PermissionLevelEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -19,4 +20,5 @@ import java.lang.annotation.Target;
 public @interface Plugin {
     String id();
     MessageTypeEnum listener();
+    PermissionLevelEnum permission() default PermissionLevelEnum.USER;
 }
