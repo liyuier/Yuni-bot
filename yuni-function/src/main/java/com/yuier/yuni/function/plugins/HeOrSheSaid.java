@@ -50,7 +50,7 @@ public class HeOrSheSaid implements BaseDetectorPlugin {
     public ResponseResult<T> run(MessageEvent messageEvent) {
         Random random = new Random();
         double probability = random.nextDouble();
-        if (probability > 0.4) {
+        if (probability > 0.3) {
             return ResponseResult.okResult();
         }
         String senderName = "";

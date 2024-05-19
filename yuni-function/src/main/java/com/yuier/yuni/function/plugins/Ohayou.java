@@ -36,7 +36,7 @@ public class Ohayou implements PositivePlugin {
     @Override
     @Scheduled(cron = "0 30 8 * * ?")
     public void run() {
-        Long[] groups = new Long[] {930198267L, 287900567L};
+        Long[] groups = new Long[] {930198267L, 287900567L, 389976995L};
         for (Long groupId : groups) {
             callOneBot.sendGroupMessage(new SendGroupMessageDto(
                     groupId,
