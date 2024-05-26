@@ -18,4 +18,12 @@ public class OrderOptionMatchedOut {
     private String name;
     private OrderArgsMatchedOut args;
     private String helpInfo;
+
+    public Boolean argExists(String argName) {
+        return args.getArgMap().containsKey(argName);
+    }
+
+    public OrderArgMatchedOut getArgByName(String argName) {
+        return args.getArgMap().get(argName);
+    }
 }

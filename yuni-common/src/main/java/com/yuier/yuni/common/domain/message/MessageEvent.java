@@ -101,4 +101,8 @@ public class MessageEvent {
     public boolean isAnonymousMessage() {
         return null != anonymous;
     }
+
+    public Long getPosition() {
+        return this.isGroupMessage() ? groupId : userId;
+    }
 }

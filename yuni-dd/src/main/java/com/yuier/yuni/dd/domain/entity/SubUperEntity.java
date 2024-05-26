@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * (SubUper)表实体类
  *
  * @author liyuier
- * @since 2024-05-14 22:51:47
+ * @since 2024-05-26 21:50:03
  */
 @SuppressWarnings("serial")
 @Data
@@ -39,7 +39,7 @@ public class SubUperEntity {
     /**
     * 订阅的主播UID
     */
-    private String uperId;
+    private Long uperId;
     
     /**
     * 订阅的主播昵称
