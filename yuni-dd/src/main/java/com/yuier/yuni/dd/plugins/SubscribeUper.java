@@ -88,8 +88,7 @@ public class SubscribeUper implements YuniOrderPlugin {
                 功能开发中...
                 已订阅 UP 主
                 昵称：%s
-                UID：%d
-                """, userCardInfo.getCard().getName(), userCardInfo.getCard().getMid());
+                UID：%d""", userCardInfo.getCard().getName(), userCardInfo.getCard().getMid());
         }
         if (messageEvent.isGroupMessage()) {
             callOneBot.sendGroupMessage(new SendGroupMessageDto(
@@ -117,8 +116,7 @@ public class SubscribeUper implements YuniOrderPlugin {
             res.append(String.format("""
                     本聊天订阅 UP 主:
                     昵称：%s
-                    UID：%d
-                    """, subUper.getUperName(), subUper.getUperId()));
+                    UID：%d""", subUper.getUperName(), subUper.getUperId()));
         } else {
             res.append("本聊天订阅 UP 主：\n");
             LambdaQueryWrapper<SubUperEntity> queryWrapper = new LambdaQueryWrapper<>();
@@ -128,8 +126,7 @@ public class SubscribeUper implements YuniOrderPlugin {
                 res.append(String.format("""
                         -------------
                         昵称：%s
-                        UID：%d
-                        """, subUper.getUperName(), subUper.getUperId()));
+                        UID：%d""", subUper.getUperName(), subUper.getUperId()));
             }
         }
         if (messageEvent.isGroupMessage()) {
