@@ -12,3 +12,10 @@ spring:
   config:
     activate:
       on-profile: common
+
+headers:
+  user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0
+  referer:
+    bilibili: https://www.bilibili.com/
+  cookies:
+    bilibili: buvid3=9EABB7BF-13D2-A0C9-1AF3-370274E118B259604infoc; b_nut=1699114359; i-wanna-go-back=-1; b_ut=7; _uuid=5BE3DAED-2672-CFC4-E199-6B5F8F18775360285infoc; buvid4=C5AFA9F4-0E52-E201-A5C9-6751DD5792F660223-023110500-NpgNqV1z%2F0Xjrv6%2BwR2ZxA%3D%3D; iflogin_when_web_push=0; header_theme_version=CLOSE; DedeUserID=428379308; DedeUserID__ckMd5=616fa3ca3652feb4; LIVE_BUVID=AUTO5216991156202668; rpdid=|(J|k~kJlR|)0J'uYmmuu~)uk; buvid_fp_plain=undefined; enable_web_push=DISABLE; CURRENT_BLACKGAP=0; hit-dyn-v2=1; bmg_af_switch=1; bmg_src_def_domain=i1.hdslb.com; FEED_LIVE_VERSION=V_WATCHLATER_PIP_WINDOW3; CURRENT_QUALITY=112; CURRENT_FNVAL=16; share_source_origin=QQ; bp_video_offset_428379308=922881454243840007; fingerprint=14e2940d76e7d6919c90a3c032d52fd2; SESSDATA=45836387%2C1731428533%2C1d964%2A51CjDXvY0YnsgYHBA40qdj9jpEGROicaOqN32bg3iiJ6Pna-iOFsQWTLuhRBsGaTmVeRgSVnpIdk5iS1NmVGpZVWVtX3BaTUhsdDZkQnZDTTFCRkhCOFFUektaa3dXckVpa1I1aDhuVXdYbk9JOU1kTGRyMVRJMVFLS09qU0Q0VF9leDFmLVJrNmZBIIEC; bili_jct=ba250853511180edf5f01971a4ae0c45; buvid_fp=14e2940d76e7d6919c90a3c032d52fd2; bili_ticket=eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTYxMzU3MzQsImlhdCI6MTcxNTg3NjQ3NCwicGx0IjotMX0.FXb5f5GtrEb0OKZVE6wKeThZjPJmrh-MemN9l8PljXQ; bili_ticket_expires=1716135674; sid=6r3uoun9; bsource_origin=login_download_bili; bsource=login_download_bili; bp_t_offset_428379308=932511621318705189; b_lsid=CB9BC747_18F8B839B93; PVID=4; home_feed_column=4; browser_resolution=1315-1270

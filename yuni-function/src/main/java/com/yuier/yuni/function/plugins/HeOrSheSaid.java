@@ -36,9 +36,7 @@ public class HeOrSheSaid implements BaseDetectorPlugin {
     @Override
     public BaseDetectorDefiner detectorDefine() {
         return BaseDetectorDefiner.build()
-                .containKeyWord("我")
-                .atBot()
-                .setDetectModel(BaseDetectorModelEnum.OR);
+                .containKeyWord("我");
     }
 
     @Override
