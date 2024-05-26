@@ -1,6 +1,8 @@
 package com.yuier.yuni.dd.plugins;
 
 import com.yuier.yuni.common.annotation.Plugin;
+import com.yuier.yuni.common.bilibiliapi.CallBilibili;
+import com.yuier.yuni.common.bilibiliapi.dto.user.baseinfo.UserCardInfo;
 import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
 import com.yuier.yuni.common.detector.order.YuniOrderOptionalArg;
 import com.yuier.yuni.common.detector.order.matchedout.OrderArgMatchedOut;
@@ -11,6 +13,7 @@ import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
 import com.yuier.yuni.common.plugin.interf.YuniOrderPlugin;
 import com.yuier.yuni.common.utils.ResponseResult;
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,19 +26,23 @@ import org.springframework.stereotype.Component;
 @Component
 @Plugin(id = "SubscribeUper", listener = MessageTypeEnum.ALL)
 public class SubscribeUper implements YuniOrderPlugin {
+
+    @Autowired
+    CallBilibili callBilibili;
+
     @Override
     public YuniOrderDefiner detectorDefine() {
         return YuniOrderDefiner.build()
                 .setOrderHead("订阅")
-                .addOptionalArg("upNameOrUid", YuniOrderArgContentTypeEnum.TEXT)
+                .addOptionalArg("uid", YuniOrderArgContentTypeEnum.NUMBER)
                 .addOption("check", "-check",
-                        new YuniOrderOptionalArg("upNameOrUid", YuniOrderArgContentTypeEnum.TEXT));
+                        new YuniOrderOptionalArg("uid", YuniOrderArgContentTypeEnum.NUMBER));
     }
 
     @Override
     public ResponseResult<T> run(MessageEvent messageEvent, OrderMatchedOut order) {
-        OrderArgMatchedOut upNameOrUid = order.getArgByName("upNameOrUid");
-
+        Long uidForSub = order.getArgByName("uid").asLong();
+        UserCardInfo userCard = callBilibili.getUserCard(uidForSub, true);
         return ResponseResult.okResult();
     }
 
