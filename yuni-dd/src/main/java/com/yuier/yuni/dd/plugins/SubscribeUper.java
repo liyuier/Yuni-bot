@@ -116,7 +116,6 @@ public class SubscribeUper implements YuniOrderPlugin {
             SubUperEntity subUper = subUperService.getOne(queryWrapper);
             res.append(String.format("""
                     本聊天订阅 UP 主:
-                    -------------
                     昵称：%s
                     UID：%d
                     """, subUper.getUperName(), subUper.getUperId()));
@@ -127,6 +126,7 @@ public class SubscribeUper implements YuniOrderPlugin {
             List<SubUperEntity> subUperList = subUperService.list(queryWrapper);
             for (SubUperEntity subUper : subUperList) {
                 res.append(String.format("""
+                        -------------
                         昵称：%s
                         UID：%d
                         """, subUper.getUperName(), subUper.getUperId()));
