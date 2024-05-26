@@ -41,6 +41,13 @@ public class CallBilibili {
                 BiliAuthenticateMethodEnum.COOKIE,
                 typeReference
         );
+        if (apiData.getCode() != 0) {
+            return null;
+        }
         return apiData.getData();
+    }
+
+    public UserCardInfo getUserCard(Long mid) {
+        return this.getUserCard(mid, true);
     }
 }

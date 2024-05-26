@@ -25,6 +25,18 @@ public class OrderMatchedOut {
         return args.getArgMap().get(argName);
     }
 
+    public Boolean argExists(String argName) {
+        return args.getArgMap().containsKey(argName);
+    }
+
+    public Boolean optionExists(String optName) {
+        return options.getOptionMap().containsKey(optName);
+    }
+
+    public Boolean optionArgExists(String optName, String argName) {
+        return optionExists(optName) && getOptionByName(optName).argExists(argName);
+    }
+
     public OrderOptionMatchedOut getOptionByName(String optName) {
         return options.getOptionMap().get(optName);
     }
