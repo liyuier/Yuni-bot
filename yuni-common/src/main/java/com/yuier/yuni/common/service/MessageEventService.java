@@ -1,6 +1,7 @@
 package com.yuier.yuni.common.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.yuier.yuni.common.domain.message.MessageEvent;
 
 /**
  * @Title: MessageEventService
@@ -12,4 +13,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 public interface MessageEventService {
 
     <T> T postToMessage(JsonNode postDataNode, Class<T> targetClazz);
+
+    MessageEvent buildMessageEvent(JsonNode postDataNode);
 }

@@ -23,11 +23,14 @@ public class OrderDetectorPluginDto {
     String pluginId;
     MessageTypeListenerDto listenerDto;
     YuniOrderDefinerDto messageDetectorDefinerDto;
+    String description;
+
 
     public OrderDetectorPluginDto(FunctionPlugin plugin) {
         pluginId = plugin.getPluginId();
         listenerDto = new MessageTypeListenerDto(plugin.getListener());
         messageDetectorDefinerDto = (YuniOrderDefinerDto) plugin.getDetectorDefiner().toDto();
+        description = plugin.getDescription();
     }
 
     public OrderDetectorPluginDto(FunctionPlugin plugin, YuniModuleEnum module) {

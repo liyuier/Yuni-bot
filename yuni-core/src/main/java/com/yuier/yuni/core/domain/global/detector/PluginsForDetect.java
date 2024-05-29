@@ -15,6 +15,10 @@ import java.util.HashMap;
 @Data
 @AllArgsConstructor
 public class PluginsForDetect {
+    /**
+     * 键 插件名称
+     * 值 重建后的插件实例
+     */
     HashMap<String, PluginForDetect> pluginMap;
 
     public PluginsForDetect() {

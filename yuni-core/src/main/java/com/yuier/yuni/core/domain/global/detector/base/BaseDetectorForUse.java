@@ -1,5 +1,6 @@
 package com.yuier.yuni.core.domain.global.detector.base;
 
+import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.detector.base.dto.BaseDetectorDefinerDto;
 import com.yuier.yuni.common.domain.message.MessageChain;
 import com.yuier.yuni.common.enums.BaseDetectorModelEnum;
@@ -48,6 +49,10 @@ public class BaseDetectorForUse {
         if (null != dto.getDetectFullMatchTextDto()) {
             subDetectors.add(BeanCopyUtils.copyBean(dto.getDetectFullMatchTextDto(), DetectFullMatchTextForUse.class));
         }
+    }
+
+    public BaseDetectorForUse(BaseDetectorDefiner detectorDefiner) {
+        this((BaseDetectorDefinerDto) detectorDefiner.toDto());
     }
 
     public Boolean hit(MessageChain chain) {

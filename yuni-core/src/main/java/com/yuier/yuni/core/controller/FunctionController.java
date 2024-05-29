@@ -32,8 +32,8 @@ public class FunctionController {
     }
 
     @PostMapping("/init_func/positive")
-    public ResponseResult initializeFunctionPositivePlugins(@RequestBody PositivePluginsDto positivePluginDto) {
-        functionService.initialPositiveFunctionPlugins(positivePluginDto);
+    public ResponseResult initializeFunctionPositivePlugins(@RequestBody PositivePluginsDto positivePluginsDto) {
+        functionService.initialPositiveFunctionPlugins(positivePluginsDto);
         return ResponseResult.okResult();
     }
 

@@ -17,8 +17,8 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class PositivePluginsDto {
     YuniModuleEnum module;
-
     ArrayList<String> positivePluginIdList;
+    ArrayList<String> positivePluginDescList;
 
     public PositivePluginsDto() {
         this.positivePluginIdList = new ArrayList<>();

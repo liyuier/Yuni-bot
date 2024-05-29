@@ -82,6 +82,8 @@ public class MessageEvent {
      */
     private AnonymousMessage anonymous;
 
+    private MessageEventPosition messageEventPosition;
+
     // 以下为 LLOneBot 在 OneBot 消息事件标准之外添加的字段
     // 消息类型，是数组还是 CQ 码
     private String messageFormat;
