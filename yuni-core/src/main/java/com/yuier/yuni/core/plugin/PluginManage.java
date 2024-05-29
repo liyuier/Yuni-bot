@@ -12,7 +12,6 @@ import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import com.yuier.yuni.core.domain.global.detector.PluginForDetect;
-import com.yuier.yuni.core.domain.global.detector.PluginsForDetect;
 import com.yuier.yuni.core.domain.global.detector.base.BasePluginForDetect;
 import com.yuier.yuni.core.domain.global.detector.order.OrderPluginForDetect;
 import org.apache.poi.ss.formula.functions.T;
