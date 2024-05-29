@@ -16,5 +16,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MessageTypeListener {
-    private MessageTypeEnum listener;
+    private MessageTypeEnum listenMessageType;
 }

@@ -23,11 +23,13 @@ public class BaseDetectorPluginDto {
     String pluginId;
     MessageTypeListenerDto listenerDto;
     BaseDetectorDefinerDto messageDetectorDefinerDto;
+    String description;
 
     public BaseDetectorPluginDto(FunctionPlugin plugin) {
         pluginId = plugin.getPluginId();
         listenerDto = new MessageTypeListenerDto(plugin.getListener());
         messageDetectorDefinerDto = (BaseDetectorDefinerDto) plugin.getDetectorDefiner().toDto();
+        description = plugin.getDescription();
     }
 
     public BaseDetectorPluginDto(FunctionPlugin plugin, YuniModuleEnum module) {

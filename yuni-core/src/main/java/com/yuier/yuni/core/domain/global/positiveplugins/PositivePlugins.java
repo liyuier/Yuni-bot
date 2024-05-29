@@ -16,6 +16,10 @@ import java.util.HashMap;
 @Data
 @AllArgsConstructor
 public class PositivePlugins {
+    /**
+     * 键为模块名
+     * 值为插件名列表
+     */
     HashMap<String, ArrayList<String>> positivePluginMap;
 
     public PositivePlugins() {

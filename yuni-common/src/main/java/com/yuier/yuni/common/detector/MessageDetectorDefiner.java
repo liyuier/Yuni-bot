@@ -1,7 +1,5 @@
 package com.yuier.yuni.common.detector;
 
-import com.yuier.yuni.common.enums.MessageDetectorEnum;
-
 /**
  * @Title: MessageDetectorDefiner
  * @Author yuier

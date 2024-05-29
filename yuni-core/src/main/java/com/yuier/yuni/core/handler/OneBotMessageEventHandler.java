@@ -2,6 +2,7 @@ package com.yuier.yuni.core.handler;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.annotation.OneBotEventHandler;
+import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.dto.CallBaseFunctionPluginDto;
 import com.yuier.yuni.common.domain.dto.CallOrderFunctionPluginDto;
@@ -14,6 +15,8 @@ import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.domain.message.dto.GetMessageDto;
 import com.yuier.yuni.common.enums.MessageDataEnum;
 import com.yuier.yuni.common.enums.OneBotEventEnum;
+import com.yuier.yuni.common.enums.YuniModuleEnum;
+import com.yuier.yuni.common.plugin.FunctionPlugin;
 import com.yuier.yuni.common.service.AsyncService;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.MessageEventService;
@@ -75,7 +78,7 @@ public class OneBotMessageEventHandler {
     CallOneBot callOneBot;
 
     public ResponseResult handle(ObjectNode postEventNode) {
-        MessageEvent messageEvent = messageEventService.postToMessage(postEventNode, MessageEvent.class);
+        MessageEvent messageEvent = messageEventService.buildMessageEvent(postEventNode);
         eventLogUtils.printRcvMsgEventLog(messageEvent);
         MessageChain chain = messageEvent.getMessage();
         if (!detectForOrderPlugin(chain, postEventNode, messageEvent)) {
@@ -95,7 +98,16 @@ public class OneBotMessageEventHandler {
             OrderMatchedOut orderMatchedOut = new OrderMatchedOut();
             if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chainForOrder, orderMatchedOut, coreGlobalData.getOrderMark().toString())) {
                 log.info("命中插件 " + pluginId);
-                callFunction.callOrderFunctionPlugin(new CallOrderFunctionPluginDto(pluginId, postEventNode, orderMatchedOut), pluginForDetect.getModule());
+                if (pluginForDetect.getModule().equals(YuniModuleEnum.CORE)) {
+                    FunctionPlugin functionPlugin = coreGlobalData.getRawCorePlugins().getPluginMap().get(pluginId);
+                    try {
+                        asyncService.asyncReflective(functionPlugin.getPluginBean(), SystemConstants.PLUGIN_CRITICAL_NAME.FUNC_PLUGIN_ENTRY, messageEvent, orderMatchedOut);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    callFunction.callOrderFunctionPlugin(new CallOrderFunctionPluginDto(pluginId, postEventNode, orderMatchedOut), pluginForDetect.getModule());
+                }
             }
         }
         return flag;
@@ -107,7 +119,16 @@ public class OneBotMessageEventHandler {
             BasePluginForDetect pluginForDetect = (BasePluginForDetect) pluginMap.get(pluginId);
             if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chain)) {
                 log.info("命中插件 " + pluginId);
-                callFunction.callBaseFunctionPlugin(new CallBaseFunctionPluginDto(pluginId, postEventNode), pluginForDetect.getModule());
+                if (pluginForDetect.getModule().equals(YuniModuleEnum.CORE)) {
+                    FunctionPlugin functionPlugin = coreGlobalData.getRawCorePlugins().getPluginMap().get(pluginId);
+                    try {
+                        asyncService.asyncReflective(functionPlugin.getPluginBean(), SystemConstants.PLUGIN_CRITICAL_NAME.FUNC_PLUGIN_ENTRY, messageEvent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    callFunction.callBaseFunctionPlugin(new CallBaseFunctionPluginDto(pluginId, postEventNode), pluginForDetect.getModule());
+                }
             }
         }
     }

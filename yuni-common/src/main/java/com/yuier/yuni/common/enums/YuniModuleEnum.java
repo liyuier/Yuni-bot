@@ -13,7 +13,8 @@ import lombok.Getter;
 public enum YuniModuleEnum {
 
     FUNCTION("function", "普通功能模块"),
-    DD("dd", "DD 模块");
+    DD("dd", "DD 模块"),
+    CORE("core", "核心模块");
 
     private final String name;
     private final String description;

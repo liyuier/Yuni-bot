@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @description: 启动时初始化插件，并将插件发送给 core 服务
  */
 @Component
-public class PluginScanRunner implements CommandLineRunner {
+public class PluginScanRunner implements CommandLineRunner{
 
     @Autowired
     DdPluginService ddPluginService;

@@ -20,6 +20,6 @@ public class MessageTypeListenerDto {
     private MessageTypeEnum listener;
 
     public MessageTypeListenerDto(MessageTypeListener listener) {
-        this.listener = listener.getListener();
+        this.listener = listener.getListenMessageType();
     }
 }

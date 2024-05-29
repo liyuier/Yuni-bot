@@ -1,5 +1,6 @@
 package com.yuier.yuni.core.domain.global.detector.order;
 
+import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
 import com.yuier.yuni.common.detector.order.dto.YuniOrderDefinerDto;
 import com.yuier.yuni.common.detector.order.matchedout.OrderArgMatchedOut;
 import com.yuier.yuni.common.detector.order.matchedout.OrderArgsMatchedOut;
@@ -44,6 +45,10 @@ public class OrderDetectorForUse {
         head = new OrderHeadDetectorForUse(dto.getHead());
         args = new OrderArgsDetectorForUse(dto.getArgs());
         options = new OrderOptionsDetectorForUse(dto.getOptions());
+    }
+
+    public OrderDetectorForUse(YuniOrderDefiner detectorDefiner) {
+        this((YuniOrderDefinerDto) detectorDefiner.toDto());
     }
 
     /**

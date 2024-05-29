@@ -2,7 +2,10 @@ package com.yuier.yuni.common.domain.message.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.yuier.yuni.common.domain.message.MessageChain;
+import com.yuier.yuni.common.domain.message.MessageEventPosition;
 import com.yuier.yuni.common.domain.message.MessageSeg;
+import com.yuier.yuni.common.enums.MessageTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,5 +39,16 @@ public class SendMessageDto {
             str.append(seg.getData().toString());
         }
         return str.toString();
+    }
+
+    public SendMessageDto(MessageEventPosition messageEventPosition, MessageChain chain) {
+        if (messageEventPosition.getMessageType().equals(MessageTypeEnum.PRIVATE)) {
+            this.messageType = "private";
+            this.userId = messageEventPosition.getPosition();
+        } else if (messageEventPosition.getMessageType().equals(MessageTypeEnum.GROUP)) {
+            this.messageType = "group";
+            this.groupId = messageEventPosition.getPosition();
+        }
+        this.message = chain.getContent();
     }
 }

@@ -52,7 +52,7 @@ public class FunctionServiceImpl implements FunctionService {
           positivePluginDto.getModule().getName(),
           positivePluginDto.getPositivePluginIdList()
         );
-        coreGlobalData.getPositivePlugins().setPositivePluginMap(positivePluginMap);
+        coreGlobalData.getPositivePlugins().getPositivePluginMap().putAll(positivePluginMap);
         log.info("主动触发插件初始化成功");
         return ResponseResult.okResult();
     }

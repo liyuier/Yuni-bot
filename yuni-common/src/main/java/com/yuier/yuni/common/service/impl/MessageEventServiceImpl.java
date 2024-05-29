@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.yuier.yuni.common.constants.SystemConstants;
+import com.yuier.yuni.common.domain.message.MessageEvent;
+import com.yuier.yuni.common.domain.message.MessageEventPosition;
+import com.yuier.yuni.common.enums.MessageTypeEnum;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.service.MessageEventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,5 +89,20 @@ public class MessageEventServiceImpl implements MessageEventService {
             e.printStackTrace();
         }
         return targetObj;
+    }
+
+    @Override
+    public MessageEvent buildMessageEvent(JsonNode postDataNode) {
+        MessageEvent messageEvent = this.postToMessage(postDataNode, MessageEvent.class);
+        MessageEventPosition position = new MessageEventPosition();
+        if (messageEvent.isGroupMessage()) {
+            position.setMessageType(MessageTypeEnum.GROUP);
+            position.setPosition(messageEvent.getGroupId());
+        } else if (messageEvent.isPrivateMessage()) {
+            position.setMessageType(MessageTypeEnum.PRIVATE);
+            position.setPosition(messageEvent.getUserId());
+        }
+        messageEvent.setMessageEventPosition(position);
+        return messageEvent;
     }
 }
