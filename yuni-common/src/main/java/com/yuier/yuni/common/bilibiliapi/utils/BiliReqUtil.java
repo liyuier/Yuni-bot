@@ -2,19 +2,16 @@ package com.yuier.yuni.common.bilibiliapi.utils;
 
 import com.yuier.yuni.common.bilibiliapi.dto.AbstractData;
 import com.yuier.yuni.common.bilibiliapi.dto.ApiData;
-import com.yuier.yuni.common.bilibiliapi.dto.user.baseinfo.UserCardInfo;
 import com.yuier.yuni.common.enums.BiliAuthenticateMethodEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -119,6 +116,34 @@ public class BiliReqUtil {
             ResponseEntity<ApiData<T>> response = restTemplate.exchange(
                     builder.build().encode().toString(),
                     HttpMethod.GET,
+                    entity,
+                    typeReference
+            );
+            return response.getBody();
+        } catch (RestClientException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public  ApiData postBiliApi(String url, HashMap<String, String> params, BiliAuthenticateMethodEnum authenticateMethod, ParameterizedTypeReference<ApiData> typeReference) {
+        // 对参数签名
+        if (authenticateMethod.equals(BiliAuthenticateMethodEnum.APP_SIGN)) {
+            appSignParams(params);
+        }
+        if (authenticateMethod.equals(BiliAuthenticateMethodEnum.WBI_SIGN)){
+            wbiSignParams(params);
+        }
+        HttpEntity<?> entity = getBaseHeader();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
+        for (String key : params.keySet()) {
+            builder.queryParam(key, params.get(key));
+        }
+        try {
+            // 发送GET请求并获取响应体
+            ResponseEntity<ApiData> response = restTemplate.exchange(
+                    builder.build().encode().toString(),
+                    HttpMethod.POST,
                     entity,
                     typeReference
             );

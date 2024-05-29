@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.io.IOException;
 
@@ -18,6 +19,7 @@ import java.io.IOException;
  * @Date 2024/5/14 22:48
  * @description: dd 模块的配置类
  */
+@EnableAsync
 @Configuration
 @EnableAspectJAutoProxy
 @ComponentScan("com.yuier.yuni.common")
