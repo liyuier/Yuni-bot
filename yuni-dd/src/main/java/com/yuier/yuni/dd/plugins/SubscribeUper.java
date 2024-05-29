@@ -18,7 +18,9 @@ import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.dd.domain.entity.SubUperEntity;
+import com.yuier.yuni.dd.domain.entity.UperFollowedEntity;
 import com.yuier.yuni.dd.service.SubUperService;
+import com.yuier.yuni.dd.service.UperFollowedService;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,6 +43,8 @@ public class SubscribeUper implements YuniOrderPlugin {
 
     @Autowired
     SubUperService subUperService;
+    @Autowired
+    UperFollowedService uperFollowedService;
 
     @Autowired
     CallOneBot callOneBot;
@@ -72,6 +76,11 @@ public class SubscribeUper implements YuniOrderPlugin {
         return ResponseResult.okResult();
     }
 
+    /**
+     * 在本群订阅 UP 主
+     * @param messageEvent
+     * @param order
+     */
     private void subscribeUp(MessageEvent messageEvent, OrderMatchedOut order) {
         Long uidForSub = order.getArgByName(argUid).asLong();
         UserCardInfo userCardInfo = callBilibili.getUserCard(uidForSub);
@@ -79,10 +88,14 @@ public class SubscribeUper implements YuniOrderPlugin {
         if (null == userCardInfo) {
             res = "UID " + uidForSub + " 无法查找到用户，请检查！";
         } else {
-            SubUperEntity subUperEntity = new SubUperEntity();
+            if (!userCardInfo.getFollowing()) {
+                callBilibili.followUp(uidForSub);
+            }
+            if (!upFollowedSaved(userCardInfo)) {
+                uperFollowedService.save(setUperFollowed(userCardInfo));
+            }
             if (!targetHasSubedUP(messageEvent, userCardInfo)) {
-                subUperEntity = setSubUperEntity(messageEvent, userCardInfo);
-                subUperService.save(subUperEntity);
+                subUperService.save(setSubUperEntity(messageEvent, userCardInfo));
             }
             res = String.format("""
                 功能开发中...
@@ -162,6 +175,20 @@ public class SubscribeUper implements YuniOrderPlugin {
         subUperEntity.setUperId(userCardInfo.getCard().getMid());
         subUperEntity.setUperName(userCardInfo.getCard().getName());
         return subUperEntity;
+    }
+
+    private Boolean upFollowedSaved(UserCardInfo userCardInfo) {
+        LambdaQueryWrapper<UperFollowedEntity> queryWrapper = new LambdaQueryWrapper<>();
+        return uperFollowedService.exists(queryWrapper
+                .eq(UperFollowedEntity::getUperId, userCardInfo.getCard().getMid()));
+    }
+
+    private UperFollowedEntity setUperFollowed(UserCardInfo userCardInfo) {
+        UperFollowedEntity uperFollowed = new UperFollowedEntity();
+        uperFollowed.setUperId(userCardInfo.getCard().getMid());
+        uperFollowed.setUperName(userCardInfo.getCard().getName());
+        uperFollowed.setUperFace(userCardInfo.getCard().getFace());
+        return uperFollowed;
     }
 
     @Override
