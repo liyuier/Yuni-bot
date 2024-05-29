@@ -97,6 +97,7 @@ public class OneBotMessageEventHandler {
             OrderPluginForDetect pluginForDetect = (OrderPluginForDetect) pluginMap.get(pluginId);
             OrderMatchedOut orderMatchedOut = new OrderMatchedOut();
             if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chainForOrder, orderMatchedOut, coreGlobalData.getOrderMark().toString())) {
+                flag = true;
                 log.info("命中插件 " + pluginId);
                 if (pluginForDetect.getModule().equals(YuniModuleEnum.CORE)) {
                     FunctionPlugin functionPlugin = coreGlobalData.getRawCorePlugins().getPluginMap().get(pluginId);
