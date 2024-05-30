@@ -2,6 +2,7 @@ package com.yuier.yuni.common.domain.message;
 
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.data.AtData;
+import com.yuier.yuni.common.domain.message.data.ImageData;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.enums.MessageDataEnum;
 import lombok.AllArgsConstructor;
@@ -18,11 +19,14 @@ import java.util.ArrayList;
  * @description: 消息链实体类
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class MessageChain {
 
     private ArrayList<MessageSeg> content;
+
+    public MessageChain() {
+        content = new ArrayList<>();
+    }
 
     @Override
     public String toString() {
@@ -112,5 +116,29 @@ public class MessageChain {
             }
         }
         return null;
+    }
+
+    public MessageChain addAt(AtData atData) {
+        content.add(new MessageSeg(
+                MessageDataEnum.AT.toString(),
+                atData
+        ));
+        return this;
+    }
+
+    public MessageChain addImage(ImageData imageData) {
+        content.add(new MessageSeg(
+                MessageDataEnum.IMAGE.toString(),
+                imageData
+        ));
+        return this;
+    }
+
+    public MessageChain addText(String text) {
+        content.add(new MessageSeg(
+                MessageDataEnum.TEXT.toString(),
+                new TextData(text)
+        ));
+        return this;
     }
 }

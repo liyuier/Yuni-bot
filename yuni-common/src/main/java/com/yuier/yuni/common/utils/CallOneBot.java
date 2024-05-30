@@ -16,9 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 /**
  * @Title: CallOneBotUtils
@@ -153,7 +151,7 @@ public class CallOneBot {
         return checkResForDataObj(yuniHttpService.postRequestForJsonNode(url, dto), GetGroupMemberInfoResData.class);
     }
 
-    public GetGroupMemberListRes getGroupMemberListRes(GetGroupMemberListDto dto) {
+    public GetGroupMemberListRes getGroupMemberList(GetGroupMemberListDto dto) {
         String url = getBaseUrl() + "get_group_member_list ";
         return yuniHttpService.postRequestForObject(url, dto, GetGroupMemberListRes.class);
     }
