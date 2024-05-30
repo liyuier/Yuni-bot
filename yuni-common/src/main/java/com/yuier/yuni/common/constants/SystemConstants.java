@@ -14,6 +14,10 @@ public class SystemConstants {
     public static final Integer HTTP_OK = 200;
     public static final String ONEBOT_OK_STATUS = "ok";
 
+    public static final Integer GROUP_PLUGIN_CLOSE = 0;
+    public static final Integer GROUP_PLUGIN_OPEN = 1;
+
+
     // OneBot 上报数据关键字段
     public static final class POST_KEY_FIELD {
 
