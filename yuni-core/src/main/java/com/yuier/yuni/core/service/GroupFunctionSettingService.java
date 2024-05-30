@@ -1,10 +1,7 @@
 package com.yuier.yuni.core.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.core.domain.entity.GroupFunctionSettingEntity;
-import com.yuier.yuni.core.domain.global.detector.PluginForDetect;
-import com.yuier.yuni.core.domain.global.detector.order.OrderPluginForDetect;
 
 /**
  * (GroupFunctionSetting)表服务接口
