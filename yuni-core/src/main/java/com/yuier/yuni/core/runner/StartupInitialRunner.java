@@ -5,6 +5,7 @@ import com.yuier.yuni.common.domain.message.res.data.GetLoginInfoResData;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
+import com.yuier.yuni.core.service.GroupFunctionSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @Author yuier
  * @Package com.yuier.yuni.core.runner
  * @Date 2024/4/16 1:11
- * @description: 启动测试类
+ * @description: CoreGlobalData 数据填充
  */
 @Component
 public class StartupInitialRunner implements CommandLineRunner {
@@ -24,6 +25,8 @@ public class StartupInitialRunner implements CommandLineRunner {
     CallOneBot callOneBot;
     @Autowired
     CoreGlobalData coreGlobalData;
+    @Autowired
+    GroupFunctionSettingService groupFunctionSettingService;
 
     @Override
     public void run(String... args) {
@@ -31,7 +34,10 @@ public class StartupInitialRunner implements CommandLineRunner {
         coreGlobalData.setBotId(data.getUserId());
         coreGlobalData.setNickname(data.getNickname());
 
-        // 下面是测试用例
+        // 填充群组关闭插件信息
+        groupFunctionSettingService.fillGlobalClosePluginCondition();
+
+        // 启动词
         SendGroupMessageDto dto = new SendGroupMessageDto();
         dto.setGroupId((long)930198267);
         dto.setMessage(messageChainService.buildChain("孩子们，我回来了").getContent());

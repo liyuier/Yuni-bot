@@ -11,4 +11,8 @@ import com.yuier.yuni.common.enums.YuniModuleEnum;
  */
 public interface CorePluginService {
     void scanAndBuildPlugin(YuniModuleEnum module);
+    Boolean pluginExists(String pluginId);
+    Boolean positivePluginExists(String pluginId);
+
+    Boolean pluginIsCore(String pluginId);
 }

@@ -5,17 +5,12 @@ import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.MessageDetectorDefiner;
 import com.yuier.yuni.common.detector.base.BaseDetectorDefiner;
 import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
-import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.enums.YuniModuleEnum;
 import com.yuier.yuni.common.listener.MessageTypeListener;
 import com.yuier.yuni.common.plugin.FunctionPlugin;
 import com.yuier.yuni.common.plugin.FunctionPlugins;
-import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginsDto;
-import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginsDto;
-import com.yuier.yuni.common.plugin.dto.positive.PositivePluginsDto;
 import com.yuier.yuni.common.plugin.interf.PositivePlugin;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
-import com.yuier.yuni.core.domain.global.detector.PluginForDetect;
 import com.yuier.yuni.core.domain.global.detector.base.BasePluginForDetect;
 import com.yuier.yuni.core.domain.global.detector.order.OrderPluginForDetect;
 import com.yuier.yuni.core.service.CorePluginService;
@@ -135,4 +130,42 @@ public class CorePluginServiceImpl implements CorePluginService {
         coreGlobalData.setRawCorePlugins(functionPlugins);
         log.info("插件扫描完毕");
     }
+
+    @Override
+    public Boolean pluginExists(String pluginId) {
+        if (positivePluginExists(pluginId)) {
+            return true;
+        }
+        if (coreGlobalData.getBasePlugins().getPluginMap().containsKey(pluginId)) {
+            return true;
+        }
+        if (coreGlobalData.getOrderPlugins().getPluginMap().containsKey(pluginId)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean positivePluginExists(String pluginId) {
+        for (ArrayList<String> pluginList : coreGlobalData.getPositivePlugins().getPositivePluginMap().values()) {
+            if (pluginList.contains(pluginId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean pluginIsCore(String pluginId) {
+        if (coreGlobalData.getBasePlugins().getPluginMap().containsKey(pluginId)) {
+            return ((BasePluginForDetect) coreGlobalData.getBasePlugins().getPluginMap().get(pluginId)).getModule().equals(YuniModuleEnum.CORE);
+        }
+        if (coreGlobalData.getOrderPlugins().getPluginMap().containsKey(pluginId)) {
+            OrderPluginForDetect orderPluginForDetect = (OrderPluginForDetect) coreGlobalData.getOrderPlugins().getPluginMap().get(pluginId);
+            return orderPluginForDetect.getModule().equals(YuniModuleEnum.CORE);
+        }
+        return false;
+    }
+
+
 }

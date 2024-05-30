@@ -29,12 +29,14 @@ import com.yuier.yuni.core.domain.global.detector.PluginForDetect;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import com.yuier.yuni.core.domain.global.detector.base.BasePluginForDetect;
 import com.yuier.yuni.core.domain.global.detector.order.OrderPluginForDetect;
+import com.yuier.yuni.core.service.GroupFunctionSettingService;
 import com.yuier.yuni.core.service.MessageRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -96,7 +98,9 @@ public class OneBotMessageEventHandler {
             chainForOrder.setCurSegIndex(0);
             OrderPluginForDetect pluginForDetect = (OrderPluginForDetect) pluginMap.get(pluginId);
             OrderMatchedOut orderMatchedOut = new OrderMatchedOut();
-            if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chainForOrder, orderMatchedOut, coreGlobalData.getOrderMark().toString())) {
+            if (pluginOpen(messageEvent, pluginForDetect) &&
+                    pluginForDetect.hitListener(messageEvent) &&
+                    pluginForDetect.hitDetector(chainForOrder, orderMatchedOut, coreGlobalData.getOrderMark().toString())) {
                 flag = true;
                 log.info("命中插件 " + pluginId);
                 if (pluginForDetect.getModule().equals(YuniModuleEnum.CORE)) {
@@ -118,7 +122,9 @@ public class OneBotMessageEventHandler {
         HashMap<String, PluginForDetect> pluginMap = coreGlobalData.getBasePlugins().getPluginMap();
         for (String pluginId : pluginMap.keySet()) {
             BasePluginForDetect pluginForDetect = (BasePluginForDetect) pluginMap.get(pluginId);
-            if (pluginForDetect.hitListener(messageEvent) && pluginForDetect.hitDetector(chain)) {
+            if (pluginOpen(messageEvent, pluginForDetect) &&
+                    pluginForDetect.hitListener(messageEvent) &&
+                    pluginForDetect.hitDetector(chain)) {
                 log.info("命中插件 " + pluginId);
                 if (pluginForDetect.getModule().equals(YuniModuleEnum.CORE)) {
                     FunctionPlugin functionPlugin = coreGlobalData.getRawCorePlugins().getPluginMap().get(pluginId);
@@ -167,5 +173,15 @@ public class OneBotMessageEventHandler {
             }
         }
         return chainForOrder;
+    }
+
+    public boolean pluginOpen(MessageEvent messageEvent, PluginForDetect pluginForDetect) {
+        if (messageEvent.isPrivateMessage()) {
+            return true;
+        } else {
+            return !coreGlobalData.getGroupFunctionClose().getClosePluginMap()
+                    .getOrDefault(pluginForDetect.getPluginId(), new ArrayList<>())
+                    .contains(messageEvent.getGroupId());
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.yuier.yuni.common.enums.OrderMarkEnum;
 import com.yuier.yuni.common.plugin.FunctionPlugins;
 import com.yuier.yuni.core.domain.global.detector.PluginsForDetect;
+import com.yuier.yuni.core.domain.global.functionhelp.GroupFunctionClose;
 import com.yuier.yuni.core.domain.global.positiveplugins.PositivePlugins;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +41,9 @@ public class CoreGlobalData {
     // 核心模块的原始插件 Bean
     private FunctionPlugins rawCorePlugins;
 
+    // 群组关闭插件的情况
+    private GroupFunctionClose groupFunctionClose;
+
     @Value("${bot.self}")
     private Long botId;
 
@@ -50,5 +54,6 @@ public class CoreGlobalData {
         this.basePlugins = new PluginsForDetect();
         this.orderPlugins = new PluginsForDetect();
         this.orderMark = OrderMarkEnum.SLASH;
+        this.groupFunctionClose = new GroupFunctionClose();
     }
 }

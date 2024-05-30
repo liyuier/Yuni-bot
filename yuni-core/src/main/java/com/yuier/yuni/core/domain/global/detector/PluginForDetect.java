@@ -12,4 +12,6 @@ import com.yuier.yuni.common.domain.message.MessageEvent;
  */
 public interface PluginForDetect {
     Boolean hitListener(MessageEvent messageEvent);
+
+    String getPluginId();
 }
