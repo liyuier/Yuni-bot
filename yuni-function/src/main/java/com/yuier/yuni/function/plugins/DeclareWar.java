@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * @Author yuier
  * @Package com.yuier.yuni.function.plugins
  * @Date 2024/5/30 22:35
- * @description: 宣战
+ * @description: 向万国宣战
  */
 @Component
 @Plugin(id = "DeclareWar", listener = MessageTypeEnum.GROUP)
