@@ -9,6 +9,7 @@ import com.yuier.yuni.common.enums.YuniModuleEnum;
 import com.yuier.yuni.common.listener.MessageTypeListener;
 import com.yuier.yuni.common.plugin.FunctionPlugin;
 import com.yuier.yuni.common.plugin.FunctionPlugins;
+import com.yuier.yuni.common.plugin.dto.positive.PositivePluginDto;
 import com.yuier.yuni.common.plugin.interf.PositivePlugin;
 import com.yuier.yuni.core.domain.global.CoreGlobalData;
 import com.yuier.yuni.core.domain.global.detector.base.BasePluginForDetect;
@@ -55,10 +56,7 @@ public class CorePluginServiceImpl implements CorePluginService {
         String coreModuleName = module.getName();
         for (FunctionPlugin pluginBean : coreGlobalData.getRawCorePlugins().getPluginMap().values()) {
             if (pluginBean.isPositive()) {  // 主动插件
-                ArrayList<String> positivePluginList = coreGlobalData.getPositivePlugins().getPositivePluginMap()
-                                                            .getOrDefault(coreModuleName, new ArrayList<>());
-                positivePluginList.add(pluginBean.getPluginId());
-                coreGlobalData.getPositivePlugins().getPositivePluginMap().put(coreModuleName, positivePluginList);
+                coreGlobalData.getPositivePlugins().getPluginMap().put(pluginBean.getPluginId(), new PositivePluginDto(pluginBean, module));
             } else {
                 if (pluginBean.useDetector(BaseDetectorDefiner.class)) {  // 使用基础消息链探测器
                     coreGlobalData.getBasePlugins().getPluginMap().put(
@@ -147,12 +145,7 @@ public class CorePluginServiceImpl implements CorePluginService {
 
     @Override
     public Boolean positivePluginExists(String pluginId) {
-        for (ArrayList<String> pluginList : coreGlobalData.getPositivePlugins().getPositivePluginMap().values()) {
-            if (pluginList.contains(pluginId)) {
-                return true;
-            }
-        }
-        return false;
+        return coreGlobalData.getPositivePlugins().getPluginMap().containsKey(pluginId);
     }
 
     @Override

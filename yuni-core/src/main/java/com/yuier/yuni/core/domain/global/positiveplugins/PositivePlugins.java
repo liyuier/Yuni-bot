@@ -1,5 +1,6 @@
 package com.yuier.yuni.core.domain.global.positiveplugins;
 
+import com.yuier.yuni.common.plugin.dto.positive.PositivePluginDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -20,9 +21,9 @@ public class PositivePlugins {
      * 键为模块名
      * 值为插件名列表
      */
-    HashMap<String, ArrayList<String>> positivePluginMap;
+    HashMap<String, PositivePluginDto> pluginMap;
 
     public PositivePlugins() {
-        positivePluginMap = new HashMap<>();
+        pluginMap = new HashMap<>();
     }
 }

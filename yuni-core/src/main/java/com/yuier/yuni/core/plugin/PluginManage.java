@@ -10,6 +10,7 @@ import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.dto.SendMessageDto;
 import com.yuier.yuni.common.enums.MessageTypeEnum;
 import com.yuier.yuni.common.enums.YuniOrderArgContentTypeEnum;
+import com.yuier.yuni.common.plugin.dto.positive.PositivePluginDto;
 import com.yuier.yuni.common.plugin.interf.YuniOrderPlugin;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
@@ -81,15 +82,24 @@ public class PluginManage implements YuniOrderPlugin {
     private void showPluginsForUse(MessageEvent messageEvent) {
         StringBuilder res = new StringBuilder("插件信息：");
         res.append("\n======== 主动插件：========\n");
-        for (ArrayList<String> pluginIds : coreGlobalData.getPositivePlugins().getPositivePluginMap().values()) {
-            for (String pluginId : pluginIds) {
-                res.append(String.format("""
+        for (PositivePluginDto plugin : coreGlobalData.getPositivePlugins().getPluginMap().values()) {
+            res.append(String.format("""
                     --------
                     插件 ID：%s
-                    """, pluginId));
-            }
+                    功能描述：%s
+                    所属模块：%s
+                    插件状态：%s
+                    """,
+                    plugin.getPluginId(),
+                    plugin.getDescription(),
+                    plugin.getModule(),
+                    messageEvent.isPrivateMessage() ? "开启" : (
+                            coreGlobalData.getGroupFunctionClose().getClosePluginMap()
+                                    .getOrDefault(plugin.getPluginId(), new ArrayList<>())
+                                    .contains(messageEvent.getGroupId()) ? "关闭" : "开启")
+            ));
         }
-        res.append("\n======== 被动插件：========\n");
+        res.append("======== 被动插件：========\n");
         for (PluginForDetect plugin : coreGlobalData.getBasePlugins().getPluginMap().values()) {
             res.append(String.format("""
                     --------
