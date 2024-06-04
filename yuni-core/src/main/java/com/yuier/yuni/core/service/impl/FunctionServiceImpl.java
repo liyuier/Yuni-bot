@@ -47,12 +47,7 @@ public class FunctionServiceImpl implements FunctionService {
 
     @Override
     public ResponseResult initialPositiveFunctionPlugins(PositivePluginsDto positivePluginDto) {
-        HashMap<String, ArrayList<String>> positivePluginMap = new HashMap<>();
-        positivePluginMap.put(
-          positivePluginDto.getModule().getName(),
-          positivePluginDto.getPositivePluginIdList()
-        );
-        coreGlobalData.getPositivePlugins().getPositivePluginMap().putAll(positivePluginMap);
+        coreGlobalData.getPositivePlugins().getPluginMap().putAll(positivePluginDto.getPluginDtoMap());
         log.info("主动触发插件初始化成功");
         return ResponseResult.okResult();
     }

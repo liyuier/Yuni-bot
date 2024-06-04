@@ -13,6 +13,7 @@ import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginDto;
 import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginsDto;
 import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginDto;
 import com.yuier.yuni.common.plugin.dto.order.OrderDetectorPluginsDto;
+import com.yuier.yuni.common.plugin.dto.positive.PositivePluginDto;
 import com.yuier.yuni.common.plugin.dto.positive.PositivePluginsDto;
 import com.yuier.yuni.common.plugin.interf.PositivePlugin;
 import com.yuier.yuni.common.utils.CallCore;
@@ -125,7 +126,7 @@ public class DdPluginServiceImpl implements DdPluginService {
         for (FunctionPlugin plugin : functionPlugins.getPluginMap().values()) {
             // 如果是主动消息链探测器
             if (plugin.isPositive()) {
-                positivePluginsDto.getPositivePluginIdList().add(plugin.getPluginId());
+                positivePluginsDto.getPluginDtoMap().put(plugin.getPluginId(), new PositivePluginDto(plugin));
             } else {
                 // 如果插件使用了基础消息链探测器
                 if (plugin.useDetector(BaseDetectorDefiner.class)) {
@@ -150,6 +151,7 @@ public class DdPluginServiceImpl implements DdPluginService {
             // 如果是主动消息链探测器
             if (plugin.isPositive()) {
                 positivePluginsDto.getPositivePluginIdList().add(plugin.getPluginId());
+                positivePluginsDto.getPluginDtoMap().put(plugin.getPluginId(), new PositivePluginDto(plugin, module));
             } else {
                 // 如果插件使用了基础消息链探测器
                 if (plugin.useDetector(BaseDetectorDefiner.class)) {

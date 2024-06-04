@@ -1,10 +1,12 @@
 package com.yuier.yuni.common.plugin.dto.positive;
 
 import com.yuier.yuni.common.enums.YuniModuleEnum;
+import com.yuier.yuni.common.plugin.dto.base.BaseDetectorPluginDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @Title: PositivePluginsDto
@@ -18,10 +20,10 @@ import java.util.ArrayList;
 public class PositivePluginsDto {
     YuniModuleEnum module;
     ArrayList<String> positivePluginIdList;
-    ArrayList<String> positivePluginDescList;
+    HashMap<String, PositivePluginDto> pluginDtoMap;
 
     public PositivePluginsDto() {
-        this.positivePluginIdList = new ArrayList<>();
+        this.pluginDtoMap = new HashMap<>();
     }
 
     public PositivePluginsDto(YuniModuleEnum module) {
