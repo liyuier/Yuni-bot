@@ -2,7 +2,7 @@ package com.yuier.yuni.dd.plugins;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yuier.yuni.common.annotation.Plugin;
-import com.yuier.yuni.common.bilibiliapi.CallBilibili;
+import com.yuier.yuni.common.bilibiliapi.request.CallForUser;
 import com.yuier.yuni.common.bilibiliapi.dto.user.baseinfo.UserCardInfo;
 import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
 import com.yuier.yuni.common.detector.order.YuniOrderOptionalArg;
@@ -39,7 +39,7 @@ import java.util.List;
 public class SubscribeUper implements YuniOrderPlugin {
 
     @Autowired
-    CallBilibili callBilibili;
+    CallForUser callForUser;
 
     @Autowired
     SubUperService subUperService;
@@ -83,13 +83,13 @@ public class SubscribeUper implements YuniOrderPlugin {
      */
     private void subscribeUp(MessageEvent messageEvent, OrderMatchedOut order) {
         Long uidForSub = order.getArgByName(argUid).asLong();
-        UserCardInfo userCardInfo = callBilibili.getUserCard(uidForSub);
+        UserCardInfo userCardInfo = callForUser.getUserCard(uidForSub);
         String res = "";
         if (null == userCardInfo) {
             res = "UID " + uidForSub + " 无法查找到用户，请检查！";
         } else {
             if (!userCardInfo.getFollowing()) {
-                callBilibili.followUp(uidForSub);
+                callForUser.followUp(uidForSub);
             }
             if (!upFollowedSaved(userCardInfo)) {
                 uperFollowedService.save(setUperFollowed(userCardInfo));

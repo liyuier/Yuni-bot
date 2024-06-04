@@ -1,4 +1,4 @@
-package com.yuier.yuni.common.bilibiliapi;
+package com.yuier.yuni.common.bilibiliapi.request;
 
 import com.yuier.yuni.common.bilibiliapi.dto.ApiData;
 import com.yuier.yuni.common.bilibiliapi.dto.user.baseinfo.UserCardInfo;
@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 @Component
-public class CallBilibili {
+public class CallForUser {
 
     @Autowired
     BiliReqUtil biliReqUtil;
