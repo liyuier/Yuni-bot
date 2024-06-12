@@ -144,7 +144,9 @@ public class RefreshCookie implements YuniOrderPlugin {
                         HashMap<String, String> biliCookieMap = new HashMap<>();
                         biliCookieMap.put(SystemConstants.REDIS_KEY.BILI_COOKIE, newCookieStr);
                         biliCookieMap.put(SystemConstants.REDIS_KEY.REFRESH_TOKEN, refreshToken);
-                        redisCache.setCacheMap(SystemConstants.REDIS_KEY.BILIBILI, biliCookieMap);
+                        redisCache.setCacheObject(SystemConstants.REDIS_KEY.BILI_COOKIE, newCookieStr);
+                        redisCache.setCacheObject(SystemConstants.REDIS_KEY.REFRESH_TOKEN, refreshToken);
+//                        redisCache.setCacheMap(SystemConstants.REDIS_KEY.BILIBILI, biliCookieMap);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
