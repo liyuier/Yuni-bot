@@ -6,6 +6,7 @@ import com.yuier.yuni.common.bilibiliapi.dto.login.RefreshCookieRes;
 import com.yuier.yuni.common.bilibiliapi.utils.BiliReqUtil;
 import com.yuier.yuni.common.enums.BiliAuthenticateMethodEnum;
 import com.yuier.yuni.common.service.YuniHttpService;
+import com.yuier.yuni.common.utils.RedisCache;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,6 +42,8 @@ public class CallForCookie {
     YuniHttpService yuniHttpService;
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    RedisCache redisCache;
 
     private String basePassportUrl = "https://passport.bilibili.com/";
     private String baseUrl = "https://www.bilibili.com/";
@@ -75,7 +79,7 @@ public class CallForCookie {
         }
     }
 
-    public RefreshCookieRes refreshCookie(String refreshCsrf) {
+    public RefreshCookieRes refreshCookie(String refreshCsrf, String newCookieStr, List<String> setCookieList) {
         String url = basePassportUrl + "x/passport-login/web/cookie/refresh";
         HashMap<String, String> params = new HashMap<>();
         params.put("csrf", getValueFromCookie(cookie, "bili_jct"));
@@ -90,17 +94,23 @@ public class CallForCookie {
         /**
          * 明天过后只有 chat-GPT 能看懂下面这坨东西是什么
          */
-        List<String> setCookieList = headers.get("Set-Cookie");
+        setCookieList.addAll(Objects.requireNonNull(headers.get("Set-Cookie")));
         String oldCookie = cookie;
         String[] oldCookieEleArr = oldCookie.split("; ");
         for (String setCookieStr : setCookieList) {
-            String s = setCookieStr.split(";")[0];
+            String setCookiePairStr = setCookieStr.split(";")[0];
             for (String oldCookieEle : oldCookieEleArr) {
-                if (oldCookieEle.startsWith(s.split("=")[0] + "=")) {
-                    oldCookieEle = s;
+                if (oldCookieEle.startsWith(setCookiePairStr.split("=")[0] + "=")) {
+                    oldCookieEle = setCookiePairStr;
                 }
             }
         }
+        StringBuilder newCookie = new StringBuilder();
+        for (String newCookieEle : oldCookieEleArr) {
+            newCookie.append(newCookieEle).append("; ");
+        }
+        newCookieStr = newCookie.toString();
+
         if (apiData.getCode() != 0) {
             return null;
         }

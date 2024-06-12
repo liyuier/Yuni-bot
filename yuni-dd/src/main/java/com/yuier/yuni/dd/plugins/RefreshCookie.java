@@ -4,6 +4,7 @@ import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.bilibiliapi.dto.login.CookieInfo;
 import com.yuier.yuni.common.bilibiliapi.dto.login.RefreshCookieRes;
 import com.yuier.yuni.common.bilibiliapi.request.CallForCookie;
+import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
 import com.yuier.yuni.common.detector.order.YuniOrderOptionalArg;
 import com.yuier.yuni.common.detector.order.YuniOrderRequiredArg;
@@ -14,12 +15,15 @@ import com.yuier.yuni.common.enums.MessageTypeEnum;
 import com.yuier.yuni.common.plugin.interf.YuniOrderPlugin;
 import com.yuier.yuni.common.service.MessageChainService;
 import com.yuier.yuni.common.utils.CallOneBot;
+import com.yuier.yuni.common.utils.RedisCache;
 import com.yuier.yuni.common.utils.ResponseResult;
 import com.yuier.yuni.dd.service.SubUperService;
 import com.yuier.yuni.dd.service.UperFollowedService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
@@ -30,7 +34,10 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.MGF1ParameterSpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @Title: RefreshCookie
@@ -55,6 +62,12 @@ public class RefreshCookie implements YuniOrderPlugin {
     CallOneBot callOneBot;
     @Autowired
     MessageChainService messageChainService;
+
+    @Autowired
+    private RedisCache redisCache;
+
+    @Value("${headers.cookies.bilibili}")
+    private String cookie;
 
     private MessageEvent messageEvent;
 
@@ -96,7 +109,42 @@ public class RefreshCookie implements YuniOrderPlugin {
                     String correspondPath = getCorrespondPath(String.format("refresh_%d", timestamp), PUBLIC_KEY);
                     String refreshCsrf = callForCookie.getRefreshCsrf(correspondPath);
                     if (null != refreshCsrf) {
-                        RefreshCookieRes refreshCookieRes = callForCookie.refreshCookie(refreshCsrf);
+                        HttpHeaders httpHeaders = new HttpHeaders();
+                        String newCookieStr = "";
+                        List<String> setCookieList = new ArrayList<>();
+                        RefreshCookieRes refreshCookieRes = callForCookie.refreshCookie(refreshCsrf, newCookieStr, setCookieList);
+                        String refreshToken = refreshCookieRes.getRefreshToken();
+                        /**
+                         * 明天过后只有 chat-GPT 能看懂下面这坨东西是什么
+                         */
+                        String oldCookie = cookie;
+                        String[] oldCookieEleArr = oldCookie.split("; ");
+                        for (String setCookieStr : setCookieList) {
+                            String setCookiePairStr = setCookieStr.split(";")[0];
+                            for (String oldCookieEle : oldCookieEleArr) {
+                                if (oldCookieEle.startsWith(setCookiePairStr.split("=")[0] + "=")) {
+                                    oldCookieEle = setCookiePairStr;
+                                }
+                            }
+                        }
+                        StringBuilder newCookie = new StringBuilder();
+                        Boolean hasRefreshToken = false;
+                        for (String newCookieEle : oldCookieEleArr) {
+                            if (newCookieEle.startsWith(SystemConstants.REDIS_KEY.REFRESH_TOKEN)) {
+                                hasRefreshToken = true;
+                                newCookieEle = SystemConstants.REDIS_KEY.REFRESH_TOKEN + "=" + refreshToken;
+                            }
+                            newCookie.append(newCookieEle).append("; ");
+                        }
+                        if (hasRefreshToken.equals(false)) {
+                            newCookie.append("; ").append(SystemConstants.REDIS_KEY.REFRESH_TOKEN + "=").append(refreshToken);
+                        }
+                        newCookieStr = newCookie.toString();
+
+                        HashMap<String, String> biliCookieMap = new HashMap<>();
+                        biliCookieMap.put(SystemConstants.REDIS_KEY.BILI_COOKIE, newCookieStr);
+                        biliCookieMap.put(SystemConstants.REDIS_KEY.REFRESH_TOKEN, refreshToken);
+                        redisCache.setCacheMap(SystemConstants.REDIS_KEY.BILIBILI, biliCookieMap);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
