@@ -134,6 +134,10 @@ public class MessageChain {
         return this;
     }
 
+    public MessageChain addImage(String url) {
+        return this.addImage(new ImageData(url));
+    }
+
     public MessageChain addText(String text) {
         content.add(new MessageSeg(
                 MessageDataEnum.TEXT.toString(),

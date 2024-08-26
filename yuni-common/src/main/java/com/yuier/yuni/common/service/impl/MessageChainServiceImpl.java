@@ -138,5 +138,13 @@ public class MessageChainServiceImpl implements MessageChainService {
         return chain;
     }
 
+    @Override
+    public MessageChain buildImageChainByUrl(String url) {
+        MessageChain chain = new MessageChain();
+        chain.setContent(new ArrayList<>());
+        chain.getContent().add(new MessageSeg(MessageDataEnum.IMAGE.toString(), new ImageData(url)));
+        return chain;
+    }
+
 
 }
