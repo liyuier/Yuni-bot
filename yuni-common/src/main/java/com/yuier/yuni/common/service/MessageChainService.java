@@ -24,4 +24,6 @@ public interface MessageChainService {
 
     MessageChain buildImageChainByLocalFile(String image);
 
+    MessageChain buildImageChainByUrl(String url);
+
 }
