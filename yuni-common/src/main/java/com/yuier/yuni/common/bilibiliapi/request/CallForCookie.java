@@ -79,7 +79,7 @@ public class CallForCookie {
         }
     }
 
-    public RefreshCookieRes refreshCookie(String refreshCsrf, String newCookieStr, List<String> setCookieList) {
+    public RefreshCookieRes refreshCookie(String refreshCsrf, List<String> setCookieList) {
         String url = basePassportUrl + "x/passport-login/web/cookie/refresh";
         HashMap<String, String> params = new HashMap<>();
         params.put("csrf", getValueFromCookie(cookie, "bili_jct"));
@@ -91,25 +91,7 @@ public class CallForCookie {
         ApiData<RefreshCookieRes> apiData = apiDataResponseEntity.getBody();
         HttpHeaders headers = apiDataResponseEntity.getHeaders();
 
-        /**
-         * 明天过后只有 chat-GPT 能看懂下面这坨东西是什么
-         */
         setCookieList.addAll(Objects.requireNonNull(headers.get("Set-Cookie")));
-        String oldCookie = cookie;
-        String[] oldCookieEleArr = oldCookie.split("; ");
-        for (String setCookieStr : setCookieList) {
-            String setCookiePairStr = setCookieStr.split(";")[0];
-            for (String oldCookieEle : oldCookieEleArr) {
-                if (oldCookieEle.startsWith(setCookiePairStr.split("=")[0] + "=")) {
-                    oldCookieEle = setCookiePairStr;
-                }
-            }
-        }
-        StringBuilder newCookie = new StringBuilder();
-        for (String newCookieEle : oldCookieEleArr) {
-            newCookie.append(newCookieEle).append("; ");
-        }
-        newCookieStr = newCookie.toString();
 
         if (apiData.getCode() != 0) {
             return null;
@@ -127,5 +109,12 @@ public class CallForCookie {
             return null;
         }
         return value;
+    }
+
+    public void confirmRefreshCookie(String newCookie, String newCsrf, String oldRefreshToken) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("csrf", newCsrf);
+        params.put("refresh_token", oldRefreshToken);
+
     }
 }
