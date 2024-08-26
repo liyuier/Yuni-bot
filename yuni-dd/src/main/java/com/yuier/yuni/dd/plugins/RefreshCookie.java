@@ -4,10 +4,9 @@ import com.yuier.yuni.common.annotation.Plugin;
 import com.yuier.yuni.common.bilibiliapi.dto.login.CookieInfo;
 import com.yuier.yuni.common.bilibiliapi.dto.login.RefreshCookieRes;
 import com.yuier.yuni.common.bilibiliapi.request.CallForCookie;
+import com.yuier.yuni.common.bilibiliapi.utils.CookieUtil;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.detector.order.YuniOrderDefiner;
-import com.yuier.yuni.common.detector.order.YuniOrderOptionalArg;
-import com.yuier.yuni.common.detector.order.YuniOrderRequiredArg;
 import com.yuier.yuni.common.detector.order.matchedout.OrderMatchedOut;
 import com.yuier.yuni.common.domain.message.MessageEvent;
 import com.yuier.yuni.common.domain.message.dto.SendMessageDto;
@@ -23,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
@@ -65,6 +63,8 @@ public class RefreshCookie implements YuniOrderPlugin {
 
     @Autowired
     private RedisCache redisCache;
+    @Autowired
+    CookieUtil cookieUtil;
 
     @Value("${headers.cookies.bilibili}")
     private String cookie;
@@ -109,15 +109,15 @@ public class RefreshCookie implements YuniOrderPlugin {
                     String correspondPath = getCorrespondPath(String.format("refresh_%d", timestamp), PUBLIC_KEY);
                     String refreshCsrf = callForCookie.getRefreshCsrf(correspondPath);
                     if (null != refreshCsrf) {
-                        HttpHeaders httpHeaders = new HttpHeaders();
                         String newCookieStr = "";
                         List<String> setCookieList = new ArrayList<>();
-                        RefreshCookieRes refreshCookieRes = callForCookie.refreshCookie(refreshCsrf, newCookieStr, setCookieList);
+                        RefreshCookieRes refreshCookieRes = callForCookie.refreshCookie(refreshCsrf, setCookieList);
                         String refreshToken = refreshCookieRes.getRefreshToken();
                         /**
                          * 明天过后只有 chat-GPT 能看懂下面这坨东西是什么
                          */
                         String oldCookie = cookie;
+                        HashMap<String, String> oldCookieMap = cookieUtil.cookieToMap(oldCookie);
                         String[] oldCookieEleArr = oldCookie.split("; ");
                         for (String setCookieStr : setCookieList) {
                             String setCookiePairStr = setCookieStr.split(";")[0];
@@ -139,14 +139,15 @@ public class RefreshCookie implements YuniOrderPlugin {
                         if (hasRefreshToken.equals(false)) {
                             newCookie.append("; ").append(SystemConstants.REDIS_KEY.REFRESH_TOKEN + "=").append(refreshToken);
                         }
-                        newCookieStr = newCookie.toString();
+                        newCookieStr = newCookie.substring(0, newCookie.length() - 2);
+                        HashMap<String, String> newCookieMap = cookieUtil.cookieToMap(newCookieStr);
 
                         HashMap<String, String> biliCookieMap = new HashMap<>();
                         biliCookieMap.put(SystemConstants.REDIS_KEY.BILI_COOKIE, newCookieStr);
                         biliCookieMap.put(SystemConstants.REDIS_KEY.REFRESH_TOKEN, refreshToken);
                         redisCache.setCacheObject(SystemConstants.REDIS_KEY.BILI_COOKIE, newCookieStr);
                         redisCache.setCacheObject(SystemConstants.REDIS_KEY.REFRESH_TOKEN, refreshToken);
-//                        redisCache.setCacheMap(SystemConstants.REDIS_KEY.BILIBILI, biliCookieMap);
+                        redisCache.setCacheMap(SystemConstants.REDIS_KEY.BILIBILI, biliCookieMap);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
