@@ -38,14 +38,14 @@ public class DetectAtUserForUse implements BaseSubDetectorForUse{
             Boolean flag = false;
             if (model.equals(BaseDetectorModelEnum.OR)) {
                 for (Long target : targets) {
-                    if (chain.atUser(target)) {
+                    if (chain.atUser(target.toString())) {
                         flag = true;
                         break;
                     }
                 }
             } else if (model.equals(BaseDetectorModelEnum.AND)) {
                 for (Long target : targets) {
-                    if (!chain.atUser(target)) {
+                    if (!chain.atUser(target.toString())) {
                         break;
                     }
                 }

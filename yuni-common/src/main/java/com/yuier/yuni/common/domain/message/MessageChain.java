@@ -3,11 +3,16 @@ package com.yuier.yuni.common.domain.message;
 import com.yuier.yuni.common.constants.SystemConstants;
 import com.yuier.yuni.common.domain.message.data.AtData;
 import com.yuier.yuni.common.domain.message.data.ImageData;
+import com.yuier.yuni.common.domain.message.data.ReplyData;
 import com.yuier.yuni.common.domain.message.data.TextData;
 import com.yuier.yuni.common.enums.MessageDataEnum;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
@@ -19,8 +24,13 @@ import java.util.ArrayList;
  * @description: 消息链实体类
  */
 @Data
+@Component
 @AllArgsConstructor
+
 public class MessageChain {
+
+
+    private String selfId;
 
     private ArrayList<MessageSeg> content;
 
@@ -37,7 +47,7 @@ public class MessageChain {
         return str.toString();
     }
 
-    public Boolean atUser(Long userId) {
+    public Boolean atUser(String userId) {
         for (MessageSeg messageSeg : content) {
             if (messageSeg.typeOf(MessageDataEnum.AT)) {
                 AtData data = (AtData) messageSeg.getData();
@@ -56,6 +66,10 @@ public class MessageChain {
             }
         }
         return false;
+    }
+
+    public Boolean atBot() {
+        return this.atUser(selfId);
     }
 
     public Boolean containText(String str) {
@@ -142,6 +156,14 @@ public class MessageChain {
         content.add(new MessageSeg(
                 MessageDataEnum.TEXT.toString(),
                 new TextData(text)
+        ));
+        return this;
+    }
+
+    public MessageChain replyToMessage(String messageId) {
+        content.add(new MessageSeg(
+                MessageDataEnum.REPLY.toString(),
+                new ReplyData(messageId)
         ));
         return this;
     }

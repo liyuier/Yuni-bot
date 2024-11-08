@@ -5,7 +5,9 @@ import com.yuier.yuni.common.domain.message.MessageChain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * @Title: DetectAtBotForUse
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
  * @description: 实际使用的 @ 机器人探测器
  */
 @Data
+@Component
 @NoArgsConstructor
 @AllArgsConstructor
 public class DetectAtBotForUse implements BaseSubDetectorForUse{
@@ -24,11 +27,18 @@ public class DetectAtBotForUse implements BaseSubDetectorForUse{
         atBot = dto.getAtBot();
     }
 
-    @Value("${bot.self}")
-    private Long botSelf;
+//    @Value("${bot.self}")
+//    private String botSelf;
+
+    @Autowired
+    private MessageChain messageChain;
+
 
     @Override
     public Boolean hit(MessageChain chain) {
-        return chain.atUser(botSelf);
+//        return chain.atBot();
+//        return chain.atUser(botSelf);
+        return chain.atUser(messageChain.getSelfId());
+
     }
 }
